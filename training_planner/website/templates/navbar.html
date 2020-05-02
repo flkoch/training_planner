@@ -1,0 +1,11 @@
+
+{% if mainNavigation %}
+    {% block mainNavigation %}
+    {% endblock  %}
+{% else %}
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a href="{% url 'home' %}">Startseite</a>
+        </li>
+    </ul>
+{% endif %}
