@@ -33,6 +33,10 @@ class Location(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def with_address(self):
+        return ', '.join([str(self), str(self.address)])
+
 
 class TargetGroup(models.Model):
     name = models.CharField(max_length=50, verbose_name="Name")

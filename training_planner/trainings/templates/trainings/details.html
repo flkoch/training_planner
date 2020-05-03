@@ -4,9 +4,14 @@
 {% endblock title %}
 {% block content %}
 <h1>{{training}}</h1>
-<p>{{training.location}}</p>
-<div class="row">
-    <div class="col-sm-4">
+<p>{{training.location.with_address}}</p>
+<nav class="nav justify-content-end flex-column flex-sm-row my-2">
+    <a class="nav-link bg-light text-dark" href="{% url 'trainings-overview' %}">Zurück</a>
+    <a class="nav-link bg-success text-white ml-sm-3" href="">Anmelden</a>
+    <a class="nav-link bg-warning text-dark ml-sm-3" href="">Bearbeiten</a>
+</nav>
+<div class="row my-2">
+    <div class="col-sm-6 col-md my-1 order-1">
         <div class="card">
             <div class="card-header">Informationen</div>
             <div class="card-body">
@@ -34,7 +39,7 @@
         </div>
     </div>
     {% if training.description %}
-    <div class="col-sm-4">
+    <div class="col-sm-12 col-lg my-1 order-2 order-sm-12 order-lg-2">
         <div class="card">
             <div class="card-header">Beschreibung</div>
             <div class="card-body">
@@ -45,7 +50,7 @@
         </div>
     </div>
     {% endif %}
-    <div class="col-sm-4">
+    <div class="col-sm-6 col-md my-1 order-3">
         <div class="card">
         {% with registered_participants.all as participants %}
             <div class="card-header d-flex justify-content-between">Teilnehmer<span class="badge {% if training.free_capacity > 4 %} badge-success {% elif training.free_capacity > 0%} badge-warning {% else %} badge-danger {% endif %} badge-pill align-self-center">{{participants|length}} / {{training.capacity}}</span></div>
