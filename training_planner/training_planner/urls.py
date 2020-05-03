@@ -21,9 +21,9 @@ from members.views import login, logout, account
 
 urlpatterns = [
     path('', welcome, name='home'),
-    path('login', login),
-    path('logout', logout),
-    path('account', account),
+    path('login', login, name='login'),
+    path('logout', logout, name='logout'),
+    path('account', account, name='account'),
     path('trainings/', include('trainings.urls')),
     path('admin/', admin.site.urls),
 ]

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}
+Neues Training erstellen
+{% endblock title %}
+{% block content %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form}}
+        <input type="submit" name="Speichern" class="btn">
+    </form>
+{% endblock content %}

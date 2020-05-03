@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}
+Trainingsübersicht
+{% endblock %}
+{% block content %}
+<h1> Trainings </h1>
+<div class="table-responsive-lg">
+<table class="table">
+    <thead>
+    <tr>
+        <th>Bezeichnung</th>
+        <th>Trainer</th>
+        <th>Wochentag</th>
+        <th>Start</th>
+        <th>Dauer</th>
+        <th>Zielgruppe</th>
+        <th>Anmeldungen</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for training in trainings %}
+    <tr>
+        <td class="align-middle"><a href="{% url 'trainings-details' training.id %}">{{training.title}}</a></td>
+        <td class="align-middle">{{training.main_instructor}}</td>
+        <td class="align-middle">{{training.weekday_as_text}}</td>
+        <td class="align-middle">{{training.starttime_as_text}}</td>
+        <td class="align-middle">{{training.duration}} Minuten</td>
+        <td class="align-middle">
+            {% with target_groups=training.target_group.all %}
+            {% if target_groups|length > 1 %}
+            <ul>
+            {% for group in target_groups %}
+                <li>{{group}}</li>
+            {% endfor %}
+            </ul>
+            {% else %}
+            {% for group in target_groups %}{{group}}{% endfor %}
+            {% endif %}
+            {% endwith %}
+        </td>
+        <td class="align-middle">{{training.capacity}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock  %}

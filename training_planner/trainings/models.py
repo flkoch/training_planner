@@ -55,16 +55,38 @@ class Training(models.Model):
         Location, on_delete=models.SET_NULL, blank=True, null=True)
     main_instructor = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT,
-        related_name="main_instructor")
+        related_name="instructor", verbose_name="Haupttrainer")
     instructor = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, related_name="further_instructors",
-        default=None, blank=True)
+        settings.AUTH_USER_MODEL, related_name="assistant",
+        default=None, blank=True, verbose_name="Assistenztrainer")
     target_group = models.ManyToManyField(
         TargetGroup, verbose_name="Zielgruppe")
+    capacity = models.PositiveSmallIntegerField(validators=[
+        MinValueValidator(1), MaxValueValidator(50)],
+        verbose_name="Kapazität (Anzahl Teilnehmer)", default=15)
+    registered_participants = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name="trainings",
+        blank=True, default=None)
 
     def __str__(self):
-        starttime = ''.join([self.start.strftime('%a').upper()[:2],
+        starttime = ''.join([self.weekday_as_text.upper()[:2],
                              self.start.strftime('%H%M'),
                              self.main_instructor
                              .get_initials_paranthesised()])
         return f"{starttime}: {self.title}"
+
+    @property
+    def weekday_as_text(self):
+        return self.start.strftime('%A')
+
+    @property
+    def starttime_as_text(self):
+        return self.start.strftime('%H:%M')
+
+    @property
+    def target_groups_as_text(self):
+        return [group.name for group in self.target_group.all()]
+
+    @property
+    def free_capacity(self):
+        return self.capacity - self.registered_participants.all().count()

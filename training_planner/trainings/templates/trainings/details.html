@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}
+{{training}}
+{% endblock title %}
+{% block content %}
+<h1>{{training}}</h1>
+<p>{{training.location}}</p>
+<div class="row">
+    <div class="col-sm-4">
+        <div class="card">
+            <div class="card-header">Informationen</div>
+            <div class="card-body">
+                <p class="card-text">
+                    Datum: {{training.start.date}}<br />
+                    Uhrzeit: {{training.starttime_as_text}}<br />
+                    Trainingsdauer: {{training.duration}} Minuten<br />
+                    Haupt-Trainer: {{training.main_instructor}}<br />
+                    {% with instructors=training.instructor.all %}
+                        {% if instructors|length > 1 %}
+                            Weitere Trainer:
+                            {{instr}}
+                            {% for instructor in instructors %}
+                                {{instructor}}
+                                {% if forloop.revcounter > 2 %}
+                                    ,
+                                {% elif forloop.revcounter == 2%}
+                                     und
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </p>
+            </div>
+        </div>
+    </div>
+    {% if training.description %}
+    <div class="col-sm-4">
+        <div class="card">
+            <div class="card-header">Beschreibung</div>
+            <div class="card-body">
+                <p class="card-text">
+                    {{training.description}}
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <div class="col-sm-4">
+        <div class="card">
+        {% with registered_participants.all as participants %}
+            <div class="card-header d-flex justify-content-between">Teilnehmer<span class="badge {% if training.free_capacity > 4 %} badge-success {% elif training.free_capacity > 0%} badge-warning {% else %} badge-danger {% endif %} badge-pill align-self-center">{{participants|length}} / {{training.capacity}}</span></div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    {% for participant in participants %}
+                        <li class="list-group-item">{{participant}}</li>
+                    {% empty %}
+                        <li class="list-group-item">Bisher noch keine Anmeldungen</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endwith %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
