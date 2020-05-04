@@ -7,11 +7,6 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     birth_date = models.DateField(
         verbose_name="Geburtsdatum", null=True, blank=True)
-    is_trainer = models.BooleanField(default=False, verbose_name="Trainer")
-    active_trainer = models.BooleanField(
-        default=False, verbose_name="aktiver Trainer")
-    active_participant = models.BooleanField(
-        default=True, verbose_name="aktiver Teilnehmer")
     initials = models.CharField(
         max_length=3, verbose_name="Initialen", null=True, blank=True)
 
@@ -28,6 +23,18 @@ class User(AbstractUser):
     def get_initials_paranthesised(self):
         return self.initials.join(['(', ')'])
 
+    @property
+    def is_trainer(self):
+        return True
+
+    @property
+    def is_active_trainer(self):
+        return True
+
+    @property
+    def is_active_participant(self):
+        return True
+
 
 def trainer():
-    return User.objects.filter(active_trainer=True)
+    return User.objects.filter(groups__name='active_trainer')
