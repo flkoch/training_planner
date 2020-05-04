@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.utils import timezone
+from django.contrib.auth import decorators as auth_decorators
 from .models import Training
 from .forms import AddTrainingForm, TrainingForm
 from .filter import TrainingFilter
+from .decorators import trainer_only
 # Create your views here.
 
 
@@ -18,12 +20,14 @@ def overview(request, message=None):
     return render(request, 'trainings/overview.html', context)
 
 
+@auth_decorators.login_required(login_url='login')
 def details(request, id):
     training = Training.objects.get(id=id)
     context = {'training': training}
     return render(request, 'trainings/details.html', context)
 
 
+@trainer_only
 def create(request):
     if request.method == 'POST':
         form = AddTrainingForm(request.POST)
@@ -37,6 +41,7 @@ def create(request):
     return render(request, 'trainings/trainingForm.html', context)
 
 
+@trainer_only
 def edit(request, id):
     if request.method == 'POST':
         form = TrainingForm(request.POST)
@@ -51,6 +56,7 @@ def edit(request, id):
     return render(request, 'trainings/trainingForm.html', context)
 
 
+@trainer_only
 def delete(request, id):
     training = Training.objects.get(id=id)
     if request.method == 'POST':

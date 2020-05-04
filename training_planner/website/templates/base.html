@@ -21,6 +21,12 @@
                 {% include 'navbar.html' %}
                 {% endblock mainNavigation %}
             </div>
+            <div class="ml-auto navbar-nav">
+                {% block userMenu %}
+                    <span class="nav-item nav-link">{{request.user}}</span>
+                    <span class="nav-item"><a class="nav-link" href="{% url 'login' %}">Anmelden</a></span>
+                {% endblock userMenu %}
+            </div>
         </div>
         </div>
     </nav>

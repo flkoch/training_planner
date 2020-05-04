@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}
+    Registrieren
+{% endblock title %}
+{% block content %}
+    <form method="POST" action="">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input class="btn btn-secondary" type="button" value="Zurück" name="Zurück" onclick="history.back()">
+    <input class="btn btn-primary" type="submit" value="Erstellen" name="Erstellen">
+    {{form.errors}}
+    </form>
+{% endblock content %}
