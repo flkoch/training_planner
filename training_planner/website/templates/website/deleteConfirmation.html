@@ -25,7 +25,7 @@ Löschen
 {% endif %}
 <form class="my-5" action="" method="POST">
     {% csrf_token %}
-    <input class="btn btn-warning" type="button" value="Zurück" name="Zurück" onclick="history.back()" class="btn btn-primary">
+    <input class="btn btn-warning" type="button" value="Zurück" name="Zurück" onclick="history.back()">
     <input class="btn btn-danger" type="submit" value="Löschen" name="Löschen">
 </form>
 {% endblock content %}
