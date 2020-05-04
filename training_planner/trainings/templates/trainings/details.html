@@ -57,7 +57,7 @@
             <div class="card-body">
                 <ul class="list-group list-group-flush">
                     {% for participant in participants %}
-                        <li class="list-group-item">{{participant}}</li>
+                        <li class="list-group-item">{{participant.get_public_name}}</li>
                     {% empty %}
                         <li class="list-group-item">Bisher noch keine Anmeldungen</li>
                     {% endfor %}

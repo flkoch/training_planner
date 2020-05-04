@@ -18,10 +18,19 @@ class User(AbstractUser):
             return full_name
 
     def get_initials(self):
+        if self.initials == None:
+            self.initials = (self.first_name[0] + self.last_name[0]).upper()
         return self.initials
 
     def get_initials_paranthesised(self):
-        return self.initials.join(['(', ')'])
+        return self.get_initials().join(['(', ')'])
+
+    def get_public_name(self):
+        lastnames = self.last_name.split()
+        lastname = ''
+        for name in lastnames:
+            lastname += name[0] + '. '
+        return self.first_name + ' ' + lastname[:-1]
 
     @property
     def is_trainer(self):

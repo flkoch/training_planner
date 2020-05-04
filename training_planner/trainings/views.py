@@ -8,15 +8,14 @@ from .decorators import trainer_only
 # Create your views here.
 
 
-def overview(request, message=None):
+def overview(request):
     trainings = Training.objects.filter(start__date__gt=timezone.now()) \
         .exclude(archived=True) \
         .exclude(deleted=True) \
         .order_by('start', 'title')
     myFilter = TrainingFilter(request.GET, queryset=trainings)
     trainings = myFilter.qs
-    context = {'trainings': trainings,
-               'message': message, 'myFilter': myFilter}
+    context = {'trainings': trainings, 'myFilter': myFilter}
     return render(request, 'trainings/overview.html', context)
 
 

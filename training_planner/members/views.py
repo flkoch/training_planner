@@ -30,7 +30,6 @@ def login(request):
     return render(request, 'members/login.html', context)
 
 
-@decorators.unauthorised_user
 def logout(request):
     auth.logout(request)
     return redirect('/trainings')

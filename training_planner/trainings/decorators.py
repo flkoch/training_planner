@@ -5,7 +5,7 @@ from django.contrib import messages
 def unauthorised_user(view_func):
     def wrapper_func(request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('trainings')
+            return redirect('trainings-overview')
         else:
             return view_func(request, *args, **kwargs)
     return wrapper_func
@@ -25,7 +25,7 @@ def trainer_only(view_func):
         if request.user.is_authenticated and True:
             return view_func(request, *args, **kwargs)
         else:
-            messages.error(
+            messages.info(
                 request, 'Nur Trainer dürfen auf diesen Bereich zugreifen.')
-            return redirect('trainings')
+            return redirect('trainings-overview')
     return wrapper_func
