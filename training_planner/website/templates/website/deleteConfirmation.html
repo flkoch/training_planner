@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}
+{% if title %}
+{{title}}
+{% else %}
+Löschen
+{% endif %}
+{% endblock title %}
+{% block mainNavigationBar %}
+{% endblock mainNavigationBar %}
+{% block content %}
+{% if items %}
+    <p class="mt-5 mb-2">Sollen die folgenden Objekte gelöscht werden?</p>
+    <ul>
+        {% if item %}
+        <li>{{item}}</li>
+        {% endif %}
+        {% for item in items %}
+        <li>{{item}}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p class="mt-5 mb-2">Soll das folgende Objekt gelöscht werden?</p>
+    <strong>{{item}}</strong>
+{% endif %}
+<form class="my-5" action="" method="POST">
+    {% csrf_token %}
+    <input class="btn btn-warning" type="button" value="Zurück" name="Zurück" onclick="history.back()" class="btn btn-primary">
+    <input class="btn btn-danger" type="submit" value="Löschen" name="Löschen">
+</form>
+{% endblock content %}

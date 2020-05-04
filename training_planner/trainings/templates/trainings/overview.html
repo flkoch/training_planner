@@ -3,16 +3,24 @@
 Trainingsübersicht
 {% endblock %}
 {% block content %}
+{% if message %}
+    <div class="alert alert-{{message.type}} alert-dismissible fade show" role="alert">
+    {{message.text}}
+    <button type="button" class="close" data-dismiss="alert", aria-label="Schliessen">
+        <span arie-hidden="true">&times;</span>
+    </button>
+    </div>
+{% endif %}
 <h1> Trainings </h1>
 <div class="table-responsive-lg">
 <table class="table">
     <thead>
     <tr>
-        <th>Bezeichnung</th>
-        <th>Trainer</th>
         <th>Wochentag</th>
         <th>Start</th>
         <th>Dauer</th>
+        <th>Bezeichnung</th>
+        <th>Trainer</th>
         <th>Zielgruppe</th>
         <th>Anmeldungen</th>
     </tr>
@@ -20,11 +28,11 @@ Trainingsübersicht
     <tbody>
     {% for training in trainings %}
     <tr>
-        <td class="align-middle"><a href="{% url 'trainings-details' training.id %}">{{training.title}}</a></td>
-        <td class="align-middle">{{training.main_instructor}}</td>
         <td class="align-middle">{{training.weekday_as_text}}</td>
         <td class="align-middle">{{training.starttime_as_text}}</td>
         <td class="align-middle">{{training.duration}} Minuten</td>
+        <td class="align-middle"><a href="{% url 'trainings-details' training.id %}">{{training.title}}</a></td>
+        <td class="align-middle">{{training.main_instructor}}</td>
         <td class="align-middle">
             {% with target_groups=training.target_group.all %}
             {% if target_groups|length > 1 %}

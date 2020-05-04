@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 
@@ -69,23 +71,28 @@ class Training(models.Model):
         MinValueValidator(1), MaxValueValidator(50)],
         verbose_name="Kapazität (Anzahl Teilnehmer)", default=15)
     registered_participants = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, related_name="trainings",
+        settings.AUTH_USER_MODEL, related_name="trainings_registered",
         blank=True, default=None)
+    participants = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name="trainings", blank=True,
+        default=None)
+    deleted = models.BooleanField(verbose_name="Gelöscht", default=False)
+    archived = models.BooleanField(verbose_name="Archiviert", default=False)
 
     def __str__(self):
         starttime = ''.join([self.weekday_as_text.upper()[:2],
-                             self.start.strftime('%H%M'),
+                             timezone.localtime(self.start).strftime('%H%M'),
                              self.main_instructor
                              .get_initials_paranthesised()])
         return f"{starttime}: {self.title}"
 
     @property
-    def weekday_as_text(self):
-        return self.start.strftime('%A')
+    def weekday_as_text(self, locale=settings.LANGUAGE_CODE[:2]):
+        return _(self.start.strftime('%A'))
 
     @property
     def starttime_as_text(self):
-        return self.start.strftime('%H:%M')
+        return timezone.localtime(self.start).strftime('%H:%M')
 
     @property
     def target_groups_as_text(self):

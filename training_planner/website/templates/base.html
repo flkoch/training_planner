@@ -9,27 +9,33 @@
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </head>
 <body>
-    <nav id="mainnav" class="container navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    {% block mainNavigationBar %}
+    <nav id="mainnav" class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+        <div class="container">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Navigation ausklappen">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarMain">
             <div class="navbar-nav">
+                {% block mainNavigation %}
                 {% include 'navbar.html' %}
+                {% endblock mainNavigation %}
             </div>
         </div>
+        </div>
     </nav>
+    {% endblock mainNavigationBar %}
     <main class="container">
         {% block content %}
-        {% endblock  %}
+        {% endblock content %}
     </main>
-    {% if footer %}
+    {% block footerBar %}
     <footer class="container-fluid bg-dark">
         <div class="container">
             {% block footer %}
-            {% endblock  %}
+            {% endblock footer %}
         </div>
     </footer>
-    {% endif %}
+    {% endblock footerBar %}
 </body>
 </html>
