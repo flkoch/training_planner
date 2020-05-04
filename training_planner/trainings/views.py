@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 from .models import Training
 from .forms import AddTrainingForm, TrainingForm
+from .filter import TrainingFilter
 # Create your views here.
 
 
@@ -10,7 +11,10 @@ def overview(request, message=None):
         .exclude(archived=True) \
         .exclude(deleted=True) \
         .order_by('start', 'title')
-    context = {'trainings': trainings, 'message': message}
+    myFilter = TrainingFilter(request.GET, queryset=trainings)
+    trainings = myFilter.qs
+    context = {'trainings': trainings,
+               'message': message, 'myFilter': myFilter}
     return render(request, 'trainings/overview.html', context)
 
 

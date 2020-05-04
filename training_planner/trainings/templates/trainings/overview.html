@@ -12,6 +12,22 @@ Trainingsübersicht
     </div>
 {% endif %}
 <h1> Trainings </h1>
+{% comment '' %}
+<div class="card">
+    <div class="card-body">
+        <form method="get" class="form-inline">
+            {% for item in myFilter.form %}
+                <div class="input-group">
+                    <label for="">{{item.label}}</label>: {{item}}
+                </div>
+            {% endfor %}
+            <button class="btn btn-primary" type="submit">
+            Filtern
+            </button>
+        </form>
+    </div>
+</div>
+{% endcomment %}
 <div class="table-responsive-lg">
 <table class="table">
     <thead>

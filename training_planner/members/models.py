@@ -27,3 +27,7 @@ class User(AbstractUser):
 
     def get_initials_paranthesised(self):
         return self.initials.join(['(', ')'])
+
+
+def trainer():
+    return User.objects.filter(active_trainer=True)
