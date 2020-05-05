@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
@@ -27,8 +28,8 @@ class Location(models.Model):
     name = models.CharField(max_length=50, verbose_name="Name")
     description = models.TextField(
         verbose_name="Beschreibung", blank=True, null=True)
-    address = models.ForeignKey(
-        Address, blank=True, null=True, on_delete=models.SET_NULL)
+    address = models.OneToOneField(
+        Address, blank=True, null=True, on_delete=models.CASCADE)
     capacity = models.PositiveSmallIntegerField(
         verbose_name="Kapazität (Anzahl Personen)", blank=True, null=True)
 
@@ -78,6 +79,10 @@ class Training(models.Model):
         default=None)
     deleted = models.BooleanField(verbose_name="Gelöscht", default=False)
     archived = models.BooleanField(verbose_name="Archiviert", default=False)
+    registration_open = models.DateTimeField(
+        verbose_name="Anmeldebeginn", default=timezone.now)
+    registration_close = models.DateTimeField(
+        verbose_name="Anmeldeschluss", default=start)
 
     def __str__(self):
         starttime = ''.join([self.weekday_as_text.upper()[:2],
@@ -101,3 +106,37 @@ class Training(models.Model):
     @property
     def free_capacity(self):
         return self.capacity - self.registered_participants.all().count()
+
+    def can_register(self, user=None):
+        if isinstance(user, get_user_model()) and not \
+                user.groups.filter(name='Participant').exists():
+            return False
+        return self.registration_open <= timezone.now() \
+            <= self.registration_close and \
+            self.registered_participants.all().count() < self.capacity
+
+    def can_unregister(self, user=None):
+        return self.registration_open <= timezone.now() \
+            <= self.registration_close and self.is_registered(user)
+
+    def is_registered(self, user=None):
+        return user in self.registered_participants.all()
+
+    def is_instructor(self, user=None):
+        return user == self.main_instructor or user in self.instructor.all()
+
+    def can_edit(self, user=None):
+        return self.is_instructor(user) or \
+            user.groups.filter(name='administrator').exists()
+
+    def register(self, user):
+        if self.can_register(user):
+            self.registered_participants.add(user)
+            return True
+        else:
+            return False
+
+    def unregister(self, user):
+        if self.is_registered(user):
+            self.registered_participants.remove(user)
+        return True

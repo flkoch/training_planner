@@ -62,7 +62,7 @@ Trainingsübersicht
             {% endif %}
             {% endwith %}
         </td>
-        <td class="align-middle">{{training.capacity}}</td>
+        <td class="align-middle">{{training.registered_participants.all.count}}/{{training.capacity}}{% if training.can_edit %}<a href="{% url 'trainings-edit' training.id %}" class="btn btn-warning btn-sm ml-3">Bearbeiten</a>{% elif training.is_registered %}<span class="oi oi-check ml-3 text-success" title="angemeldet" aria-hidden="true"></span>{% elif training.can_register %}<a href="{% url 'trainings-register' training.id %}" class="btn btn-primary btn-sm ml-3">Anmelden</a>{% endif %}</td>
     </tr>
     {% endfor %}
     </tbody>

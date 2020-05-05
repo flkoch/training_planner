@@ -5,10 +5,23 @@
 {% block content %}
 <h1>{{training}}</h1>
 <p>{{training.location.with_address}}</p>
+{% for message in messages %}
+    <div class="alert alert-{{message.tags}} alert-dismissible fade show my-2" role="alert">
+    {{message}}
+    <button type="button" class="close" data-dismiss="alert", aria-label="Schliessen">
+        <span arie-hidden="true">&times;</span>
+    </button>
+    </div>
+{% endfor %}
 <nav class="nav justify-content-end flex-column flex-sm-row my-2">
     <a class="nav-link bg-light text-dark" href="{% url 'trainings-overview' %}">Zurück</a>
-    <a class="nav-link bg-success text-white ml-sm-3" href="">Anmelden</a>
-    <a class="nav-link bg-warning text-dark ml-sm-3" href="">Bearbeiten</a>
+    {% if training.can_edit %}
+        <a class="nav-link bg-warning text-dark ml-sm-3" href="{% url 'trainings-edit' training.id %}">Bearbeiten</a>
+    {% elif training.can_unregister %}
+        <a class="nav-link bg-danger text-white ml-sm-3" href="{% url 'trainings-unregister' training.id %}">Abmelden</a>
+    {% elif training.can_register %}
+        <a class="nav-link bg-success text-white ml-sm-3" href="{% url 'trainings-register' training.id %}">Anmelden</a>
+    {% endif %}
 </nav>
 <div class="row my-2">
     <div class="col-sm-6 col-md my-1 order-1">
@@ -52,7 +65,7 @@
     {% endif %}
     <div class="col-sm-6 col-md my-1 order-3">
         <div class="card">
-        {% with registered_participants.all as participants %}
+        {% with training.registered_participants.all as participants %}
             <div class="card-header d-flex justify-content-between">Teilnehmer<span class="badge {% if training.free_capacity > 4 %} badge-success {% elif training.free_capacity > 0%} badge-warning {% else %} badge-danger {% endif %} badge-pill align-self-center">{{participants|length}} / {{training.capacity}}</span></div>
             <div class="card-body">
                 <ul class="list-group list-group-flush">

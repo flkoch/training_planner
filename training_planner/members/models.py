@@ -26,11 +26,13 @@ class User(AbstractUser):
         return self.get_initials().join(['(', ')'])
 
     def get_public_name(self):
-        lastnames = self.last_name.split()
-        lastname = ''
-        for name in lastnames:
-            lastname += name[0] + '. '
-        return self.first_name + ' ' + lastname[:-1]
+        if self.first_name:
+            lastnames = self.last_name.split()
+            lastname = ''
+            for name in lastnames:
+                lastname += name[0] + '. '
+            return self.first_name + ' ' + lastname[:-1]
+        return self.username
 
     @property
     def is_trainer(self):

@@ -22,7 +22,8 @@ def allowed_users(allowed_roles=[]):
 
 def trainer_only(view_func):
     def wrapper_func(request, *args, **kwargs):
-        if request.user.is_authenticated and True:
+        if request.user.is_authenticated and \
+                request.user.groups.filter(name='Trainer').exists():
             return view_func(request, *args, **kwargs)
         else:
             messages.info(
