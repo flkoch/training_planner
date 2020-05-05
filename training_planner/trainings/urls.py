@@ -7,6 +7,8 @@ urlpatterns = [
     path('<int:id>/anmelden', trainings.register, name="trainings-register"),
     path('<int:id>/abmelden', trainings.unregister,
          name="trainings-unregister"),
+    path('<int:id>/koordinator/anmelden', trainings.register_as_coordinator,
+         name="trainings-register-coordinator"),
     path('erstellen', trainings.create, name="trainings-create"),
     path('<int:id>/bearbeiten', trainings.edit, name="trainings-edit"),
     path('<int:id>/entfernen', trainings.delete, name="trainings-delete")

@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.contrib import messages
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth import get_user_model
 from django.utils import timezone
@@ -66,6 +67,11 @@ class Training(models.Model):
     instructor = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="assistant",
         default=None, blank=True, verbose_name="Assistenztrainer")
+    coordinator = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                    on_delete=models.PROTECT,
+                                    related_name='coordinated_trainins',
+                                    verbose_name='Trainingskoordinator',
+                                    null=True, blank=True, default=None)
     target_group = models.ManyToManyField(
         TargetGroup, verbose_name="Zielgruppe")
     capacity = models.PositiveSmallIntegerField(validators=[
@@ -82,7 +88,7 @@ class Training(models.Model):
     registration_open = models.DateTimeField(
         verbose_name="Anmeldebeginn", default=timezone.now)
     registration_close = models.DateTimeField(
-        verbose_name="Anmeldeschluss", default=start)
+        verbose_name="Anmeldeschluss")
 
     def __str__(self):
         starttime = ''.join([self.weekday_as_text.upper()[:2],
@@ -140,3 +146,15 @@ class Training(models.Model):
         if self.is_registered(user):
             self.registered_participants.remove(user)
         return True
+
+    def register_as_coordinator(self, user):
+        if self.coordinator is not None:
+            return 1
+        elif user == self.main_instructor:
+            return 2
+        else:
+            print(self.coordinator)
+            self.coordinator = user
+            self.save()
+            print(self.coordinator)
+            return 0

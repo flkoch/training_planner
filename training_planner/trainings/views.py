@@ -10,6 +10,20 @@ from .decorators import trainer_only
 # Create your views here.
 
 
+def _simple_message(request, msg, index=0):
+    kind, message = msg.get(index, ('info', 'no message'))
+    if kind == 'warning':
+        messages.warning(request, message)
+    elif kind in ['danger', 'error']:
+        messages.error(request, message)
+    elif kind == 'success':
+        messages.success(request, message)
+    elif kind == 'debug':
+        messages.debug(request, message)
+    else:
+        messages.info(request, message)
+
+
 def overview(request):
     trainings = Training.objects.filter(start__gte=timezone.now()) \
         .exclude(start__gte=timezone.now() + datetime.timedelta(days=14)) \
@@ -54,6 +68,19 @@ def unregister(request, id):
     else:
         messages.info(request, 'Abmelden ist fehlgeschlagen.')
     return redirect('trainings-overview')
+
+
+@auth_decorators.login_required(login_url='login')
+def register_as_coordinator(request, id):
+    training = Training.objects.get(id=id)
+    index = training.register_as_coordinator(request.user)
+    msg = {
+        0: ('success', 'Vielen Dank, dass Du den Einlass koordinierst.'),
+        1: ('info', 'Es ist bereits ein anderer Koordinator angemeldet.'),
+        2: ('warning', 'Der Koordinator kann nicht der Haupt-Trainer sein.'),
+    }
+    _simple_message(request, msg, index)
+    return redirect('trainings-details', id)
 
 
 @trainer_only
