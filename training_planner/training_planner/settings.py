@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 't26iy1k7mbgb2ah8ay9o2i#qe-%7zgj382d8kb@#&vz_ue^+es'
+SECRET_KEY = os.environ['PYTHON_DJANGO_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'training_planner.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': os.environ['PYTHON_DJANGO_DB_ENGINE'],
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
@@ -133,10 +133,9 @@ STATIC_URL = '/static/'
 # E-mail configuration
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'mail.fkoch.ch'
-EMAIL_PORT = '465'
-EMAIL_USE_SSL = True
-# EMAIL_PORT = '587'
-# EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'fkoch@fkoch.ch'
-EMAIL_HOST_PASSWORD = ':9r%De71@.ps'
+EMAIL_HOST = os.environ['PYTHON_DJANGO_EMAIL_HOST']
+EMAIL_PORT = os.environ['PYTHON_DJANGO_EMAIL_PORT']
+EMAIL_USE_SSL = os.environ['PYTHON_DJANGO_EMAIL_USE_SSL']
+DEFAULT_FROM_EMAIL = os.environ['PYTHON_DJANGO_EMAIL_FROM']
+EMAIL_HOST_USER = os.environ['PYTHON_DJANGO_EMAIL_USER']
+EMAIL_HOST_PASSWORD = os.environ['PYTHON_DJANGO_EMAIL_PASSWORD']
