@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.contrib import messages
 from django.contrib.auth import decorators as auth_decorators
+import datetime
 from .models import Training
 from .forms import AddTrainingForm, TrainingForm
 from .filter import TrainingFilter
@@ -10,7 +11,8 @@ from .decorators import trainer_only
 
 
 def overview(request):
-    trainings = Training.objects.filter(start__date__gt=timezone.now()) \
+    trainings = Training.objects.filter(start__gte=timezone.now()) \
+        .exclude(start__gte=timezone.now() + datetime.timedelta(days=14)) \
         .exclude(archived=True) \
         .exclude(deleted=True) \
         .order_by('start', 'title')
@@ -62,7 +64,8 @@ def create(request):
             id = form.save().id
             messages.success(request, 'Training erfolgreich hinzugefügt.')
             return redirect(details, id)
-    form = AddTrainingForm
+    else:
+        form = AddTrainingForm()
     context = {'form': form, 'title': 'Neues Training'}
     return render(request, 'trainings/trainingForm.html', context)
 
@@ -70,9 +73,9 @@ def create(request):
 @trainer_only
 def edit(request, id):
     if request.method == 'POST':
-        form = TrainingForm(request.POST)
+        form = TrainingForm(request.POST, instance=Training.objects.get(id=id))
         if form.is_valid():
-            form.save(instance=Training.objects.get(id=id))
+            form.save()
             messages.success(request, 'Änderungen erfolgreich gespeichert')
             return redirect(details, id)
     training = Training.objects.get(id=id)

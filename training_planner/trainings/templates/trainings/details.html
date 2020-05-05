@@ -34,7 +34,7 @@
                     Trainingsdauer: {{training.duration}} Minuten<br />
                     Haupt-Trainer: {{training.main_instructor}}<br />
                     {% with instructors=training.instructor.all %}
-                        {% if instructors|length > 1 %}
+                        {% if instructors|length > 0 %}
                             Weitere Trainer:
                             {{instr}}
                             {% for instructor in instructors %}

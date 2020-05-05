@@ -18,8 +18,10 @@ class User(AbstractUser):
             return full_name
 
     def get_initials(self):
-        if self.initials == None:
-            self.initials = (self.first_name[0] + self.last_name[0]).upper()
+        if self.initials is None:
+            if self.first_name == self.last_name == '':
+                return self.username[:2].upper()
+            return (self.first_name[0] + self.last_name[0]).upper()
         return self.initials
 
     def get_initials_paranthesised(self):

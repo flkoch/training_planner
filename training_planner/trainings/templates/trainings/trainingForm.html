@@ -5,7 +5,8 @@
 {% block content %}
     <form action="" method="POST">
         {% csrf_token %}
-        {{form}}
+        {{form.as_p}}
         <input type="submit" name="Speichern" class="btn">
+        {{form.errors}}
     </form>
 {% endblock content %}
