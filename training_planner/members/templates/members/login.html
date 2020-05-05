@@ -27,6 +27,7 @@
             {% for error in form.errors %}
             <p>{{error}}</p>
             {% endfor %}
+            <p class="card-text"><small class="text-muted">Noch keinen Account? <a href="{% url 'register' %}">Hier</a> registrieren</smaal></p>
             <button type="submit" class="btn btn-primary">Anmelden</button>
             </form>
         </div>

@@ -24,8 +24,12 @@
             </div>
             <div class="ml-auto navbar-nav">
                 {% block userMenu %}
+                    {% if user.is_authenticated %}
                     <span class="nav-item nav-link">{{request.user}}</span>
+                    <span class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Abmelden</a></span>
+                    {% else %}
                     <span class="nav-item"><a class="nav-link" href="{% url 'login' %}">Anmelden</a></span>
+                    {% endif %}
                 {% endblock userMenu %}
             </div>
         </div>

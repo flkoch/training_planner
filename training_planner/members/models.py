@@ -37,17 +37,29 @@ class User(AbstractUser):
         return self.username
 
     @property
+    def name(self):
+        return ' '.join([self.first_name, self.last_name])
+
+    @property
     def is_trainer(self):
-        return True
+        return self.groups.filter(name='Trainer').exists()
 
     @property
     def is_active_trainer(self):
-        return True
+        return self.groups.filter(name='Active Trainer').exists()
+
+    @property
+    def is_participant(self):
+        return self.groups.filter(name='Participant').exists()
 
     @property
     def is_active_participant(self):
-        return True
+        return self.groups.filter(name='Active Participant').exists()
+
+
+def active_trainer():
+    return User.objects.filter(groups__name='Active Trainer')
 
 
 def trainer():
-    return User.objects.filter(groups__name='active_trainer')
+    return User.objects.filter(groups__name='Trainer')

@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block title %}
+{{user}} - Details
+{% endblock title %}
+{% block content %}
+<h1>{{user}}</h1>
+{% for message in messages %}
+    <div class="alert alert-{{message.tags}} alert-dismissible fade show my-2" role="alert">
+    {{message}}
+    <button type="button" class="close" data-dismiss="alert", aria-label="Schliessen">
+        <span arie-hidden="true">&times;</span>
+    </button>
+    </div>
+{% endfor %}
+<nav class="nav justify-content-end flex-column flex-sm-row my-2">
+    <a class="nav-link bg-light text-dark" href="{% url 'members-all' %}">Zurück</a>
+    <a class="nav-link bg-warning text-dark ml-sm-3" href="{% url 'member-edit' user.id %}">Bearbeiten</a>
+</nav>
+<div class="row my-2">
+    <div class="col-sm-6 col-md my-1 order-1">
+        <div class="card">
+            <div class="card-header">Informationen</div>
+            <div class="card-body">
+                <p class="card-text">
+                    Name: {{user.name}}<br />
+                    Benutzername: {{user.username}}<br />
+                    E-Mail: {{user.email}}<br />
+                    {% with groups=user.groups.all %}
+                        {% if groups|length > 0 %}
+                            Gruppen:
+                            {{instr}}
+                            {% for group in groups %}
+                                {{group}}
+                                {% if forloop.revcounter > 2 %}
+                                    ,
+                                {% elif forloop.revcounter == 2%}
+                                     und
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </p>
+            </div>
+        </div>
+    </div>
+    {% with user.trainings_registered.all as trainings %}
+    <div class="col-sm-6 col-md my-1 order-3">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">angemeldete Trainings<span class="badge badge-info badge-pill align-self-center">{{trainings|length}}</span></div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    {% for training in trainings %}
+                        <li class="list-group-item">{{training.start.date}}: {{training.title}}</li>
+                    {% empty %}
+                        <li class="list-group-item">Bisher noch keine Anmeldungen</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endwith %}
+    {% with user.trainings.all as trainings %}
+    <div class="col-sm-6 col-md my-1 order-3">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">absolvierte Trainings<span class="badge badge-success badge-pill align-self-center">{{trainings|length}}</span></div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    {% for training in trainings %}
+                        <li class="list-group-item">{{training.start.date}}: {{training.title}}</li>
+                    {% empty %}
+                        <li class="list-group-item">Bisher noch keine absolvierten Trainings.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endwith %}
+</div>
+{% endblock content %}

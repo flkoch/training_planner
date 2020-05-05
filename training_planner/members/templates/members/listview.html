@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}
+Mitglieder Liste
+{% endblock %}
+{% block content %}
+{% for message in messages %}
+    <div class="alert alert-{{message.tags}} alert-dismissible fade show my-2" role="alert">
+    {{message}}
+    <button type="button" class="close" data-dismiss="alert", aria-label="Schliessen">
+        <span arie-hidden="true">&times;</span>
+    </button>
+    </div>
+{% endfor %}
+<h1> Mitglieder </h1>
+<div class="card">
+    <div class="card-body">
+        <form method="get" class="form-inline">
+            {% for item in myFilter.form %}
+                <div class="input-group">
+                    <label for="">{{item.label}}</label>: {{item}}
+                </div>
+            {% endfor %}
+            <button class="btn btn-primary" type="submit">
+            Filtern
+            </button>
+        </form>
+    </div>
+</div>
+<div class="table-responsive-lg">
+<table class="table">
+    <thead>
+    <tr>
+        <th>Vorname</th>
+        <th>Nachname</th>
+        <th>Benutzername</th>
+        <th>E-Mail</th>
+        <th>Gruppen</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+    <tr>
+        <td class="align-middle">{{user.first_name}}</td>
+        <td class="align-middle">{{user.last_name}}</td>
+        <td class="align-middle"><a href="{% url 'member-details' user.id %}">{{user.username}}</a></td>
+        <td class="align-middle"><a href="mailto:{{user.email}}">{{user.email}}</a></td>
+        <td class="align-middle">
+            {% with user_groups=user.groups.all %}
+            {% if user_groups|length > 1 %}
+            <ul>
+            {% for group in user_groups %}
+                <li>{{group}}</li>
+            {% endfor %}
+            </ul>
+            {% else %}
+            {% for group in user_groups %}{{group}}{% endfor %}
+            {% endif %}
+            {% endwith %}
+        </td>
+        <td class="align-middle"><a href="{% url 'member-details' user.id %}" class="btn btn-primary btn-sm ml-3">Details</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock  %}

@@ -1,4 +1,9 @@
 
-<a href="{% url 'home' %}", class="nav-item nav-link">Startseite</a>
+{% comment %} <a href="{% url 'home' %}", class="nav-item nav-link">Startseite</a> {% endcomment %}
 <a href="{% url 'trainings-overview' %}", class="nav-item nav-link">Trainings</a>
+{% if user.is_trainer %}
 <a href="{% url 'trainings-create' %}", class="nav-item nav-link">Neues Training</a>
+{% endif %}
+{% if user.is_staff %}
+<a href="/admin" class="nav-item nav-link">Administration</a>
+{% endif %}
