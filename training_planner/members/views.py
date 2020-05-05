@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib import auth
 from django.contrib.auth import decorators as auth_decorators
 from django.contrib.auth.models import Group
+from django.urls import reverse
 from trainings import decorators
 from .forms import CreateUserForm
 from .models import User
@@ -13,7 +14,20 @@ from .filter import UserFilter
 
 @auth_decorators.login_required(login_url='login')
 def account(request):
-    return render(request, 'members/account.html')
+    user = request.user
+    context = {'user': user, 'edit_link': reverse('account-edit')}
+    return render(request, 'members/details.html', context)
+
+
+@auth_decorators.login_required(login_url='login')
+def account_edit(request):
+    user = request.user
+    context = {'user': user, 'edit_link': reverse('account-edit')}
+    messages.info(
+        request,
+        'Das Bearbeiten der Nutzerdaten ist aktuell leider noch nicht möglich.'
+    )
+    return render(request, 'members/editForm.html', context)
 
 
 @decorators.unauthorised_user
@@ -65,5 +79,16 @@ def all(request):
 @auth_decorators.permission_required('members.view_user')
 def details(request, id):
     user = User.objects.get(id=id)
-    context = {'user': user}
+    context = {'user': user, 'edit_link': reverse('member-edit', args=[id])}
     return render(request, 'members/details.html', context)
+
+
+@auth_decorators.permission_required('members.edit_user')
+def edit_user(request, id):
+    user = User.objects.get(id=id)
+    context = {'user': user, 'edit_link': reverse('account-edit')}
+    messages.info(
+        request,
+        'Das Bearbeiten der Nutzerdaten ist aktuell leider noch nicht möglich.'
+    )
+    return render(request, 'members/editForm.html', context)

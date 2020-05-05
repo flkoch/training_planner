@@ -18,23 +18,24 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 
 from website.views import welcome
-from members.views import login, logout, account, register
+from members.views import login, logout, account, account_edit, register
 
 urlpatterns = [
     path('', welcome, name='home'),
     path('login', login, name='login'),
     path('logout', logout, name='logout'),
     path('register', register, name='register'),
-    path('account', account, name='account'),
-    path('account/reset-password',
+    path('konto/', account, name='account'),
+    path('konto/bearbeiten', account_edit, name='account-edit'),
+    path('konto/passwort-reset',
          auth_views.PasswordResetView.as_view(), name='reset_password'),
-    path('account/reset-password-done',
+    path('konto/passwort-reset-initiiert',
          auth_views.PasswordResetDoneView.as_view(),
          name='password_reset_done'),
-    path('account/reset/<uidb64>/<token>',
+    path('konto/reset/<uidb64>/<token>',
          auth_views.PasswordResetConfirmView.as_view(),
          name='password_reset_confirm'),
-    path('account/password-complete',
+    path('konto/passwort-angepasst',
          auth_views.PasswordResetCompleteView.as_view(),
          name='password_reset_complete'),
     path('mitglieder/', include('members.urls')),

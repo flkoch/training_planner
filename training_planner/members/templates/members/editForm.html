@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-{{user}} - Details
+{{user}} - Bearbeiten
 {% endblock title %}
 {% block content %}
 <h1>{{user}}</h1>
@@ -14,7 +14,7 @@
 {% endfor %}
 <nav class="nav nav-pills justify-content-end flex-column flex-sm-row my-2">
     <a class="nav-link bg-light text-dark" href="javascript:history.back()">Zurück</a>
-    <a class="nav-link bg-warning text-dark ml-sm-3" href="{{edit_link}}">Bearbeiten</a>
+    <a class="nav-link bg-success text-dark ml-sm-3" href="{{edit_link}}">Speichern</a>
 </nav>
 <div class="row my-2">
     <div class="col-sm-6 col-md my-1 order-1">
