@@ -1,6 +1,5 @@
 from django.db import models
 from django.conf import settings
-from django.contrib import messages
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth import get_user_model
 from django.utils import timezone
@@ -133,7 +132,7 @@ class Training(models.Model):
 
     def can_edit(self, user=None):
         return self.is_instructor(user) or \
-            user.groups.filter(name='administrator').exists()
+            user.groups.filter(name='Administrator').exists()
 
     def register(self, user):
         if self.can_register(user):

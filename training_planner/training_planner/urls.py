@@ -26,7 +26,7 @@ urlpatterns = [
     path('logout', logout, name='logout'),
     path('register', register, name='register'),
     path('konto/', account, name='account'),
-    path('konto/bearbeiten', account_edit, name='account-edit'),
+    path('konto/bearbeiten', account_edit, name='account_edit'),
     path('konto/passwort-reset',
          auth_views.PasswordResetView.as_view(), name='reset_password'),
     path('konto/passwort-reset-initiiert',

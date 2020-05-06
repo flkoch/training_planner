@@ -27,6 +27,9 @@
             {% for error in form.errors %}
             <p>{{error}}</p>
             {% endfor %}
+            {% if messages %}
+            <p class="card-text"><small class="text-muted">Passwort vergessen? <a href="{% url 'reset_password' %}">Passwort zurücksetzen</a></smaal></p>
+            {% endif %}
             <p class="card-text"><small class="text-muted">Noch keinen Account? <a href="{% url 'register' %}">Hier</a> registrieren</smaal></p>
             <button type="submit" class="btn btn-primary">Anmelden</button>
             </form>
