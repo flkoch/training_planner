@@ -69,7 +69,7 @@ def register(request):
 
 @auth_decorators.permission_required('members.view_user')
 def all(request):
-    users = User.objects.all()
+    users = User.objects.all().exclude(groups__name='System')
     myFilter = UserFilter(request.GET, queryset=users)
     users = myFilter.qs
     context = {'users': users, 'myFilter': myFilter}
