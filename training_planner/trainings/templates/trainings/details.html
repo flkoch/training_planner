@@ -15,12 +15,14 @@
 {% endfor %}
 <nav class="nav justify-content-end flex-column flex-sm-row my-2">
     <a class="nav-link bg-light text-dark" href="{% url 'trainings-overview' %}">Zurück</a>
-    {% if training.can_edit %}
-        <a class="nav-link bg-warning text-dark ml-sm-3" href="{% url 'trainings-edit' training.id %}">Bearbeiten</a>
-    {% elif training.can_unregister %}
+    {% if training.can_unregister %}
         <a class="nav-link bg-danger text-white ml-sm-3" href="{% url 'trainings-unregister' training.id %}">Abmelden</a>
     {% elif training.can_register %}
         <a class="nav-link bg-success text-white ml-sm-3" href="{% url 'trainings-register' training.id %}">Anmelden</a>
+    {% endif %}
+    {% if training.can_edit %}
+        <a class="nav-link bg-warning text-dark ml-sm-3" href="{% url 'trainings-edit' training.id %}">Bearbeiten</a>
+        <a class="nav-link bg-danger text-white ml-sm-3" href="{% url 'trainings-delete' training.id %}">Löschen</a>
     {% endif %}
 </nav>
 <div class="row my-2">
@@ -45,6 +47,7 @@
                                      und
                                 {% endif %}
                             {% endfor %}
+                            <br />
                         {% endif %}
                     {% endwith %}
                     Koordinator: {% if training.coordinator %}{{training.coordinator}}{% else %}<a href="{% url 'trainings-register-coordinator' training.id %}" class="btn btn-sm btn-secondary">Anmelden</a>{% endif %}<br />

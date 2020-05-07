@@ -113,9 +113,10 @@ class Training(models.Model):
         return self.capacity - self.registered_participants.all().count()
 
     def can_register(self, user=None):
-        if isinstance(user, get_user_model()) and not \
-                user.groups.filter(name='Participant').exists():
-            return False
+        if isinstance(user, get_user_model()):
+            if self.is_instructor(user) or \
+                    not user.groups.filter(name='Participant').exists():
+                return False
         return self.registration_open <= timezone.now() \
             <= self.registration_close and \
             self.registered_participants.all().count() < self.capacity

@@ -6,7 +6,7 @@ import datetime
 from .models import Training
 from .forms import AddTrainingForm, TrainingForm
 from .filter import TrainingFilter
-from .decorators import trainer_only
+from .decorators import trainer_only, protect_training
 # Create your views here.
 
 
@@ -43,6 +43,7 @@ def overview(request):
 def details(request, id):
     training = Training.objects.get(id=id)
     training.can_edit = training.can_edit(request.user)
+    training.can_register = training.can_register(request.user)
     training.can_unregister = training.can_unregister(request.user)
     context = {'training': training}
     return render(request, 'trainings/details.html', context)
@@ -97,7 +98,7 @@ def create(request):
     return render(request, 'trainings/trainingForm.html', context)
 
 
-@trainer_only
+@protect_training
 def edit(request, id):
     if request.method == 'POST':
         form = TrainingForm(request.POST, instance=Training.objects.get(id=id))
@@ -111,11 +112,12 @@ def edit(request, id):
     return render(request, 'trainings/trainingForm.html', context)
 
 
-@trainer_only
+@protect_training
 def delete(request, id):
     training = Training.objects.get(id=id)
     if request.method == 'POST':
         training.deleted = True
+        training.save()
         # message = {'text': f"<em>{training}</em> wurde gelöscht",
         #    'type': "success"}
         return redirect(overview)

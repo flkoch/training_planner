@@ -1,5 +1,6 @@
 from django.shortcuts import redirect
 from django.contrib import messages
+from .models import Training
 
 
 def unauthorised_user(view_func):
@@ -28,5 +29,18 @@ def trainer_only(view_func):
         else:
             messages.info(
                 request, 'Nur Trainer dürfen auf diesen Bereich zugreifen.')
+            return redirect('trainings-overview')
+    return wrapper_func
+
+
+def protect_training(view_func):
+    def wrapper_func(request, *args, **kwargs):
+        training = Training.objects.get(id=kwargs.get('id'))
+        if training.can_edit(request.user):
+            return view_func(request, *args, **kwargs)
+        else:
+            messages.info(
+                request, 'Nur die zuständigen Trainer und Administratoren '
+                'dürfen auf diesen Bereich zugreifen.')
             return redirect('trainings-overview')
     return wrapper_func
