@@ -41,6 +41,12 @@ class User(AbstractUser):
         return ' '.join([self.first_name, self.last_name])
 
     @property
+    def name_or_username(self):
+        if self.first_name:
+            return ' '.join([self.first_name, self.last_name])
+        return self.username
+
+    @property
     def is_trainer(self):
         return self.groups.filter(name='Trainer').exists()
 

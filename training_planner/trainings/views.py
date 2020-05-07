@@ -46,6 +46,8 @@ def details(request, id):
     training.can_register = training.can_register(request.user)
     training.can_unregister = training.can_unregister(request.user)
     context = {'training': training}
+    if request.user.groups.filter(name="Trainer").exists():
+        return render(request, 'trainings/details_admin.html', context)
     return render(request, 'trainings/details.html', context)
 
 
@@ -81,6 +83,14 @@ def register_as_coordinator(request, id):
         2: ('warning', 'Der Koordinator kann nicht der Haupt-Trainer sein.'),
     }
     _simple_message(request, msg, index)
+    return redirect('trainings-details', id)
+
+
+@protect_training
+def unregister_as_coordinator(request, id):
+    training = Training.objects.get(id=id)
+    training.unregister_as_coordinator()
+    messages.info(request, "Koordinator erfolgreich entfernt.")
     return redirect('trainings-details', id)
 
 
