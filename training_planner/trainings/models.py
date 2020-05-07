@@ -153,8 +153,6 @@ class Training(models.Model):
         elif user == self.main_instructor:
             return 2
         else:
-            print(self.coordinator)
             self.coordinator = user
             self.save()
-            print(self.coordinator)
             return 0
