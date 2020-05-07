@@ -156,3 +156,8 @@ class Training(models.Model):
             self.coordinator = user
             self.save()
             return 0
+
+    def unregister_as_coordinator(self):
+        self.coordinator = None
+        self.save()
+        return True
