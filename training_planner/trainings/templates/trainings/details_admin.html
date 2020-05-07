@@ -50,7 +50,7 @@
                             <br />
                         {% endif %}
                     {% endwith %}
-                    Koordinator: {% if training.coordinator %}{{training.coordinator}}<a href="{% url 'trainings-unregister-coordinator' training.id %}" class="text-danger mx-1"><span class="oi oi-circle-x"></span></a><br /><small class="text-muted">Du erhälst weitere Informationen kurz vor dem Training. Wenn Du doch nicht kommen kannst, melde Dich bitte beim zuständigen Trainer, damit wir noch einen Ersatz organisieren können.</small> {% else %}<a href="{% url 'trainings-register-coordinator' training.id %}" class="btn btn-sm btn-secondary">Anmelden</a>{% endif %}<br />
+                    Koordinator: {% if training.coordinator %}{{training.coordinator}}<a href="{% url 'trainings-unregister-coordinator' training.id %}" class="text-danger mx-1"><span class="oi oi-circle-x"></span></a>{% if training.coordinator == user %}<br /><small class="text-muted">Du erhälst weitere Informationen kurz vor dem Training. Wenn Du doch nicht kommen kannst, melde Dich bitte beim zuständigen Trainer, damit wir noch einen Ersatz organisieren können.</small>{% endif %}{% else %}<a href="{% url 'trainings-register-coordinator' training.id %}" class="btn btn-sm btn-secondary">Anmelden</a>{% endif %}<br />
                 </p>
             </div>
         </div>
