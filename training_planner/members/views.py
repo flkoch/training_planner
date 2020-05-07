@@ -15,14 +15,14 @@ from .filter import UserFilter
 @auth_decorators.login_required(login_url='login')
 def account(request):
     user = request.user
-    context = {'user': user, 'edit_link': reverse('account-edit')}
+    context = {'user': user, 'edit_link': reverse('account_edit')}
     return render(request, 'members/details.html', context)
 
 
 @auth_decorators.login_required(login_url='login')
 def account_edit(request):
     user = request.user
-    context = {'user': user, 'edit_link': reverse('account-edit')}
+    context = {'user': user, 'edit_link': reverse('account_edit')}
     messages.info(
         request,
         'Das Bearbeiten der Nutzerdaten ist aktuell leider noch nicht möglich.'
