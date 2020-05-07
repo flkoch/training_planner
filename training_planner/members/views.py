@@ -34,9 +34,9 @@ def account_edit(request):
 def login(request):
     username = ''
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = auth.authenticate(request, username=username, password=password)
+        user = auth.authenticate(request,
+                                 username=request.POST.get('username'),
+                                 password=request.POST.get('password'))
         if user is not None:
             auth.login(request, user)
             return redirect('/trainings')
@@ -58,9 +58,12 @@ def register(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            user = form.save(commit=False)
+            if not user.initials:
+                user.initials = user.get_initials
+            user.save()
             user.groups.add(Group.objects.get(name='Participant'))
-            user.initials = user.get_initials()
+            form.save_m2m()
             messages.success(request, 'Der Account wurde erstellt.')
             return redirect(login)
     context = {'form': form}
