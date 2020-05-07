@@ -99,9 +99,15 @@ def create(request):
     if request.method == 'POST':
         form = AddTrainingForm(request.POST)
         if form.is_valid():
-            id = form.save().id
+            training = form.save(commit=False)
+            training.registration_close = training.start - \
+                datetime.timedelta(2)
+            training.registration_open = timezone.now() - \
+                datetime.timedelta(14)
+            training.save()
+            form.save_m2m()
             messages.success(request, 'Training erfolgreich hinzugefügt.')
-            return redirect(details, id)
+            return redirect(details, training.id)
     else:
         form = AddTrainingForm()
     context = {'form': form, 'title': 'Neues Training'}

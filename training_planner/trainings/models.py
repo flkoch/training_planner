@@ -68,7 +68,7 @@ class Training(models.Model):
         default=None, blank=True, verbose_name="Assistenztrainer")
     coordinator = models.ForeignKey(settings.AUTH_USER_MODEL,
                                     on_delete=models.PROTECT,
-                                    related_name='coordinated_trainins',
+                                    related_name='coordinated_trainings',
                                     verbose_name='Trainingskoordinator',
                                     null=True, blank=True, default=None)
     target_group = models.ManyToManyField(
@@ -112,13 +112,25 @@ class Training(models.Model):
     def free_capacity(self):
         return self.capacity - self.registered_participants.all().count()
 
+    @property
+    def before_registration(self):
+        return timezone.now() < self.registration_open
+
+    @property
+    def during_registration(self):
+        return self.registration_open <= timezone.now() \
+            <= self.registration_close
+
+    @property
+    def after_registration(self):
+        return self.registration_close < timezone.now() <= self.start
+
     def can_register(self, user=None):
         if isinstance(user, get_user_model()):
             if self.is_instructor(user) or \
                     not user.groups.filter(name='Participant').exists():
                 return False
-        return self.registration_open <= timezone.now() \
-            <= self.registration_close and \
+        return self.during_registration and \
             self.registered_participants.all().count() < self.capacity
 
     def can_unregister(self, user=None):
