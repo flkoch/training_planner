@@ -34,22 +34,20 @@ Trainingsübersicht
     <tr>
         <th>Wochentag</th>
         <th>Start</th>
-        <th>Dauer</th>
-        <th>Bezeichnung</th>
+        <th class="d-none d-md-table-cell">Zielgruppe</th>
+        <th class="d-none d-sm-table-cell">Ort</th>
         <th>Trainer</th>
-        <th>Zielgruppe</th>
-        <th>Anmeldungen</th>
+        <th class="d-none d-lg-table-cell">Koordinator</th>
+        <th class="d-none d-lg-table-cell">Dauer</th>
+        <th colspan="2">Anmeldungen</th>
     </tr>
     </thead>
     <tbody>
     {% for training in trainings %}
     <tr>
-        <td class="align-middle">{{training.weekday_as_text}}</td>
-        <td class="align-middle">{{training.starttime_as_text}}</td>
-        <td class="align-middle">{{training.duration}} Minuten</td>
-        <td class="align-middle"><a href="{% url 'trainings-details' training.id %}">{{training.title}}</a></td>
-        <td class="align-middle">{{training.main_instructor}}</td>
-        <td class="align-middle">
+        <td class="align-middle"><a href="{% url 'trainings-details' training.id %}">{{training.weekday_as_text}}</a></td>
+        <td class="align-middle"><a href="{% url 'trainings-details' training.id %}">{{training.starttime_as_text}}</a></td>
+        <td class="align-middle d-none d-md-table-cell">
             {% with target_groups=training.target_group.all %}
             {% if target_groups|length > 1 %}
             <ul>
@@ -62,7 +60,12 @@ Trainingsübersicht
             {% endif %}
             {% endwith %}
         </td>
-        <td class="align-middle">{{training.registered_participants.all.count}}/{{training.capacity}}{% if training.can_edit %}<a href="{% url 'trainings-edit' training.id %}" class="btn btn-warning btn-sm ml-3">Bearbeiten</a>{% elif training.is_registered %}<span class="oi oi-check ml-3 text-success" title="angemeldet" aria-hidden="true"></span>{% elif training.can_register %}<a href="{% url 'trainings-register' training.id %}" class="btn btn-primary btn-sm ml-3">Anmelden</a>{% endif %}</td>
+        <td class="align-middle d-none d-sm-table-cell">{{training.location}}</td>
+        <td class="align-middle">{{training.main_instructor}}</td>
+        <td class="align-middle d-none d-lg-table-cell">{% if training.coordinator %}{{training.coordinator.get_public_name}}{% else %}offen{% endif %}</td>
+        <td class="align-middle d-none d-lg-table-cell">{{training.duration}} Minuten</td>
+        <td class="align-middle">{{training.registered_participants.all.count}}/{{training.capacity}}</td>
+        <td class="align-middle d-none d-sm-table-cell">{% if training.can_edit %}<a href="{% url 'trainings-edit' training.id %}" class="btn btn-warning btn-sm ml-3">Bearbeiten</a>{% elif training.is_registered %}<span class="oi oi-check ml-3 text-success" title="angemeldet" aria-hidden="true"></span>{% elif training.can_register %}<a href="{% url 'trainings-register' training.id %}" class="btn btn-primary btn-sm ml-3">Anmelden</a>{% endif %}</td>
     </tr>
     {% endfor %}
     </tbody>
