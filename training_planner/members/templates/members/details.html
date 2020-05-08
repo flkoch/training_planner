@@ -42,32 +42,32 @@
             </div>
         </div>
     </div>
-    {% with user.trainings_registered.all as trainings %}
+    {% with reg_trainings as trainings %}
     <div class="col-sm-6 col-md my-1 order-3">
         <div class="card">
             <div class="card-header d-flex justify-content-between">angemeldete Trainings<span class="badge badge-info badge-pill align-self-center">{{trainings|length}}</span></div>
             <div class="card-body">
                 <ul class="list-group list-group-flush">
                     {% for training in trainings %}
-                        <li class="list-group-item">{{training.start.date}}: {{training.title}}</li>
+                        <li class="list-group-item">{{training.start.date}}: {{training}}</li>
                     {% empty %}
-                        <li class="list-group-item">Bisher noch keine Anmeldungen</li>
+                        <li class="list-group-item">Keine zukünftigen Anmeldungen</li>
                     {% endfor %}
                 </ul>
             </div>
         </div>
     </div>
     {% endwith %}
-    {% with user.trainings.all as trainings %}
+    {% with part_trainings as trainings %}
     <div class="col-sm-6 col-md my-1 order-3">
         <div class="card">
             <div class="card-header d-flex justify-content-between">absolvierte Trainings<span class="badge badge-success badge-pill align-self-center">{{trainings|length}}</span></div>
             <div class="card-body">
                 <ul class="list-group list-group-flush">
                     {% for training in trainings %}
-                        <li class="list-group-item">{{training.start.date}}: {{training.title}}</li>
+                        <li class="list-group-item">{{training.start.date}}: {{training}}</li>
                     {% empty %}
-                        <li class="list-group-item">Bisher noch keine absolvierten Trainings.</li>
+                        <li class="list-group-item">Bisher noch keine absolvierten Trainings</li>
                     {% endfor %}
                 </ul>
             </div>

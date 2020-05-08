@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib import auth
 from django.contrib.auth import decorators as auth_decorators
 from django.contrib.auth.models import Group
+from django.utils import timezone
 from django.urls import reverse
 from trainings import decorators
 from .forms import CreateUserForm
@@ -15,7 +16,14 @@ from .filter import UserFilter
 @auth_decorators.login_required(login_url='login')
 def account(request):
     user = request.user
-    context = {'user': user, 'edit_link': reverse('account-edit')}
+    reg_trainings = user.trainings_registered.filter(start__gte=timezone.now())
+    part_trainings = user.trainings.filter(start__lte=timezone.now())
+    context = {
+        'user': user,
+        'edit_link': reverse('account-edit'),
+        'reg_trainings': reg_trainings,
+        'part_trainings': part_trainings
+    }
     return render(request, 'members/details.html', context)
 
 
@@ -84,7 +92,14 @@ def details(request, id):
     user = User.objects.get(id=id)
     if request.user == user:
         return redirect('account')
-    context = {'user': user, 'edit_link': reverse('member-edit', args=[id])}
+    reg_trainings = user.trainings_registered.filter(start__gte=timezone.now())
+    part_trainings = user.trainings.filter(start__lte=timezone.now())
+    context = {
+        'user': user,
+        'edit_link': reverse('member-edit', args=[id]),
+        'reg_trainings': reg_trainings,
+        'part_trainings': part_trainings
+    }
     return render(request, 'members/details.html', context)
 
 
