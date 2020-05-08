@@ -96,9 +96,9 @@ def register_as_coordinator(request, id):
 
 
 @protect_training
-def unregister_as_coordinator(request, id):
+def unregister_coordinator(request, id):
     training = Training.objects.get(id=id)
-    training.unregister_as_coordinator()
+    training.unregister_coordinator()
     messages.info(request, "Koordinator erfolgreich entfernt.")
     return redirect('trainings-details', id)
 

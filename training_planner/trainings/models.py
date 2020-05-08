@@ -155,17 +155,17 @@ class Training(models.Model):
         return self.during_registration and \
             self.registered_participants.all().count() < self.capacity
 
-    def can_unregister(self, user=None):
+    def can_unregister(self, user):
         return self.registration_open <= timezone.now() \
             <= self.registration_close and self.is_registered(user)
 
-    def is_registered(self, user=None):
+    def is_registered(self, user):
         return user in self.registered_participants.all()
 
-    def is_instructor(self, user=None):
+    def is_instructor(self, user):
         return user == self.main_instructor or user in self.instructor.all()
 
-    def can_edit(self, user=None):
+    def can_edit(self, user):
         return self.is_instructor(user) or \
             user.groups.filter(name='Administrator').exists()
 
@@ -191,7 +191,7 @@ class Training(models.Model):
             self.save()
             return 0
 
-    def unregister_as_coordinator(self):
+    def unregister_coordinator(self):
         self.coordinator = None
         self.save()
         return True
