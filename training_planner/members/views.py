@@ -16,8 +16,10 @@ from .filter import UserFilter
 @auth_decorators.login_required(login_url='login')
 def account(request):
     user = request.user
-    reg_trainings = user.trainings_registered.filter(start__gte=timezone.now())
-    part_trainings = user.trainings.filter(start__lte=timezone.now())
+    reg_trainings = user.trainings_registered.filter(
+        start__gte=timezone.now()).order_by('start')
+    part_trainings = user.trainings.filter(
+        start__lte=timezone.now()).order_by('-start')[:10]
     context = {
         'user': user,
         'edit_link': reverse('account-edit'),
@@ -92,8 +94,10 @@ def details(request, id):
     user = User.objects.get(id=id)
     if request.user == user:
         return redirect('account')
-    reg_trainings = user.trainings_registered.filter(start__gte=timezone.now())
-    part_trainings = user.trainings.filter(start__lte=timezone.now())
+    reg_trainings = user.trainings_registered.filter(
+        start__gte=timezone.now()).order_by('start')
+    part_trainings = user.trainings.filter(
+        start__lte=timezone.now()).order_by('-start')[:10]
     context = {
         'user': user,
         'edit_link': reverse('member-edit', args=[id]),
