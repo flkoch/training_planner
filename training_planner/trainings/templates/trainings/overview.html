@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}
 Trainingsübersicht
-{% endblock %}
+{% endblock title %}
 {% block content %}
 {% for message in messages %}
     <div class="alert alert-{{message.tags}} alert-dismissible fade show my-2" role="alert">
@@ -11,7 +11,7 @@ Trainingsübersicht
     </button>
     </div>
 {% endfor %}
-<h1> Trainings </h1>
+<h1>Trainings</h1>
 {% comment '' %}
 <div class="card">
     <div class="card-body">
@@ -71,4 +71,4 @@ Trainingsübersicht
     </tbody>
 </table>
 </div>
-{% endblock  %}
+{% endblock content %}
