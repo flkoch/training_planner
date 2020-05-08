@@ -28,7 +28,6 @@
                     {% with groups=user.groups.all %}
                         {% if groups|length > 0 %}
                             Gruppen:
-                            {{instr}}
                             {% for group in groups %}
                                 {{group}}
                                 {% if forloop.revcounter > 2 %}
