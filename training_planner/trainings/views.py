@@ -25,7 +25,8 @@ def _simple_message(request, msg, index=0):
 
 
 def overview(request):
-    trainings = Training.objects.filter(start__gte=timezone.now()) \
+    trainings = Training.objects.filter(start__gte=timezone.now() -
+                                        datetime.timedelta(hours=2)) \
         .exclude(start__gte=timezone.now() + datetime.timedelta(days=14)) \
         .exclude(archived=True) \
         .exclude(deleted=True) \
