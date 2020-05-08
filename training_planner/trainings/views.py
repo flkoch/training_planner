@@ -102,7 +102,7 @@ def create(request):
             training = form.save(commit=False)
             training.registration_close = training.start - \
                 datetime.timedelta(2)
-            training.registration_open = timezone.now() - \
+            training.registration_open = training.start - \
                 datetime.timedelta(14)
             training.save()
             form.save_m2m()
