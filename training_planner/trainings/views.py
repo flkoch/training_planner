@@ -45,6 +45,15 @@ def details(request, id):
     training.can_edit = training.can_edit(request.user)
     training.can_register = training.can_register(request.user)
     training.can_unregister = training.can_unregister(request.user)
+    if training.before_registration:
+        messages.info(
+            request, f'Die Anmeldung wird am {training.opendate_as_text} um '
+            f'{training.opentime_as_text} Uhr geöffnet.')
+    elif training.after_registration:
+        messages.info(
+            request, f'Die Anmeldung ist seit dem {training.closedate_as_text}'
+            f' um {training.closetime_as_text} geschlossen. Für kurzfristige '
+            'An- oder Abmeldungen kontaktiere bitte den zuständigen Trainer.')
     context = {'training': training}
     if request.user.groups.filter(name="Trainer").exists():
         return render(request, 'trainings/details_admin.html', context)

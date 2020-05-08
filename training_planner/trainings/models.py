@@ -105,6 +105,28 @@ class Training(models.Model):
         return timezone.localtime(self.start).strftime('%H:%M')
 
     @property
+    def opentime_as_text(self):
+        return timezone.localtime(self.registration_open).strftime('%H:%M')
+
+    @property
+    def closetime_as_text(self):
+        return timezone.localtime(self.registration_close).strftime('%H:%M')
+
+    @property
+    def startdate_as_text(self, locale=settings.LANGUAGE_CODE[:2]):
+        return _(timezone.localtime(self.start).strftime('%d. %B %Y'))
+
+    @property
+    def opendate_as_text(self, locale=settings.LANGUAGE_CODE[:2]):
+        return _(timezone.localtime(self.registration_open)
+                 .strftime('%d. %B %Y'))
+
+    @property
+    def closedate_as_text(self, locale=settings.LANGUAGE_CODE[:2]):
+        return _(timezone.localtime(self.registration_close)
+                 .strftime('%d. %B %Y'))
+
+    @property
     def target_groups_as_text(self):
         return [group.name for group in self.target_group.all()]
 
