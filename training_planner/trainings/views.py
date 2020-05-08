@@ -119,7 +119,11 @@ def create(request):
             messages.success(request, 'Training erfolgreich hinzugefügt.')
             return redirect(details, training.id)
     else:
-        form = AddTrainingForm()
+        form = AddTrainingForm(initial={
+            'main_instructor': request.user,
+            'capacity': 10,
+            'duration': 45,
+        })
     context = {'form': form, 'title': 'Neues Training'}
     return render(request, 'trainings/trainingForm.html', context)
 
