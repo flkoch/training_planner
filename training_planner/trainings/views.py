@@ -148,3 +148,36 @@ def delete(request, id):
         return redirect(overview)
     context = {'item': training, 'title': 'Training löschen'}
     return render(request, 'website/deleteConfirmation.html', context)
+
+
+@trainer_only
+def held(request, user=None):
+    if user is None:
+        user = request.user
+    trainings_main = user.instructor.filter(start__lte=timezone.now() +
+                                            datetime.timedelta(minutes=30)) \
+        .exclude(start__lte=timezone.now() - datetime.timedelta(days=7)) \
+        .exclude(deleted=True) \
+        .order_by('start', 'title')
+    trainings_assistant = user.assistant.filter(
+        start__lte=timezone.now() + datetime.timedelta(minutes=30)) \
+        .exclude(start__lte=timezone.now() - datetime.timedelta(days=7)) \
+        .exclude(deleted=True)
+    context = {
+        'trainings_main': trainings_main,
+        'trainings_assistant': trainings_assistant
+    }
+    return render(request, 'trainings/overview_held_trainings.html', context)
+
+
+@protect_training
+def controlling(request, id):
+    training = Training.objects.get(id=id)
+    if request.method == 'POST':
+        participants = [int(user_id) for user_id, value in request.POST.items()
+                        if 'participated' in value]
+        training.participants.clear()
+        training.participants.add(*participants)
+        messages.success(request, "Änderungen gespeichert")
+    context = {'training': training}
+    return render(request, 'trainings/details_controlling.html', context)

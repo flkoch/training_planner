@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}
+{{training}}
+{% endblock title %}
+{% block content %}
+<h1>{{training}}</h1>
+<p>{{training.location.with_address}}</p>
+{% for message in messages %}
+    <div class="alert alert-{{message.tags}} alert-dismissible fade show my-2" role="alert">
+    {{message}}
+    <button type="button" class="close" data-dismiss="alert", aria-label="Schliessen">
+        <span arie-hidden="true">&times;</span>
+    </button>
+    </div>
+{% endfor %}
+<nav class="nav justify-content-end flex-column flex-sm-row my-2">
+    <a class="nav-link bg-light text-dark" href="{% url 'trainings-held' %}">Zurück</a>
+    <a class="nav-link bg-warning text-dark ml-sm-3" href="{% url 'trainings-edit' training.id %}">Bearbeiten</a>
+    <a class="nav-link bg-danger text-white ml-sm-3" href="{% url 'trainings-delete' training.id %}">Löschen</a>
+</nav>
+<div class="row my-2">
+    <div class="col-sm-6 my-1 order-1">
+        <div class="card">
+            <div class="card-header">Angemeldet</div>
+            <div class="card-body">
+                <form method="POST" action="">
+                {% csrf_token %}
+                {% for participant in training.registered_participants.all %}
+                    <div class="form-group row my-0 {% cycle '' 'bg-secondary text-white' %}">
+                        <label class="col-10 col-form-label" for="cb-{{ participant.id }}">{{ participant.name_or_username }}</label>
+                        <div class="col-1">
+                            <input id="cb-{{ participant.id }}" type="checkbox" name="{{participant.id}}" value="participated" class="form-control" aria-label="{{participant.name_or_username}}" {% if participant in training.participants.all %}checked{% endif %}/>
+                        </div>
+                    </div>
+                    {% empty %}
+                        <div class="list-group-item">Bisher keine Anmeldungen</div>
+                    {% endfor %}
+                <input type="submit" class="btn btn-primary my-3" value="Speichern"/>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 my-1 order-1">
+        <div class="card">
+            <div class="card-header">Teilnehmer</div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        {% for participant in training.participants.all %}
+                            <li class="list-group-item">{{participant.get_public_name}}</li>
+                        {% empty %}
+                            <li class="list-group-item">Bisher noch keine Teilnehmer erfasst.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

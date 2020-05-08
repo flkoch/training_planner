@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}
+Trainingsübersicht
+{% endblock title %}
+{% block content %}
+{% for message in messages %}
+    <div class="alert alert-{{message.tags}} alert-dismissible fade show my-2" role="alert">
+    {{message}}
+    <button type="button" class="close" data-dismiss="alert", aria-label="Schliessen">
+        <span arie-hidden="true">&times;</span>
+    </button>
+    </div>
+{% endfor %}
+<h1>Trainings</h1>
+<div class="table-responsive-lg">
+<table class="table">
+    <thead>
+    <tr>
+        <th>Wochentag</th>
+        <th>Start</th>
+        <th class="d-none d-sm-table-cell">Ort</th>
+        <th>Trainer</th>
+        <th class="d-none d-lg-table-cell">Koordinator</th>
+        <th colspan="2">Teilnahme</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for training in trainings_main %}
+    <tr>
+        <td class="align-middle"><a href="{% url 'trainings-controlling' training.id %}">{{training.weekday_as_text}}</a></td>
+        <td class="align-middle"><a href="{% url 'trainings-controlling' training.id %}">{{training.starttime_as_text}}</a></td>
+        <td class="align-middle d-none d-sm-table-cell">{% if training.location %}{{training.location}}{% else %}&mdash;{% endif %}</td>
+        <td class="align-middle">{{training.main_instructor}}</td>
+        <td class="align-middle d-none d-lg-table-cell">{% if training.coordinator %}{{training.coordinator.get_public_name}}{% else %}offen{% endif %}</td>
+        <td class="align-middle">{{training.participants.all.count}}/{{training.registered_participants.all.count}}{% if training.participants.all.count == training.registered_participants.all.count %}<span class="oi oi-check text-success ml-4"></span>{% endif %}</td>
+        <td class="align-middle d-none d-sm-table-cell"></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock content %}

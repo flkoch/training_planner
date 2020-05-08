@@ -13,5 +13,8 @@ urlpatterns = [
          name="trainings-unregister-coordinator"),
     path('erstellen', trainings.create, name="trainings-create"),
     path('<int:id>/bearbeiten', trainings.edit, name="trainings-edit"),
-    path('<int:id>/entfernen', trainings.delete, name="trainings-delete")
+    path('<int:id>/entfernen', trainings.delete, name="trainings-delete"),
+    path('kontrolle', trainings.held, name="trainings-held"),
+    path('kontrolle/<int:id>', trainings.controlling,
+         name="trainings-controlling"),
 ]
