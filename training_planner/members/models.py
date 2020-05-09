@@ -11,7 +11,7 @@ class User(AbstractUser):
         max_length=3, verbose_name="Initialen", null=True, blank=True)
 
     def __str__(self):
-        full_name = f"{self.first_name} {self.last_name}"
+        full_name = self.get_full_name()
         if full_name.isspace():
             return f"{self.username}"
         else:
@@ -38,7 +38,7 @@ class User(AbstractUser):
 
     @property
     def name(self):
-        return ' '.join([self.first_name, self.last_name])
+        return self.get_full_name()
 
     @property
     def name_or_username(self):
