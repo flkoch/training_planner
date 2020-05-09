@@ -24,7 +24,7 @@ def account(request):
         'user': user,
         'edit_link': reverse('account-edit'),
         'reg_trainings': reg_trainings,
-        'part_trainings': part_trainings
+        'part_trainings': part_trainings,
     }
     return render(request, 'members/details.html', context)
 
@@ -32,7 +32,16 @@ def account(request):
 @auth_decorators.login_required(login_url='login')
 def account_edit(request):
     user = request.user
-    context = {'user': user, 'edit_link': reverse('account-edit')}
+    reg_trainings = user.trainings_registered.filter(
+        start__gte=timezone.now()).order_by('start')
+    part_trainings = user.trainings.filter(
+        start__lte=timezone.now()).order_by('-start')[:10]
+    context = {
+        'user': user,
+        'edit_link': reverse('account-edit'),
+        'reg_trainings': reg_trainings,
+        'part_trainings': part_trainings,
+    }
     messages.info(
         request,
         'Das Bearbeiten der Nutzerdaten ist aktuell leider noch nicht möglich.'
@@ -102,7 +111,7 @@ def details(request, id):
         'user': user,
         'edit_link': reverse('member-edit', args=[id]),
         'reg_trainings': reg_trainings,
-        'part_trainings': part_trainings
+        'part_trainings': part_trainings,
     }
     return render(request, 'members/details.html', context)
 
@@ -112,7 +121,16 @@ def edit(request, id):
     user = User.objects.get(id=id)
     if request.user == user:
         return redirect('account-edit')
-    context = {'user': user, 'edit_link': reverse('account-edit')}
+    reg_trainings = user.trainings_registered.filter(
+        start__gte=timezone.now()).order_by('start')
+    part_trainings = user.trainings.filter(
+        start__lte=timezone.now()).order_by('-start')[:10]
+    context = {
+        'user': user,
+        'edit_link': reverse('member-edit', args=[id]),
+        'reg_trainings': reg_trainings,
+        'part_trainings': part_trainings,
+    }
     messages.info(
         request,
         'Das Bearbeiten der Nutzerdaten ist aktuell leider noch nicht möglich.'

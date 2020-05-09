@@ -42,7 +42,7 @@
             </div>
         </div>
     </div>
-    {% with user.trainings_registered.all as trainings %}
+    {% with reg_trainings as trainings %}
     <div class="col-sm-6 col-md my-1 order-3">
         <div class="card">
             <div class="card-header d-flex justify-content-between">angemeldete Trainings<span class="badge badge-info badge-pill align-self-center">{{trainings|length}}</span></div>
@@ -58,7 +58,7 @@
         </div>
     </div>
     {% endwith %}
-    {% with user.trainings.all as trainings %}
+    {% with part_trainings as trainings %}
     <div class="col-sm-6 col-md my-1 order-3">
         <div class="card">
             <div class="card-header d-flex justify-content-between">absolvierte Trainings<span class="badge badge-success badge-pill align-self-center">{{trainings|length}}</span></div>
