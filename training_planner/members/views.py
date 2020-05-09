@@ -102,7 +102,7 @@ def all(request):
     myFilter = UserFilter(request.GET, queryset=users)
     users = myFilter.qs
     context = {'users': users, 'myFilter': myFilter}
-    return render(request, 'members/listview.html', context)
+    return render(request, 'members/overview.html', context)
 
 
 @auth_decorators.permission_required('members.view_user')
