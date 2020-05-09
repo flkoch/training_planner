@@ -61,7 +61,7 @@
     {% with part_trainings as trainings %}
     <div class="col-sm-6 col-md my-1 order-3">
         <div class="card">
-            <div class="card-header d-flex justify-content-between">absolvierte Trainings<span class="badge badge-success badge-pill align-self-center">{{trainings|length}}</span></div>
+            <div class="card-header d-flex justify-content-between">absolvierte Trainings<span class="badge badge-success badge-pill align-self-center">{{trainings.paginator.count}}</span></div>
             <div class="card-body">
                 <ul class="list-group list-group-flush">
                     {% for training in trainings %}
@@ -70,6 +70,19 @@
                         <li class="list-group-item">Bisher noch keine absolvierten Trainings.</li>
                     {% endfor %}
                 </ul>
+                {% if trainings.has_other_pages %}
+                    <nav aria-label="Seitenwahl für absolvierte Trainings">
+                    <ul class="pagination pagination-sm mt-3 justify-content-center">
+                    {% for page in trainings.paginator.page_range %}
+                        {% if page == trainings.number %}
+                            <li class="page-item active"><a href="#" class="page-link" aria-current="page">{{page}}<span class="sr-only">(aktuell)</span></a></li>
+                        {% elif page == trainings.start_index or page == trainings.end_index or page == trainings.previous_page_number or page == trainings.next_page_number %}
+                            <li class="page-item"><a href="?page={{page}}" class="page-link">{{page}}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                    </nav>
+                {% endif %}
             </div>
         </div>
     </div>

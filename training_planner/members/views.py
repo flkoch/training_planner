@@ -1,14 +1,15 @@
-from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib import auth
 from django.contrib.auth import decorators as auth_decorators
 from django.contrib.auth.models import Group
+from django.core.paginator import Paginator
+from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.urls import reverse
 from trainings import decorators
+from .filter import UserFilter
 from .forms import CreateUserForm
 from .models import User
-from .filter import UserFilter
 
 # Create your views here.
 
@@ -19,12 +20,15 @@ def account(request):
     reg_trainings = user.trainings_registered.filter(
         start__gte=timezone.now()).order_by('start')
     part_trainings = user.trainings.filter(
-        start__lte=timezone.now()).order_by('-start')[:10]
+        start__lte=timezone.now()).order_by('-start')
+    paginator = Paginator(part_trainings, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page((page_number))
     context = {
         'user': user,
         'edit_link': reverse('account-edit'),
         'reg_trainings': reg_trainings,
-        'part_trainings': part_trainings,
+        'part_trainings': page_obj,
     }
     return render(request, 'members/details.html', context)
 
@@ -35,12 +39,15 @@ def account_edit(request):
     reg_trainings = user.trainings_registered.filter(
         start__gte=timezone.now()).order_by('start')
     part_trainings = user.trainings.filter(
-        start__lte=timezone.now()).order_by('-start')[:10]
+        start__lte=timezone.now()).order_by('-start')
+    paginator = Paginator(part_trainings, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page((page_number))
     context = {
         'user': user,
         'edit_link': reverse('account-edit'),
         'reg_trainings': reg_trainings,
-        'part_trainings': part_trainings,
+        'part_trainings': page_obj,
     }
     messages.info(
         request,
@@ -106,12 +113,15 @@ def details(request, id):
     reg_trainings = user.trainings_registered.filter(
         start__gte=timezone.now()).order_by('start')
     part_trainings = user.trainings.filter(
-        start__lte=timezone.now()).order_by('-start')[:10]
+        start__lte=timezone.now()).order_by('-start')
+    paginator = Paginator(part_trainings, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page((page_number))
     context = {
         'user': user,
         'edit_link': reverse('member-edit', args=[id]),
         'reg_trainings': reg_trainings,
-        'part_trainings': part_trainings,
+        'part_trainings': page_obj,
     }
     return render(request, 'members/details.html', context)
 
@@ -124,12 +134,15 @@ def edit(request, id):
     reg_trainings = user.trainings_registered.filter(
         start__gte=timezone.now()).order_by('start')
     part_trainings = user.trainings.filter(
-        start__lte=timezone.now()).order_by('-start')[:10]
+        start__lte=timezone.now()).order_by('-start')
+    paginator = Paginator(part_trainings, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page((page_number))
     context = {
         'user': user,
         'edit_link': reverse('member-edit', args=[id]),
         'reg_trainings': reg_trainings,
-        'part_trainings': part_trainings,
+        'part_trainings': page_obj,
     }
     messages.info(
         request,
