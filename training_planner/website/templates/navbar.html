@@ -6,6 +6,9 @@
 <a href="{% url 'trainings-create' %}", class="nav-item nav-link">Neues Training</a>
 <a href="{% url 'members-all' %}", class="nav-item nav-link">Mitglieder</a>
 {% endif %}
+{% if user.is_administrator %}
+<a href="{% url 'trainings-participation' %}" class="nav-item nav-link">Statistik</a>
+{% endif %}
 {% if user.is_staff %}
 <a href="/admin" class="nav-item nav-link">Administration</a>
 {% endif %}

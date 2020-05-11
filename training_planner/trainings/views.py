@@ -1,12 +1,16 @@
+from operator import itemgetter
 from django.shortcuts import render, redirect
 from django.utils import timezone
-from django.contrib import messages
+from django.contrib import messages, auth
 from django.contrib.auth import decorators as auth_decorators
+from django.db.models import Count
+from django.db.models.functions import ExtractWeek
 import datetime
+from members.filter import UserStatisticsFilter
 from .models import Training
 from .forms import AddTrainingForm, TrainingForm
 from .filter import TrainingFilter
-from .decorators import trainer_only, protect_training
+from .decorators import trainer_only, protect_training, admin_only
 # Create your views here.
 
 
@@ -148,8 +152,7 @@ def delete(request, id):
     if request.method == 'POST':
         training.deleted = True
         training.save()
-        # message = {'text': f"<em>{training}</em> wurde gelöscht",
-        #    'type': "success"}
+        messages.success(request, f'{training} wurde gelöscht')
         return redirect(overview)
     context = {'item': training, 'title': 'Training löschen'}
     return render(request, 'website/deleteConfirmation.html', context)
@@ -186,3 +189,64 @@ def controlling(request, id):
         messages.success(request, "Änderungen gespeichert")
     context = {'training': training}
     return render(request, 'trainings/details_controlling.html', context)
+
+
+@admin_only
+def participation_view(request, year=None):
+    if year is None:
+        if 'year' in request.GET and request.GET['year'] != '':
+            try:
+                year = int(request.GET['year'])
+            except ValueError:
+                print("ValueError")
+                pass
+            if (not isinstance(year, int)) or \
+                    datetime.MINYEAR > year or \
+                    datetime.MAXYEAR < year:
+                messages.info(
+                    request,
+                    'Ungültiges Jahr, zeige Werte für aktuelles Kalendarjahr.'
+                )
+                year = timezone.now().year
+        else:
+            year = timezone.now().year
+    users = auth.get_user_model().objects.filter(
+        groups__name='Active Participant'
+    ).filter(trainings__start__year=year).annotate(
+        total_trainings=Count('trainings')
+    ).annotate(
+        week_num=ExtractWeek('trainings__start')
+    ).values(
+        'id',
+        'first_name',
+        'last_name',
+        'username',
+        'total_trainings',
+        'week_num'
+    ).annotate(
+        count=Count('week_num')
+    ).order_by('id')
+    myFilter = UserStatisticsFilter(request.GET, queryset=users)
+    users = myFilter.qs
+    new_users = []
+    for user in users:
+        if len(new_users) != 0 and user['id'] == new_users[-1]['id']:
+            new_users[-1]['week_' + str(user['week_num'])] = user['count']
+            new_users[-1]['total_trainings'] += user['total_trainings']
+        else:
+            new_users.append({
+                'id': user['id'],
+                'first_name': user['first_name'],
+                'last_name': user['last_name'],
+                'username': user['username'],
+                'total_trainings': user['total_trainings'],
+                'week_' + str(user['week_num']): user['count'],
+            })
+    new_users.sort(key=itemgetter('first_name'))
+    new_users.sort(key=itemgetter('last_name'))
+    context = {
+        'users': new_users,
+        'myFilter': myFilter,
+        'year': year,
+    }
+    return render(request, 'trainings/participation_view.html', context)
