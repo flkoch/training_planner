@@ -2,6 +2,7 @@ from django import forms as forms
 from django.contrib.auth import get_user_model
 from crispy_forms import layout as cfl
 from crispy_forms.helper import FormHelper
+from tempus_dominus import widgets
 from .models import Training
 
 
@@ -12,6 +13,18 @@ class AddTrainingForm(forms.ModelForm):
     instructor = forms.ModelMultipleChoiceField(
         queryset=get_user_model().objects.filter(groups__name='Trainer'),
         required=False, label='Assistenztrainer')
+    start = forms.DateTimeField(
+        widget=widgets.DateTimePicker(
+            options={
+                'stepping': 15,
+                'format': 'DD.MM.YYYY HH:mm'
+            },
+            attrs={
+                'append': 'fa fa-calendar',
+                'icon_toggle': True,
+            }
+        )
+    )
 
     class Meta:
         model = Training
@@ -88,6 +101,42 @@ class TrainingForm(forms.ModelForm):
     instructor = forms.ModelMultipleChoiceField(
         queryset=get_user_model().objects.filter(groups__name='Trainer'),
         required=False, label='Assistenztrainer')
+    registration_open = forms.DateTimeField(
+        widget=widgets.DateTimePicker(
+            options={
+                'stepping': 15,
+                'format': 'DD.MM.YYYY HH:mm'
+            },
+            attrs={
+                'append': 'fa fa-calendar',
+                'icon_toggle': True,
+            }
+        )
+    )
+    registration_close = forms.DateTimeField(
+        widget=widgets.DateTimePicker(
+            options={
+                'stepping': 15,
+                'format': 'DD.MM.YYYY HH:mm'
+            },
+            attrs={
+                'append': 'fa fa-calendar',
+                'icon_toggle': True,
+            }
+        )
+    )
+    start = forms.DateTimeField(
+        widget=widgets.DateTimePicker(
+            options={
+                'stepping': 15,
+                'format': 'DD.MM.YYYY HH:mm'
+            },
+            attrs={
+                'append': 'fa fa-calendar',
+                'icon_toggle': True,
+            }
+        )
+    )
 
     class Meta:
         model = Training
@@ -187,6 +236,43 @@ class TrainingForm(forms.ModelForm):
 
 
 class AdminTrainingForm(forms.ModelForm):
+    registration_open = forms.DateTimeField(
+        widget=widgets.DateTimePicker(
+            options={
+                'stepping': 15,
+                'format': 'DD.MM.YYYY HH:mm'
+            },
+            attrs={
+                'append': 'fa fa-calendar',
+                'icon_toggle': True,
+            }
+        )
+    )
+    registration_close = forms.DateTimeField(
+        widget=widgets.DateTimePicker(
+            options={
+                'stepping': 15,
+                'format': 'DD.MM.YYYY HH:mm'
+            },
+            attrs={
+                'append': 'fa fa-calendar',
+                'icon_toggle': True,
+            }
+        )
+    )
+    start = forms.DateTimeField(
+        widget=widgets.DateTimePicker(
+            options={
+                'stepping': 15,
+                'format': 'DD.MM.YYYY HH:mm'
+            },
+            attrs={
+                'append': 'fa fa-calendar',
+                'icon_toggle': True,
+            }
+        )
+    )
+
     class Meta:
         model = Training
         fields = '__all__'

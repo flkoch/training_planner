@@ -11,6 +11,7 @@
         {% block styles %}
             <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
             <link rel="stylesheet" href="{% static 'css/open-iconic-bootstrap.min.css' %}"/>
+            <link rel="stylesheet" href="{% static 'css/all.min.css' %}"/>
             {% block additionalStyles %}
             {% endblock additionalStyles %}
         {% endblock styles %}
@@ -62,5 +63,7 @@
         </div>
     </footer>
     {% endblock footerBar %}
+    {% block afterScripts %}
+    {% endblock afterScripts %}
 </body>
 </html>

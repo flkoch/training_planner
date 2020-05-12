@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tempus_dominus',
     'crispy_forms',
     'django_filters',
     'website',
@@ -142,5 +143,8 @@ EMAIL_HOST_USER = os.environ['PYTHON_DJANGO_EMAIL_USER']
 EMAIL_HOST_PASSWORD = os.environ['PYTHON_DJANGO_EMAIL_PASSWORD']
 
 # Further configuration
+# Tempus Dominus
+TEMPUS_DOMINUS_LOCALIZE = True
+
 # Crispy Form
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

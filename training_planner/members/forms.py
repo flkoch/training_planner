@@ -1,10 +1,24 @@
+from django import forms as forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from crispy_forms import layout as cfl
 from crispy_forms.helper import FormHelper
+from tempus_dominus import widgets
 from .models import User
 
 
 class CreateUserForm(UserCreationForm):
+    birth_date = forms.DateField(
+        widget=widgets.DatePicker(
+            options={
+                'format': 'DD.MM.YYYY',
+            },
+            attrs={
+                'append': 'fa fa-calendar',
+                'icon_toggle': True,
+            }
+        )
+    )
+
     class Meta:
         model = User
         fields = UserCreationForm.Meta.fields + \
