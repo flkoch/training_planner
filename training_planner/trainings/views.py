@@ -149,7 +149,7 @@ def make_training_series(request, id):
         training = Training.objects.get(id=id)
         training.coordinator = None
         instructors = [e.id for e in training.instructor.all()]
-        target_groups = [e.id for e in training.target_groups.all()]
+        target_groups = [e.id for e in training.target_group.all()]
         dates = request.POST['dates'].split(',')
         for date in dates:
             training.pk = None
