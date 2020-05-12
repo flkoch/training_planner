@@ -149,6 +149,7 @@ def make_training_series(request, id):
         training = Training.objects.get(id=id)
         training.coordinator = None
         instructors = [e.id for e in training.instructor.all()]
+        target_groups = [e.id for e in training.target_group.all()]
         dates = request.POST['dates'].split(',')
         for date in dates:
             training.pk = None
@@ -159,9 +160,12 @@ def make_training_series(request, id):
                 ),
                 timezone.get_current_timezone()
             )
+            training.deleted = False
+            training.archived = False
             training.set_registration_times()
             training.save()
             training.instructor.add(*instructors)
+            training.target_group.add(*target_groups)
         messages.success(
             request,
             f'Trainings an {len(dates)} Tagen erstellt.'
