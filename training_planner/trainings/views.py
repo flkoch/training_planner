@@ -159,6 +159,8 @@ def make_training_series(request, id):
                 ),
                 timezone.get_current_timezone()
             )
+            training.deleted = False
+            training.archived = False
             training.set_registration_times()
             training.save()
             training.instructor.add(*instructors)
