@@ -17,8 +17,10 @@ urlpatterns = [
     path('<int:id>/serie', trainings.make_training_series,
          name='trainings-series'),
     path('kontrolle', trainings.held, name='trainings-held'),
-    path('kontrolle/<int:id>', trainings.controlling,
+    path('<int:id>/kontrolle', trainings.controlling,
          name='trainings-controlling'),
+    path('kontrolle/<int:id>', trainings.held,
+         name='trainings-held-trainer'),
     path('teilnahme', trainings.participation_view,
-         name='trainings-participation')
+         name='trainings-participation'),
 ]
