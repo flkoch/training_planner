@@ -78,10 +78,10 @@ class Training(models.Model):
         verbose_name="Kapazität (Anzahl Teilnehmer)", default=15)
     registered_participants = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="trainings_registered",
-        blank=True, default=None)
+        blank=True, default=None, verbose_name="Angemeldete Teilnehmer")
     participants = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="trainings", blank=True,
-        default=None)
+        default=None, verbose_name="Teilnehmer")
     deleted = models.BooleanField(verbose_name="Gelöscht", default=False)
     archived = models.BooleanField(verbose_name="Archiviert", default=False)
     registration_open = models.DateTimeField(

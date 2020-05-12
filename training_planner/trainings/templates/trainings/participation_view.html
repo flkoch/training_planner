@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}{% load static %}
+{% load i18n %}{% load static %}{% load crispy_forms_tags %}
 {% block title %}
 Teilnehmer Statistik
 {% endblock title %}
@@ -25,19 +25,15 @@ Teilnehmer Statistik
     <div class="card-body">
         <form method="get" class="form-inline">
             <div class="form-row col-12">
-            {% for item in myFilter.form %}
+                {{myFilter.form|crispy}}
                 <div class="col-auto">
-                    <label for="{{item.id_for_label}}" class="d-inline-flex">{{item.label}}</label>: {{item}}
+                    <input type="number" class="form-control" placeholder="{% trans 'Jahr' %}" aria-label="{% trans 'Jahr' %}" min="1" max="9999" name="year" value="{{year}}">
                 </div>
-            {% endfor %}
-            <div class="col-auto">
-                <input type="number" class="form-control" placeholder="{% trans 'Jahr' %}" aria-label="{% trans 'Jahr' %}" min="1" max="9999" name="year" value="{{year}}">
-            </div>
-            <div class="col-auto">
-                <button class="btn btn-primary" type="submit">
-                    Filtern
-                </button>
-            </div>
+                <div class="col-auto">
+                    <button class="btn btn-primary" type="submit">
+                        Filtern
+                    </button>
+                </div>
             </div>
         </form>
     </div>

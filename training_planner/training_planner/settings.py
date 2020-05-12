@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'django_filters',
     'website',
     'trainings',
@@ -139,3 +140,7 @@ EMAIL_USE_SSL = os.environ['PYTHON_DJANGO_EMAIL_USE_SSL']
 DEFAULT_FROM_EMAIL = os.environ['PYTHON_DJANGO_EMAIL_FROM']
 EMAIL_HOST_USER = os.environ['PYTHON_DJANGO_EMAIL_USER']
 EMAIL_HOST_PASSWORD = os.environ['PYTHON_DJANGO_EMAIL_PASSWORD']
+
+# Further configuration
+# Crispy Form
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

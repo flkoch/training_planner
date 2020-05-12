@@ -1,43 +1,8 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% block title %}
     Registrieren
 {% endblock title %}
 {% block content %}
-    <form method="POST" action="">
-    {% csrf_token %}
-    <div class="form-group">
-        {{ form.first_name.errors }}
-        {{ form.first_name.label_tag }}
-        {{ form.first_name }}
-        {{ form.last_name.errors }}
-        {{ form.last_name.label_tag }}
-        {{ form.last_name }}
-    </div>
-    <div class="form-group">
-        {{ form.initials.errors }}
-        {{ form.initials.label_tag }}
-        {{ form.initials }}
-        {{ form.birth_date.errors }}
-        {{ form.birth_date.label_tag }}
-        {{ form.birth_date }}
-    </div>
-    <div class="form-group">
-        {{ form.email.errors }}
-        {{ form.email.label_tag }}
-        {{ form.email }}
-        {{ form.username.errors }}
-        {{ form.username.label_tag }}
-        {{ form.username }}
-    </div>
-    <div class="form-group">
-        {{ form.password1.errors }}
-        {{ form.password1.label_tag }}
-        {{ form.password1 }}
-        {{ form.password2.errors }}
-        {{ form.password2.label_tag }}
-        {{ form.password2 }}
-    </div>
-    <input class="btn btn-secondary" type="button" value="Zurück" name="Zurück" onclick="history.back()">
-    <input class="btn btn-primary" type="submit" value="Erstellen" name="Erstellen">
-    </form>
+    {% crispy form %}
 {% endblock content %}

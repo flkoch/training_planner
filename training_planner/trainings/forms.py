@@ -1,15 +1,17 @@
-from django.forms import ModelForm, ModelChoiceField, ModelMultipleChoiceField
+from django import forms as forms
 from django.contrib.auth import get_user_model
+from crispy_forms import layout as cfl
+from crispy_forms.helper import FormHelper
 from .models import Training
 
 
-class AddTrainingForm(ModelForm):
-    main_instructor = ModelChoiceField(
+class AddTrainingForm(forms.ModelForm):
+    main_instructor = forms.ModelChoiceField(
         queryset=get_user_model().objects.filter(groups__name='Trainer'),
-        empty_label="Trainer wählen")
-    instructor = ModelMultipleChoiceField(
+        empty_label='Trainer wählen', label='Haupttrainer')
+    instructor = forms.ModelMultipleChoiceField(
         queryset=get_user_model().objects.filter(groups__name='Trainer'),
-        required=False)
+        required=False, label='Assistenztrainer')
 
     class Meta:
         model = Training
@@ -18,15 +20,173 @@ class AddTrainingForm(ModelForm):
                    'registration_close', 'coordinator',
                    'registered_participants', 'participants']
 
+    def __init__(self, *args, **kwargs):
+        super(forms.ModelForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.action = ''
+        self.helper.layout = cfl.Layout(
+            'title',
+            'description',
+            cfl.Row(
+                cfl.Field(
+                    'start',
+                    wrapper_class='col-auto',
+                ),
+                cfl.Field(
+                    'duration',
+                    wrapper_class='col-auto',
+                ),
+                cfl.Field(
+                    'location',
+                    wrapper_class='col-auto',
+                ),
+                cfl.Field(
+                    'capacity',
+                    wrapper_class='col-auto',
+                ),
+            ),
+            cfl.Row(
+                cfl.Field(
+                    'main_instructor',
+                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                ),
+                cfl.Field(
+                    'instructor',
+                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                    help_text='Bitte <Ctrl> gedrückt halten, '
+                    'um Auswahl zu ändern.',
+                ),
+                cfl.HTML(
+                    '''
+                    <p class="col-auto my-4 text-muted">
+                    Bitte &langle;<strong>Ctrl</strong>&rangle; gedrückt
+                    halten, um die Auswahl zu ändern</p>
+                    '''
+                ),
+            ),
+            cfl.Row(
+                cfl.HTML(
+                    '''
+                        <a href="javascript:history.back()"
+                        class="btn btn-secondary mr-3">Zurück</a>
+                    '''
+                ),
+                cfl.Submit(
+                    'submit',
+                    'Training erstellen',
+                    css_class='btn btn-primary'
+                ),
+            ),
+        )
 
-class TrainingForm(ModelForm):
+
+class TrainingForm(forms.ModelForm):
+    main_instructor = forms.ModelChoiceField(
+        queryset=get_user_model().objects.filter(groups__name='Trainer'),
+        empty_label='Trainer wählen', label='Haupttrainer')
+    instructor = forms.ModelMultipleChoiceField(
+        queryset=get_user_model().objects.filter(groups__name='Trainer'),
+        required=False, label='Assistenztrainer')
+
     class Meta:
         model = Training
         fields = '__all__'
         exclude = ['deleted', 'archived']
 
+    def __init__(self, *args, **kwargs):
+        super(forms.ModelForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.action = ''
+        self.helper.layout = cfl.Layout(
+            'title',
+            'description',
+            cfl.Row(
+                cfl.Field(
+                    'start',
+                    wrapper_class='col-auto',
+                ),
+                cfl.Field(
+                    'duration',
+                    wrapper_class='col-auto',
+                ),
+                cfl.Field(
+                    'location',
+                    wrapper_class='col-auto',
+                ),
+                cfl.Field(
+                    'capacity',
+                    wrapper_class='col-auto',
+                ),
+            ),
+            cfl.Row(
+                cfl.Field(
+                    'main_instructor',
+                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                ),
+                cfl.Field(
+                    'instructor',
+                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                    help_text='Bitte <Ctrl> gedrückt halten, '
+                    'um Auswahl zu ändern.',
+                ),
+                cfl.HTML(
+                    '''
+                    <p class="col-auto my-4 text-muted">
+                    Bitte &langle;<strong>Ctrl</strong>&rangle; gedrückt
+                    halten, um die Auswahl zu ändern</p>
+                    '''
+                ),
+            ),
+            cfl.Row(
+                cfl.Field(
+                    'registered_participants',
+                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                    help_text='Bitte <Ctrl> gedrückt halten, '
+                    'um Auswahl zu ändern.',
+                ),
+                cfl.Field(
+                    'participants',
+                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                    help_text='Bitte <Ctrl> gedrückt halten, '
+                    'um Auswahl zu ändern.',
+                ),
+                cfl.HTML(
+                    '''
+                    <p class="col-auto my-4 text-muted">
+                    Bitte &langle;<strong>Ctrl</strong>&rangle; gedrückt
+                    halten, um die Auswahl zu ändern</p>
+                    '''
+                ),
+            ),
+            cfl.Row(
+                cfl.Field(
+                    'registration_open',
+                    wrapper_class='col-auto',
+                ),
+                cfl.Field(
+                    'registration_close',
+                    wrapper_class='col-auto',
+                ),
+            ),
+            cfl.Row(
+                cfl.HTML(
+                    '''
+                        <a href="javascript:history.back()"
+                        class="btn btn-secondary mr-3">Zurück</a>
+                    '''
+                ),
+                cfl.Submit(
+                    'submit',
+                    'Speichern',
+                    css_class='btn btn-primary'
+                ),
+            ),
+        )
 
-class AdminTrainingForm(ModelForm):
+
+class AdminTrainingForm(forms.ModelForm):
     class Meta:
         model = Training
         fields = '__all__'
