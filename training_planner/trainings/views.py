@@ -10,7 +10,8 @@ from members.filter import UserStatisticsFilter
 from .models import Training
 from .forms import AddTrainingForm, TrainingForm, TrainingSeriesForm
 from .filter import TrainingFilter
-from .decorators import trainer_only, protect_training, admin_only
+from .decorators import trainer_only, protect_training, admin_only, \
+    trainer_or_admin_only
 # Create your views here.
 
 
@@ -29,10 +30,14 @@ def _simple_message(request, msg, index=0):
 
 
 def overview(request):
-    trainings = Training.objects.filter(start__gte=timezone.now() -
-                                        datetime.timedelta(hours=2)) \
-        .exclude(start__gte=timezone.now() + datetime.timedelta(days=14)) \
-        .exclude(archived=True) \
+    if request.user.is_trainer:
+        trainings = Training.objects.filter(start__gte=timezone.now() -
+                                            datetime.timedelta(hours=2))
+    else:
+        trainings = Training.objects.filter(start__gte=timezone.now() -
+                                            datetime.timedelta(hours=2)) \
+            .exclude(start__gte=timezone.now() + datetime.timedelta(days=14))
+    trainings = trainings.exclude(archived=True) \
         .exclude(deleted=True) \
         .order_by('start', 'title')
     myFilter = TrainingFilter(request.GET, queryset=trainings)
@@ -193,20 +198,28 @@ def delete(request, id):
     return render(request, 'website/deleteConfirmation.html', context)
 
 
-@trainer_only
-def held(request, user=None):
-    if user is None:
+@trainer_or_admin_only
+def held(request, id=None):
+    if id is None:
         user = request.user
+    elif not request.user.groups.filter(name='Administrator').exists():
+        messages.info(request, 'Zugriff nur auf eigene Trainings.')
+        return redirect('trainings-held')
+    else:
+        user = auth.get_user_model().objects.get(id=id)
+        if user == request.user:
+            return redirect('trainings-held')
     trainings_main = user.instructor.filter(start__lte=timezone.now() +
                                             datetime.timedelta(minutes=30)) \
-        .exclude(start__lte=timzne.now() - datetime.timedelta(days=7)) \
-        .exclude(deleted=Tru)\
+        .exclude(start__lte=timezone.now() - datetime.timedelta(days=7)) \
+        .exclude(deleted=True)\
         .order_by('start', 'title')
     trainings_assistant = user.assistant.filter(
         start__lte=timezone.now() + datetime.timedelta(minutes=30)) \
         .exclude(start__lte=timezone.now() - datetime.timedelta(days=7)) \
         .exclude(deleted=True)
     context = {
+        'title': str(user),
         'trainings_main': trainings_main,
         'trainings_assistant': trainings_assistant
     }
