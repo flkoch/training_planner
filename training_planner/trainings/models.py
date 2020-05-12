@@ -195,3 +195,12 @@ class Training(models.Model):
         self.coordinator = None
         self.save()
         return True
+
+    def set_registration_times(self, start=14, end=2):
+        """
+        Set self.registration_open to self.start - start days and
+        self.registration_close to self.start - end days.
+        """
+        self.registration_open = self.start - timezone.timedelta(days=start)
+        self.registration_close = self.start - timezone.timedelta(days=end)
+        return self

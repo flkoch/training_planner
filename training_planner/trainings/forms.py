@@ -17,7 +17,8 @@ class AddTrainingForm(forms.ModelForm):
         widget=widgets.DateTimePicker(
             options={
                 'stepping': 15,
-                'format': 'DD.MM.YYYY HH:mm'
+                'format': 'DD.MM.YYYY HH:mm',
+                'sideBySide': True
             },
             attrs={
                 'append': 'fa fa-calendar',
@@ -105,7 +106,8 @@ class TrainingForm(forms.ModelForm):
         widget=widgets.DateTimePicker(
             options={
                 'stepping': 15,
-                'format': 'DD.MM.YYYY HH:mm'
+                'format': 'DD.MM.YYYY HH:mm',
+                'sideBySide': True
             },
             attrs={
                 'append': 'fa fa-calendar',
@@ -117,7 +119,8 @@ class TrainingForm(forms.ModelForm):
         widget=widgets.DateTimePicker(
             options={
                 'stepping': 15,
-                'format': 'DD.MM.YYYY HH:mm'
+                'format': 'DD.MM.YYYY HH:mm',
+                'sideBySide': True
             },
             attrs={
                 'append': 'fa fa-calendar',
@@ -129,7 +132,8 @@ class TrainingForm(forms.ModelForm):
         widget=widgets.DateTimePicker(
             options={
                 'stepping': 15,
-                'format': 'DD.MM.YYYY HH:mm'
+                'format': 'DD.MM.YYYY HH:mm',
+                'sideBySide': True
             },
             attrs={
                 'append': 'fa fa-calendar',
@@ -240,7 +244,8 @@ class AdminTrainingForm(forms.ModelForm):
         widget=widgets.DateTimePicker(
             options={
                 'stepping': 15,
-                'format': 'DD.MM.YYYY HH:mm'
+                'format': 'DD.MM.YYYY HH:mm',
+                'sideBySide': True
             },
             attrs={
                 'append': 'fa fa-calendar',
@@ -252,7 +257,8 @@ class AdminTrainingForm(forms.ModelForm):
         widget=widgets.DateTimePicker(
             options={
                 'stepping': 15,
-                'format': 'DD.MM.YYYY HH:mm'
+                'format': 'DD.MM.YYYY HH:mm',
+                'sideBySide': True
             },
             attrs={
                 'append': 'fa fa-calendar',
@@ -264,7 +270,8 @@ class AdminTrainingForm(forms.ModelForm):
         widget=widgets.DateTimePicker(
             options={
                 'stepping': 15,
-                'format': 'DD.MM.YYYY HH:mm'
+                'format': 'DD.MM.YYYY HH:mm',
+                'sideBySide': True
             },
             attrs={
                 'append': 'fa fa-calendar',
@@ -276,3 +283,53 @@ class AdminTrainingForm(forms.ModelForm):
     class Meta:
         model = Training
         fields = '__all__'
+
+
+class TrainingSeriesForm(forms.ModelForm):
+    dates = forms.DateField(
+        widget=widgets.DatePicker(
+            options={
+                'format': 'DD.MM.YYYY',
+                'sideBySide': True,
+                'useCurrent': False,
+                'allowMultidate': True
+            },
+            attrs={
+                'append': 'fa fa-calendar',
+                'icon_toggle': True,
+            }
+        )
+    )
+
+    class Meta:
+        model = Training
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(forms.ModelForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.action = ''
+        self.helper.layout = cfl.Layout(
+            cfl.HTML(
+                '''
+                <p class="my-3">Weitere Trainings zu {{training}} vom
+                {{training.start}} erstellen.<br />
+                Bitte die Daten der Trainings auswählen.</p>
+                '''
+            ),
+            'dates',
+            cfl.Row(
+                cfl.HTML(
+                    '''
+                        <a href="javascript:history.back()"
+                        class="btn btn-secondary mr-3">Zurück</a>
+                    '''
+                ),
+                cfl.Submit(
+                    'submit',
+                    'Speichern',
+                    css_class='btn btn-primary'
+                ),
+            ),
+        )

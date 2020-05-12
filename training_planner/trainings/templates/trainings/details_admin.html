@@ -21,6 +21,7 @@
         <a class="nav-link bg-success text-white ml-sm-3" href="{% url 'trainings-register' training.id %}">Anmelden</a>
     {% endif %}
     {% if training.can_edit %}
+        <a class="nav-link bg-info text-white ml-sm-3" href="{% url 'trainings-series' training.id %}">Serie</a>
         <a class="nav-link bg-warning text-dark ml-sm-3" href="{% url 'trainings-edit' training.id %}">Bearbeiten</a>
         <a class="nav-link bg-danger text-white ml-sm-3" href="{% url 'trainings-delete' training.id %}">Löschen</a>
     {% endif %}

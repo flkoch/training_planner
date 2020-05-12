@@ -8,7 +8,7 @@ from django.db.models.functions import ExtractWeek
 import datetime
 from members.filter import UserStatisticsFilter
 from .models import Training
-from .forms import AddTrainingForm, TrainingForm
+from .forms import AddTrainingForm, TrainingForm, TrainingSeriesForm
 from .filter import TrainingFilter
 from .decorators import trainer_only, protect_training, admin_only
 # Create your views here.
@@ -114,10 +114,7 @@ def create(request):
         form = AddTrainingForm(request.POST)
         if form.is_valid():
             training = form.save(commit=False)
-            training.registration_close = training.start - \
-                datetime.timedelta(2)
-            training.registration_open = training.start - \
-                datetime.timedelta(14)
+            training.set_registration_times()
             training.save()
             form.save_m2m()
             messages.success(request, 'Training erfolgreich hinzugefügt.')
@@ -143,6 +140,37 @@ def edit(request, id):
     training = Training.objects.get(id=id)
     form = TrainingForm(instance=training)
     context = {'form': form, 'title': f"{training.title} bearbeiten"}
+    return render(request, 'trainings/trainingForm.html', context)
+
+
+@protect_training
+def make_training_series(request, id):
+    if request.method == 'POST':
+        training = Training.objects.get(id=id)
+        training.coordinator = None
+        instructors = [e.id for e in training.instructor.all()]
+        dates = request.POST['dates'].split(',')
+        for date in dates:
+            training.pk = None
+            training.start = datetime.datetime.combine(
+                datetime.datetime.strptime(date, '%d.%m.%Y'),
+                training.start.time()
+            )
+            training.set_registration_times()
+            training.save()
+            training.instructor.add(*instructors)
+        messages.success(
+            request,
+            f'Trainings an {len(dates)} Tagen erstellt.'
+        )
+        return redirect(overview)
+    training = Training.objects.get(id=id)
+    form = TrainingSeriesForm()
+    context = {
+        'form': form,
+        'training': training,
+        'title': 'Neue Trainings Serie'
+    }
     return render(request, 'trainings/trainingForm.html', context)
 
 

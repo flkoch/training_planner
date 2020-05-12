@@ -14,6 +14,8 @@ urlpatterns = [
     path('erstellen', trainings.create, name='trainings-create'),
     path('<int:id>/bearbeiten', trainings.edit, name='trainings-edit'),
     path('<int:id>/entfernen', trainings.delete, name='trainings-delete'),
+    path('<int:id>/serie', trainings.make_training_series,
+         name='trainings-series'),
     path('kontrolle', trainings.held, name='trainings-held'),
     path('kontrolle/<int:id>', trainings.controlling,
          name='trainings-controlling'),
