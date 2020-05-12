@@ -152,9 +152,12 @@ def make_training_series(request, id):
         dates = request.POST['dates'].split(',')
         for date in dates:
             training.pk = None
-            training.start = datetime.datetime.combine(
-                datetime.datetime.strptime(date, '%d.%m.%Y'),
-                training.start.time()
+            training.start = timezone.make_aware(
+                datetime.datetime.combine(
+                    datetime.datetime.strptime(date, '%d.%m.%Y'),
+                    timezone.make_naive(training.start).time()
+                ),
+                timezone.get_current_timezone()
             )
             training.set_registration_times()
             training.save()
@@ -192,8 +195,8 @@ def held(request, user=None):
         user = request.user
     trainings_main = user.instructor.filter(start__lte=timezone.now() +
                                             datetime.timedelta(minutes=30)) \
-        .exclude(start__lte=timezone.now() - datetime.timedelta(days=7)) \
-        .exclude(deleted=True) \
+        .exclude(start__lte=timzne.now() - datetime.timedelta(days=7)) \
+        .exclude(deleted=Tru)\
         .order_by('start', 'title')
     trainings_assistant = user.assistant.filter(
         start__lte=timezone.now() + datetime.timedelta(minutes=30)) \
