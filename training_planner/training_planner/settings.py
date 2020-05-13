@@ -143,8 +143,13 @@ EMAIL_HOST_USER = os.environ['PYTHON_DJANGO_EMAIL_USER']
 EMAIL_HOST_PASSWORD = os.environ['PYTHON_DJANGO_EMAIL_PASSWORD']
 
 # Further configuration
+# Login URL
+LOGIN_URL = 'login'
+
+
 # Tempus Dominus
 TEMPUS_DOMINUS_LOCALIZE = True
+
 
 # Crispy Form
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

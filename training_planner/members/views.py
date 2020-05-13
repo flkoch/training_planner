@@ -13,7 +13,7 @@ from .models import User
 # Create your views here.
 
 
-@auth_decorators.login_required(login_url='login')
+@auth_decorators.login_required
 def account(request):
     user = request.user
     reg_trainings = user.trainings_registered.filter(
@@ -32,7 +32,7 @@ def account(request):
     return render(request, 'members/details.html', context)
 
 
-@auth_decorators.login_required(login_url='login')
+@auth_decorators.login_required
 def account_edit(request):
     user = request.user
     reg_trainings = user.trainings_registered.filter(
@@ -64,6 +64,8 @@ def login(request):
                                  password=request.POST.get('password'))
         if user is not None:
             auth.login(request, user)
+            if 'next' in request.GET:
+                return redirect(request.GET['next'])
             return redirect('/trainings')
         else:
             messages.info(request, "Benutzername und Passwort gehören zu"

@@ -49,7 +49,7 @@ def overview(request):
     return render(request, 'trainings/overview.html', context)
 
 
-@auth_decorators.login_required(login_url='login')
+@auth_decorators.login_required
 def details(request, id):
     training = get_object_or_404(Training, id=id)
     training.can_edit = training.can_edit(request.user)
@@ -70,7 +70,7 @@ def details(request, id):
     return render(request, 'trainings/details.html', context)
 
 
-@auth_decorators.login_required(login_url='login')
+@auth_decorators.login_required
 def register(request, id):
     training = get_object_or_404(Training, id=id)
     if training.register(request.user):
@@ -81,7 +81,7 @@ def register(request, id):
     return redirect('trainings-details', id)
 
 
-@auth_decorators.login_required(login_url='login')
+@auth_decorators.login_required
 def unregister(request, id):
     training = get_object_or_404(Training, id=id)
     if training.unregister(request.user):
@@ -92,7 +92,7 @@ def unregister(request, id):
     return redirect('trainings-overview')
 
 
-@auth_decorators.login_required(login_url='login')
+@auth_decorators.login_required
 def register_as_coordinator(request, id):
     training = get_object_or_404(Training, id=id)
     index = training.register_as_coordinator(request.user)
