@@ -30,7 +30,7 @@ def _simple_message(request, msg, index=0):
 
 
 def overview(request):
-    if request.user.is_trainer:
+    if request.user.is_authenticated and request.user.is_trainer:
         trainings = Training.objects.filter(start__gte=timezone.now() -
                                             datetime.timedelta(hours=2))
     else:
