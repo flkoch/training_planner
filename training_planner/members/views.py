@@ -1,9 +1,8 @@
 from django.contrib import messages
 from django.contrib import auth
 from django.contrib.auth import decorators as auth_decorators
-from django.contrib.auth.models import Group
 from django.core.paginator import Paginator
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.urls import reverse
 from trainings import decorators
@@ -88,7 +87,8 @@ def register(request):
             if not user.initials:
                 user.initials = user.get_initials
             user.save()
-            user.groups.add(Group.objects.get(name='Participant'))
+            user.groups.add(get_object_or_404(
+                auth.models.Group, name='Participant'))
             form.save_m2m()
             messages.success(request, 'Der Account wurde erstellt.')
             return redirect(login)
@@ -107,7 +107,7 @@ def all(request):
 
 @auth_decorators.permission_required('members.view_user')
 def details(request, id):
-    user = User.objects.get(id=id)
+    user = get_object_or_404(auth.get_user_model(), id=id)
     if request.user == user:
         return redirect('account')
     reg_trainings = user.trainings_registered.filter(
@@ -128,7 +128,7 @@ def details(request, id):
 
 @auth_decorators.permission_required('members.edit_user')
 def edit(request, id):
-    user = User.objects.get(id=id)
+    user = get_object_or_404(auth.get_user_model(), id=id)
     if request.user == user:
         return redirect('account-edit')
     reg_trainings = user.trainings_registered.filter(

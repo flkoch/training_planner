@@ -1,5 +1,5 @@
 from operator import itemgetter
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.contrib import messages, auth
 from django.contrib.auth import decorators as auth_decorators
@@ -51,7 +51,7 @@ def overview(request):
 
 @auth_decorators.login_required(login_url='login')
 def details(request, id):
-    training = Training.objects.get(id=id)
+    training = get_object_or_404(Training, id=id)
     training.can_edit = training.can_edit(request.user)
     training.can_register = training.can_register(request.user)
     training.can_unregister = training.can_unregister(request.user)
@@ -72,7 +72,7 @@ def details(request, id):
 
 @auth_decorators.login_required(login_url='login')
 def register(request, id):
-    training = Training.objects.get(id=id)
+    training = get_object_or_404(Training, id=id)
     if training.register(request.user):
         messages.success(
             request, f'Du wurdest erfolgreich angemeldet.')
@@ -83,7 +83,7 @@ def register(request, id):
 
 @auth_decorators.login_required(login_url='login')
 def unregister(request, id):
-    training = Training.objects.get(id=id)
+    training = get_object_or_404(Training, id=id)
     if training.unregister(request.user):
         messages.success(
             request, f'Du wurdest erfolgreich von {training} abgemeldet.')
@@ -94,7 +94,7 @@ def unregister(request, id):
 
 @auth_decorators.login_required(login_url='login')
 def register_as_coordinator(request, id):
-    training = Training.objects.get(id=id)
+    training = get_object_or_404(Training, id=id)
     index = training.register_as_coordinator(request.user)
     msg = {
         0: ('success', 'Vielen Dank, dass Du den Einlass koordinierst.'),
@@ -107,7 +107,7 @@ def register_as_coordinator(request, id):
 
 @protect_training
 def unregister_coordinator(request, id):
-    training = Training.objects.get(id=id)
+    training = get_object_or_404(Training, id=id)
     training.unregister_coordinator()
     messages.info(request, "Koordinator erfolgreich entfernt.")
     return redirect('trainings-details', id)
@@ -137,12 +137,13 @@ def create(request):
 @protect_training
 def edit(request, id):
     if request.method == 'POST':
-        form = TrainingForm(request.POST, instance=Training.objects.get(id=id))
+        form = TrainingForm(
+            request.POST, instance=get_object_or_404(Training, id=id))
         if form.is_valid():
             form.save()
             messages.success(request, 'Änderungen erfolgreich gespeichert')
             return redirect(details, id)
-    training = Training.objects.get(id=id)
+    training = get_object_or_404(Training, id=id)
     form = TrainingForm(instance=training)
     context = {'form': form, 'title': f"{training.title} bearbeiten"}
     return render(request, 'trainings/trainingForm.html', context)
@@ -151,7 +152,7 @@ def edit(request, id):
 @protect_training
 def make_training_series(request, id):
     if request.method == 'POST':
-        training = Training.objects.get(id=id)
+        training = get_object_or_404(Training, id=id)
         training.coordinator = None
         instructors = [e.id for e in training.instructor.all()]
         target_groups = [e.id for e in training.target_group.all()]
@@ -176,7 +177,7 @@ def make_training_series(request, id):
             f'Trainings an {len(dates)} Tagen erstellt.'
         )
         return redirect(overview)
-    training = Training.objects.get(id=id)
+    training = get_object_or_404(Training, id=id)
     form = TrainingSeriesForm()
     context = {
         'form': form,
@@ -188,7 +189,7 @@ def make_training_series(request, id):
 
 @protect_training
 def delete(request, id):
-    training = Training.objects.get(id=id)
+    training = get_object_or_404(Training, id=id)
     if request.method == 'POST':
         training.deleted = True
         training.save()
@@ -206,7 +207,7 @@ def held(request, id=None):
         messages.info(request, 'Zugriff nur auf eigene Trainings.')
         return redirect('trainings-held')
     else:
-        user = auth.get_user_model().objects.get(id=id)
+        user = get_object_or_404(auth.get_user_model(), id=id)
         if user == request.user:
             return redirect('trainings-held')
     trainings_main = user.instructor.filter(start__lte=timezone.now() +
@@ -228,7 +229,7 @@ def held(request, id=None):
 
 @protect_training
 def controlling(request, id):
-    training = Training.objects.get(id=id)
+    training = get_object_or_404(Training, id=id)
     if request.method == 'POST':
         participants = [int(user_id) for user_id, value in request.POST.items()
                         if 'participated' in value]
