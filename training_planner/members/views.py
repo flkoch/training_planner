@@ -25,7 +25,7 @@ def account(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page((page_number))
     context = {
-        'user': user,
+        'page_user': user,
         'edit_link': reverse('account-edit'),
         'reg_trainings': reg_trainings,
         'part_trainings': page_obj,
@@ -44,7 +44,7 @@ def account_edit(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page((page_number))
     context = {
-        'user': user,
+        'page_user': user,
         'edit_link': reverse('account-edit'),
         'reg_trainings': reg_trainings,
         'part_trainings': page_obj,
@@ -118,7 +118,7 @@ def details(request, id):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page((page_number))
     context = {
-        'user': user,
+        'page_user': user,
         'edit_link': reverse('member-edit', args=[id]),
         'reg_trainings': reg_trainings,
         'part_trainings': page_obj,
@@ -139,7 +139,7 @@ def edit(request, id):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page((page_number))
     context = {
-        'user': user,
+        'page_user': user,
         'edit_link': reverse('member-edit', args=[id]),
         'reg_trainings': reg_trainings,
         'part_trainings': page_obj,
