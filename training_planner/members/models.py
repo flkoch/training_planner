@@ -1,5 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group
+from django.utils import timezone
+import datetime
 
 # Create your models here.
 
@@ -68,16 +70,57 @@ class User(AbstractUser):
 
 
 def active_participant():
-    return User.objects.filter(groups__name='Active Participant')
+    return User.objects.filter(groups__name='Active Participant') \
+        .exclude(groups__name='System')
 
 
 def participant():
-    return User.objects.filter(groups__name='Participant')
+    return User.objects.filter(groups__name='Participant') \
+        .exclude(groups__name='System')
 
 
 def active_trainer():
-    return User.objects.filter(groups__name='Active Trainer')
+    return User.objects.filter(groups__name='Active Trainer') \
+        .exclude(groups__name='System')
 
 
 def trainer():
-    return User.objects.filter(groups__name='Trainer')
+    return User.objects.filter(groups__name='Trainer') \
+        .exclude(groups__name='System')
+
+
+def check_active_participants(**kwargs):
+    users = participant()
+    group = Group.objects.get(name='Active Participant')
+    active_users = users.filter(
+        trainings__start__gte=timezone.now() - datetime.timedelta(**kwargs)
+    )
+    group.user_set.remove(
+        *users.difference(active_users).values_list('id', flat=True)
+    )
+    group.user_set.add(*active_users.values_list('id', flat=True))
+
+
+def check_active_trainers(**kwargs):
+    trainers = trainer()
+    group = Group.objects.get(name='Active Trainer')
+    time = timezone.now() - datetime.timedelta(**kwargs)
+    active_instructors = trainers.filter(instructor__start__gte=time)
+    active_assistants = trainers.filter(assistant__start__gte=time)
+    print(active_instructors)
+    print(active_assistants)
+    group.user_set.remove(*trainers.difference(
+        active_instructors, active_assistants).values_list('id', flat=True)
+    )
+    group.user_set.add(*active_instructors.union(
+        active_assistants).values_list('id', flat=True))
+
+
+def check_trainers(**kwargs):
+    time = timezone.now() - datetime.timedelta(**kwargs)
+    instructors = User.objects.filter(instructor__start__gte=time)
+    assistants = User.objects.filter(assistant__start__gte=time)
+    group = Group.objects.get(name='Trainer')
+    group.user_set.add(
+        *instructors.union(assistants).values_list('id', flat=True)
+    )

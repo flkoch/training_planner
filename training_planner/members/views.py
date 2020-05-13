@@ -8,7 +8,8 @@ from django.urls import reverse
 from trainings import decorators
 from .filter import UserFilter
 from .forms import CreateUserForm
-from .models import User
+from .models import User, check_active_participants, check_active_trainers, \
+    check_trainers
 
 # Create your views here.
 
@@ -151,3 +152,19 @@ def edit(request, id):
         'Das Bearbeiten der Nutzerdaten ist aktuell leider noch nicht möglich.'
     )
     return render(request, 'members/editForm.html', context)
+
+
+@decorators.admin_only
+def user_management(request):
+    if request.method == 'POST':
+        print(request.POST)
+        if 'check_active_participants' in request.POST:
+            check_active_participants(weeks=15)
+            messages.success(request, 'Aktive Teilnehmer aktualisiert')
+        elif 'check_active_trainers' in request.POST:
+            check_active_trainers(weeks=15)
+            messages.success(request, 'Aktive Trainer aktualisiert')
+        elif 'check_trainers' in request.POST:
+            check_trainers(weeks=15)
+            messages.success(request, 'Trainer aktualisiert')
+    return render(request, 'members/user_management.html')
