@@ -234,7 +234,9 @@ def controlling(request, id):
                         if 'participated' in value]
         training.participants.clear()
         training.participants.add(*participants)
-        messages.success(request, "Änderungen gespeichert")
+        group = auth.models.Group.objects.get(name='Active Participant')
+        group.user_set.add(*participants)
+        messages.success(request, 'Änderungen gespeichert')
     context = {'training': training}
     return render(request, 'trainings/details_controlling.html', context)
 
