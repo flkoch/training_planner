@@ -14,7 +14,7 @@
     </div>
 {% endfor %}
 <nav class="nav justify-content-end flex-column flex-sm-row my-2">
-    <a class="nav-link bg-light text-dark" href="{% url 'trainings-held' %}">Zurück</a>
+    <a class="nav-link bg-light text-dark" href="javascript:history.back()">Zurück</a>
     <a class="nav-link bg-warning text-dark ml-sm-3" href="{% url 'trainings-edit' training.id %}">Bearbeiten</a>
     <a class="nav-link bg-danger text-white ml-sm-3" href="{% url 'trainings-delete' training.id %}">Löschen</a>
 </nav>
