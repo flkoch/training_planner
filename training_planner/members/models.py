@@ -67,6 +67,14 @@ class User(AbstractUser):
         return self.groups.filter(name='Administrator').exists()
 
 
+def active_participant():
+    return User.objects.filter(groups__name='Active Participant')
+
+
+def participant():
+    return User.objects.filter(groups__name='Participant')
+
+
 def active_trainer():
     return User.objects.filter(groups__name='Active Trainer')
 
