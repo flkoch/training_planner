@@ -172,6 +172,10 @@ class TrainingForm(forms.ModelForm):
                     'capacity',
                     wrapper_class='col-auto',
                 ),
+                cfl.Field(
+                    'coordinator',
+                    wrapper_class='col-auto',
+                ),
             ),
             cfl.Row(
                 cfl.Field(
@@ -190,37 +194,6 @@ class TrainingForm(forms.ModelForm):
                     Bitte &langle;<strong>Ctrl</strong>&rangle; gedrückt
                     halten, um die Auswahl zu ändern</p>
                     '''
-                ),
-            ),
-            cfl.Row(
-                cfl.Field(
-                    'registered_participants',
-                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
-                    help_text='Bitte <Ctrl> gedrückt halten, '
-                    'um Auswahl zu ändern.',
-                ),
-                cfl.Field(
-                    'participants',
-                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
-                    help_text='Bitte <Ctrl> gedrückt halten, '
-                    'um Auswahl zu ändern.',
-                ),
-                cfl.HTML(
-                    '''
-                    <p class="col-auto my-4 text-muted">
-                    Bitte &langle;<strong>Ctrl</strong>&rangle; gedrückt
-                    halten, um die Auswahl zu ändern</p>
-                    '''
-                ),
-            ),
-            cfl.Row(
-                cfl.Field(
-                    'registration_open',
-                    wrapper_class='col-auto',
-                ),
-                cfl.Field(
-                    'registration_close',
-                    wrapper_class='col-auto',
                 ),
             ),
             cfl.Row(
@@ -283,6 +256,111 @@ class AdminTrainingForm(forms.ModelForm):
     class Meta:
         model = Training
         fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(forms.ModelForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.action = ''
+        self.helper.layout = cfl.Layout(
+            'title',
+            'description',
+            cfl.Row(
+                cfl.Field(
+                    'start',
+                    wrapper_class='col-auto',
+                ),
+                cfl.Field(
+                    'duration',
+                    wrapper_class='col-auto',
+                ),
+                cfl.Field(
+                    'location',
+                    wrapper_class='col-auto',
+                ),
+                cfl.Field(
+                    'capacity',
+                    wrapper_class='col-auto',
+                ),
+                cfl.Field(
+                    'coordinator',
+                    wrapper_class='col-auto',
+                ),
+            ),
+            cfl.Row(
+                cfl.Field(
+                    'main_instructor',
+                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                ),
+                cfl.Field(
+                    'instructor',
+                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                    help_text='Bitte <Ctrl> gedrückt halten, '
+                    'um Auswahl zu ändern.',
+                ),
+                cfl.HTML(
+                    '''
+                    <p class="col-auto my-4 text-muted">
+                    Bitte &langle;<strong>Ctrl</strong>&rangle; gedrückt
+                    halten, um die Auswahl zu ändern</p>
+                    '''
+                ),
+            ),
+            cfl.Row(
+                cfl.Field(
+                    'registered_participants',
+                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                    help_text='Bitte <Ctrl> gedrückt halten, '
+                    'um Auswahl zu ändern.',
+                ),
+                cfl.Field(
+                    'participants',
+                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                    help_text='Bitte <Ctrl> gedrückt halten, '
+                    'um Auswahl zu ändern.',
+                ),
+                cfl.HTML(
+                    '''
+                    <p class="col-auto my-4 text-muted">
+                    Bitte &langle;<strong>Ctrl</strong>&rangle; gedrückt
+                    halten, um die Auswahl zu ändern</p>
+                    '''
+                ),
+            ),
+            cfl.Row(
+                cfl.Field(
+                    'registration_open',
+                    wrapper_class='col-auto',
+                ),
+                cfl.Field(
+                    'registration_close',
+                    wrapper_class='col-auto',
+                ),
+            ),
+            cfl.Row(
+                cfl.Field(
+                    'archived',
+                    wrapper_class='col-auto',
+                ),
+                cfl.Field(
+                    'deleted',
+                    wrapper_class='col-auto',
+                ),
+            ),
+            cfl.Row(
+                cfl.HTML(
+                    '''
+                        <a href="javascript:history.back()"
+                        class="btn btn-secondary mr-3">Zurück</a>
+                    '''
+                ),
+                cfl.Submit(
+                    'submit',
+                    'Speichern',
+                    css_class='btn btn-primary'
+                ),
+            ),
+        )
 
 
 class TrainingSeriesForm(forms.ModelForm):

@@ -8,7 +8,8 @@ from django.db.models.functions import ExtractWeek
 import datetime
 from members.filter import UserStatisticsFilter
 from .models import Training
-from .forms import AddTrainingForm, TrainingForm, TrainingSeriesForm
+from .forms import AddTrainingForm, AdminTrainingForm, TrainingForm, \
+    TrainingSeriesForm
 from .filter import TrainingFilter
 from .decorators import trainer_only, protect_training, admin_only, \
     trainer_or_admin_only
@@ -144,7 +145,10 @@ def edit(request, id):
             messages.success(request, 'Änderungen erfolgreich gespeichert')
             return redirect(details, id)
     training = get_object_or_404(Training, id=id)
-    form = TrainingForm(instance=training)
+    if request.user.is_administrator:
+        form = AdminTrainingForm(instance=training)
+    else:
+        form = TrainingForm(instance=training)
     context = {'form': form, 'title': f"{training.title} bearbeiten"}
     return render(request, 'trainings/trainingForm.html', context)
 
