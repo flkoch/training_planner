@@ -24,6 +24,7 @@ PYTHON_DJANGO_EMAIL_USER
 PYTHON_DJANGO_EMAIL_FROM
 PYTHON_DJANGO_EMAIL_PASSWORD
 PYTHON_DJANGO_SECRET_KEY
+PYTHON_DJANGO_STATIC_ROOT
 ```
 Once you have made the necessary adoptions, you are ready for deployment. You can follow for example the instruction on [DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-18-04), where instead of creating a new project you can clone your customised repository. When creating the `gunicorn.service` file, in the `[service]` section make sure to include `EnvironmentFile=` followed by the absolute path to a file containing your environment variables in the format `variable='value'` without any export directives. Only then gunicorn will be able to load the environment variables and start the server.
 
