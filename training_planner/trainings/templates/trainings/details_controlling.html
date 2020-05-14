@@ -26,11 +26,9 @@
                 <form method="POST" action="">
                 {% csrf_token %}
                 {% for participant in training.registered_participants.all %}
-                    <div class="form-group row my-0 {% cycle '' 'bg-secondary text-white' %}">
-                        <label class="col-10 col-form-label" for="cb-{{ participant.id }}">{{ participant.name_or_username }}</label>
-                        <div class="col-1">
-                            <input id="cb-{{ participant.id }}" type="checkbox" name="{{participant.id}}" value="participated" class="form-control" aria-label="{{participant.name_or_username}}" {% if participant in training.participants.all %}checked{% endif %}/>
-                        </div>
+                    <div class="form-check row my-0 p-2 {% cycle '' 'bg-secondary text-white' %}">
+                        <label class="form-check-label" for="cb-{{ participant.id }}">{{ participant.name_or_username }}</label>
+                        <input id="cb-{{ participant.id }}" type="checkbox" name="{{participant.id}}" value="participated" class="mt-1 float-right" aria-label="{{participant.name_or_username}}" {% if participant in training.participants.all %}checked{% endif %}/>
                     </div>
                     {% empty %}
                         <div class="list-group-item">Bisher keine Anmeldungen</div>
