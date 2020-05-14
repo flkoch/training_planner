@@ -3,8 +3,6 @@ from django.contrib.auth.models import AbstractUser, Group
 from django.utils import timezone
 import datetime
 
-# Create your models here.
-
 
 class User(AbstractUser):
     birth_date = models.DateField(
