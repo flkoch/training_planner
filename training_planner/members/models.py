@@ -12,23 +12,27 @@ class User(AbstractUser):
 
     def __str__(self):
         full_name = self.get_full_name()
-        if full_name.isspace():
+        if not full_name.strip():
             return f"{self.username}"
         else:
             return full_name
 
     def get_initials(self):
-        if self.initials is None:
-            if self.first_name == self.last_name == '':
+        if self.initials is None or (isinstance(self.initials, str) and
+                                     not self.initials.strip()):
+            if self.first_name.strip() and self.last_name.strip():
+                return (self.first_name[0] + self.last_name[0]).upper()
+            elif len(self.username) < 3:
+                return self.usernamen.upper()
+            else:
                 return self.username[:2].upper()
-            return (self.first_name[0] + self.last_name[0]).upper()
         return self.initials
 
     def get_initials_paranthesised(self):
         return self.get_initials().join(['(', ')'])
 
     def get_public_name(self):
-        if self.first_name:
+        if self.first_name.strip():
             lastnames = self.last_name.split()
             lastname = ''
             for name in lastnames:

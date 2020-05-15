@@ -87,7 +87,7 @@ def register(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            if not user.initials:
+            if not (user.initials and user.initials.strip()):
                 user.initials = user.get_initials
             user.save()
             user.groups.add(get_object_or_404(

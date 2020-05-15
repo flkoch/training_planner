@@ -16,7 +16,15 @@ class CreateUserForm(UserCreationForm):
                 'append': 'fa fa-calendar',
                 'icon_toggle': True,
             }
-        )
+        ),
+        required=False,
+        label='Geburtsdatum'
+    )
+    initials = forms.CharField(
+        required=False,
+        label='Initialen',
+        max_length=3,
+        min_length=2
     )
 
     class Meta:
@@ -29,6 +37,8 @@ class CreateUserForm(UserCreationForm):
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.action = ''
+        for field in ['first_name', 'last_name', 'email']:
+            self.fields[field].required = True
         self.helper.layout = cfl.Layout(
             cfl.Row(
                 cfl.Field(
