@@ -52,7 +52,7 @@
             <div class="card-body">
                 <ul class="list-group list-group-flush">
                     {% for training in trainings %}
-                        <li class="list-group-item">{{training.start.date}}: {{training}}</li>
+                        <li class="list-group-item"><a href="{% url 'trainings-details' training.id %}">{{training.start.date}}: {{training}}</a></li>
                     {% empty %}
                         <li class="list-group-item">Keine zukünftigen Anmeldungen</li>
                     {% endfor %}
@@ -68,7 +68,7 @@
             <div class="card-body">
                 <ul class="list-group list-group-flush">
                     {% for training in trainings %}
-                        <li class="list-group-item">{{training.start.date}}: {{training}}</li>
+                        <li class="list-group-item"><a href="{% url 'trainings-details' training.id %}">{{training.start.date}}: {{training}}</a></li>
                     {% empty %}
                         <li class="list-group-item">Bisher noch keine absolvierten Trainings</li>
                     {% endfor %}
