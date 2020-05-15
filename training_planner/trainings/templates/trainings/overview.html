@@ -32,6 +32,7 @@ Trainingsübersicht
 <table class="table">
     <thead>
     <tr>
+        <th class="d-none-d-xl-table-cell">Datum</th>
         <th>Wochentag</th>
         <th>Start</th>
         <th class="d-none d-lg-table-cell">Dauer</th>
@@ -45,6 +46,7 @@ Trainingsübersicht
     <tbody>
     {% for training in trainings %}
     <tr>
+        <td class="align-middle d-none d-xl-table-cell"><a href="{% url 'trainings-details' training.id %}">{{training.start.date}}</a></td>
         <td class="align-middle"><a href="{% url 'trainings-details' training.id %}">{{training.weekday_as_text}}</a></td>
         <td class="align-middle"><a href="{% url 'trainings-details' training.id %}">{{training.starttime_as_text}}</a></td>
         <td class="align-middle d-none d-lg-table-cell">{{training.duration}} min.</td>
