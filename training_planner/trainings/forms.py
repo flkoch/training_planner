@@ -44,6 +44,9 @@ class AddTrainingForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.action = ''
+        self.helper.html5_required = True
+        for field in ['description', 'location', 'instructor']:
+            self.fields[field].required = False
         self.helper.layout = cfl.Layout(
             'title',
             'description',
@@ -73,6 +76,12 @@ class AddTrainingForm(forms.ModelForm):
                 cfl.Field(
                     'instructor',
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                    help_text='Bitte <Ctrl> gedrückt halten, '
+                    'um Auswahl zu ändern.',
+                ),
+                cfl.Field(
+                    'target_group',
+                    wrapper_class='col-auto',
                     help_text='Bitte <Ctrl> gedrückt halten, '
                     'um Auswahl zu ändern.',
                 ),
@@ -163,6 +172,10 @@ class TrainingForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.action = ''
+        self.helper.html5_required = True
+        for field in ['description', 'location', 'instructor', 'coordinator',
+                      'registered_participants', 'participants']:
+            self.fields[field].required = False
         self.helper.layout = cfl.Layout(
             'title',
             'description',
@@ -196,6 +209,12 @@ class TrainingForm(forms.ModelForm):
                 cfl.Field(
                     'instructor',
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                    help_text='Bitte <Ctrl> gedrückt halten, '
+                    'um Auswahl zu ändern.',
+                ),
+                cfl.Field(
+                    'target_group',
+                    wrapper_class='col-auto',
                     help_text='Bitte <Ctrl> gedrückt halten, '
                     'um Auswahl zu ändern.',
                 ),
@@ -283,6 +302,11 @@ class AdminTrainingForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.action = ''
+        self.helper.html5_required = True
+        for field in ['description', 'location', 'instructor', 'coordinator',
+                      'registered_participants', 'participants', 'archived',
+                      'deleted']:
+            self.fields[field].required = False
         self.helper.layout = cfl.Layout(
             'title',
             'description',
@@ -316,6 +340,12 @@ class AdminTrainingForm(forms.ModelForm):
                 cfl.Field(
                     'instructor',
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                    help_text='Bitte <Ctrl> gedrückt halten, '
+                    'um Auswahl zu ändern.',
+                ),
+                cfl.Field(
+                    'target_group',
+                    wrapper_class='col-auto',
                     help_text='Bitte <Ctrl> gedrückt halten, '
                     'um Auswahl zu ändern.',
                 ),
@@ -409,6 +439,10 @@ class TrainingSeriesForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.action = ''
+        self.helper.html5_required = True
+        for field in ['description', 'location', 'instructor', 'coordinator',
+                      'registered_participants', 'participants']:
+            self.fields[field].required = False
         self.helper.layout = cfl.Layout(
             cfl.HTML(
                 '''

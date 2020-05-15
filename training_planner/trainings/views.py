@@ -111,7 +111,7 @@ def register_as_coordinator(request, id):
 def unregister_coordinator(request, id):
     training = get_object_or_404(Training, id=id)
     training.unregister_coordinator()
-    messages.info(request, "Koordinator erfolgreich entfernt.")
+    messages.info(request, "Koordinator erfolgreich entfernt")
     return redirect('trainings-details', id)
 
 
@@ -124,8 +124,10 @@ def create(request):
             training.set_registration_times()
             training.save()
             form.save_m2m()
-            messages.success(request, 'Training erfolgreich hinzugefügt.')
+            messages.success(request, 'Training erfolgreich hinzugefügt')
             return redirect(details, training.id)
+        else:
+            messages.warning((request, 'Bitte die angezeigten Fehler beheben'))
     else:
         form = AddTrainingForm(initial={
             'main_instructor': request.user,
@@ -138,18 +140,21 @@ def create(request):
 
 @protect_training
 def edit(request, id):
+    if request.user.is_administrator:
+        formClass = AdminTrainingForm
+    else:
+        formClass = TrainingForm
+    training = get_object_or_404(Training, id=id)
     if request.method == 'POST':
-        form = TrainingForm(
-            request.POST, instance=get_object_or_404(Training, id=id))
+        form = formClass(request.POST, instance=training)
         if form.is_valid():
             form.save()
             messages.success(request, 'Änderungen erfolgreich gespeichert')
             return redirect(details, id)
-    training = get_object_or_404(Training, id=id)
-    if request.user.is_administrator:
-        form = AdminTrainingForm(instance=training)
+        else:
+            messages.warning((request, 'Bitte die angezeigten Fehler beheben'))
     else:
-        form = TrainingForm(instance=training)
+        form = formClass(instance=training)
     context = {'form': form, 'title': f"{training.title} bearbeiten"}
     return render(request, 'trainings/trainingForm.html', context)
 

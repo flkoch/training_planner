@@ -5,5 +5,13 @@
 {{title}} - Training Form
 {% endblock title %}
 {% block content %}
+{% for message in messages %}
+    <div class="alert alert-{{message.tags}} alert-dismissible fade show my-2" role="alert">
+    {{message}}
+    <button type="button" class="close" data-dismiss="alert", aria-label="Schliessen">
+        <span arie-hidden="true">&times;</span>
+    </button>
+    </div>
+{% endfor %}
 {% crispy form %}
 {% endblock content %}
