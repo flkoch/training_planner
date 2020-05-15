@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.contrib import messages, auth
 from django.contrib.auth import decorators as auth_decorators
+from django.core.mail import send_mass_mail
 from django.db.models import Count
 from django.db.models.functions import ExtractWeek
 import datetime
@@ -244,6 +245,46 @@ def controlling(request, id):
         messages.success(request, 'Änderungen gespeichert')
     context = {'training': training}
     return render(request, 'trainings/details_controlling.html', context)
+
+
+@protect_training
+def message(request, id):
+    training = get_object_or_404(Training, id=id)
+    context = {
+        'training': training,
+    }
+    if request.method == 'POST':
+        user_id = []
+        from_email = request.user.email
+        for key, value in request.POST.items():
+            if key == 'message':
+                message = value
+                if message.rstrip == '':
+                    messages.warning(
+                        request,
+                        'Eine leere Nachricht kann nicht gesendet werden'
+                    )
+                    return render(request, 'trainings/messages.html', context)
+            elif key == 'salutation':
+                if value == '':
+                    salutation = 'Hallo'
+                else:
+                    salutation = value.rstrip()
+            elif key == 'subject':
+                subject = value
+            elif 'send_message' in value:
+                user_id.append(key)
+        mails = [
+            [subject, salutation + ' ' + user.first_name + ',\r\n' + message,
+             from_email, [user.email]] for user in
+            [auth.get_user_model().objects.get(id=id) for id in user_id]]
+        mails = tuple([tuple(mail) for mail in mails])
+        send_mass_mail(mails)
+        messages.success(
+            request, f'Es wurden {len(user_id)} Nachrichten versendet.'
+        )
+        return redirect('trainings-details', id)
+    return render(request, 'trainings/message.html', context)
 
 
 @admin_only
