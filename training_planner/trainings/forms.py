@@ -1,5 +1,6 @@
 from django import forms as forms
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 from crispy_forms import layout as cfl
 from crispy_forms.helper import FormHelper
 from tempus_dominus import widgets
@@ -10,10 +11,10 @@ from .models import Training
 class AddTrainingForm(forms.ModelForm):
     main_instructor = forms.ModelChoiceField(
         queryset=get_user_model().objects.filter(groups__name='Trainer'),
-        empty_label='Trainer wählen', label='Haupttrainer')
+        empty_label=_('Trainer wählen'), label=_('Haupttrainer'))
     instructor = forms.ModelMultipleChoiceField(
         queryset=get_user_model().objects.filter(groups__name='Trainer'),
-        required=False, label='Assistenztrainer')
+        required=False, label=_('Assistenztrainer'))
     start = forms.DateTimeField(
         widget=widgets.DateTimePicker(
             options={
@@ -76,33 +77,37 @@ class AddTrainingForm(forms.ModelForm):
                 cfl.Field(
                     'instructor',
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
-                    help_text='Bitte <Ctrl> gedrückt halten, '
-                    'um Auswahl zu ändern.',
+                    help_text=_('Bitte <Ctrl> gedrückt halten, '
+                                'um Auswahl zu ändern.'),
                 ),
                 cfl.Field(
                     'target_group',
                     wrapper_class='col-auto',
-                    help_text='Bitte <Ctrl> gedrückt halten, '
-                    'um Auswahl zu ändern.',
+                    help_text=_('Bitte <Ctrl> gedrückt halten, '
+                                'um Auswahl zu ändern.'),
                 ),
                 cfl.HTML(
-                    '''
-                    <p class="col-auto my-4 text-muted">
-                    Bitte &langle;<strong>Ctrl</strong>&rangle; gedrückt
-                    halten, um die Auswahl zu ändern</p>
-                    '''
+                    _(
+                        '''
+                        <p class="col-auto my-4 text-muted">
+                        Bitte &langle;<strong>Ctrl</strong>&rangle; gedrückt
+                        halten, um die Auswahl zu ändern</p>
+                        '''
+                    )
                 ),
             ),
             cfl.Row(
                 cfl.HTML(
                     '''
                         <a href="javascript:history.back()"
-                        class="btn btn-secondary mr-3">Zurück</a>
-                    '''
+                        class="btn btn-secondary mr-3">%(back)s</a>
+                    ''' % {
+                        'back': _('Zurück')
+                    }
                 ),
                 cfl.Submit(
                     'submit',
-                    'Training erstellen',
+                    _('Training erstellen'),
                     css_class='btn btn-primary'
                 ),
             ),
@@ -112,10 +117,10 @@ class AddTrainingForm(forms.ModelForm):
 class TrainingForm(forms.ModelForm):
     main_instructor = forms.ModelChoiceField(
         queryset=get_user_model().objects.filter(groups__name='Trainer'),
-        empty_label='Trainer wählen', label='Haupttrainer')
+        empty_label=_('Trainer wählen'), label=_('Haupttrainer'))
     instructor = forms.ModelMultipleChoiceField(
         queryset=get_user_model().objects.filter(groups__name='Trainer'),
-        required=False, label='Assistenztrainer')
+        required=False, label=_('Assistenztrainer'))
     registration_open = forms.DateTimeField(
         widget=widgets.DateTimePicker(
             options={
@@ -209,33 +214,37 @@ class TrainingForm(forms.ModelForm):
                 cfl.Field(
                     'instructor',
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
-                    help_text='Bitte <Ctrl> gedrückt halten, '
-                    'um Auswahl zu ändern.',
+                    help_text=_('Bitte <Ctrl> gedrückt halten, '
+                                'um Auswahl zu ändern.'),
                 ),
                 cfl.Field(
                     'target_group',
                     wrapper_class='col-auto',
-                    help_text='Bitte <Ctrl> gedrückt halten, '
-                    'um Auswahl zu ändern.',
+                    help_text=_('Bitte <Ctrl> gedrückt halten, '
+                                'um Auswahl zu ändern.'),
                 ),
                 cfl.HTML(
-                    '''
-                    <p class="col-auto my-4 text-muted">
-                    Bitte &langle;<strong>Ctrl</strong>&rangle; gedrückt
-                    halten, um die Auswahl zu ändern</p>
-                    '''
+                    _(
+                        '''
+                        <p class="col-auto my-4 text-muted">
+                        Bitte &langle;<strong>Ctrl</strong>&rangle; gedrückt
+                        halten, um die Auswahl zu ändern</p>
+                        '''
+                    )
                 ),
             ),
             cfl.Row(
                 cfl.HTML(
                     '''
                         <a href="javascript:history.back()"
-                        class="btn btn-secondary mr-3">Zurück</a>
-                    '''
+                        class="btn btn-secondary mr-3">%(back)s</a>
+                    ''' % {
+                        'back': _('Zurück')
+                    }
                 ),
                 cfl.Submit(
                     'submit',
-                    'Speichern',
+                    _('Speichern'),
                     css_class='btn btn-primary'
                 ),
             ),
@@ -340,42 +349,46 @@ class AdminTrainingForm(forms.ModelForm):
                 cfl.Field(
                     'instructor',
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
-                    help_text='Bitte <Ctrl> gedrückt halten, '
-                    'um Auswahl zu ändern.',
+                    help_text=_('Bitte <Ctrl> gedrückt halten, '
+                                'um Auswahl zu ändern.'),
                 ),
                 cfl.Field(
                     'target_group',
                     wrapper_class='col-auto',
-                    help_text='Bitte <Ctrl> gedrückt halten, '
-                    'um Auswahl zu ändern.',
+                    help_text=_('Bitte <Ctrl> gedrückt halten, '
+                                'um Auswahl zu ändern.'),
                 ),
                 cfl.HTML(
-                    '''
-                    <p class="col-auto my-4 text-muted">
-                    Bitte &langle;<strong>Ctrl</strong>&rangle; gedrückt
-                    halten, um die Auswahl zu ändern</p>
-                    '''
+                    _(
+                        '''
+                        <p class="col-auto my-4 text-muted">
+                        Bitte &langle;<strong>Ctrl</strong>&rangle; gedrückt
+                        halten, um die Auswahl zu ändern</p>
+                        '''
+                    )
                 ),
             ),
             cfl.Row(
                 cfl.Field(
                     'registered_participants',
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
-                    help_text='Bitte <Ctrl> gedrückt halten, '
-                    'um Auswahl zu ändern.',
+                    help_text=_('Bitte <Ctrl> gedrückt halten, '
+                                'um Auswahl zu ändern.'),
                 ),
                 cfl.Field(
                     'participants',
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
-                    help_text='Bitte <Ctrl> gedrückt halten, '
-                    'um Auswahl zu ändern.',
+                    help_text=_('Bitte <Ctrl> gedrückt halten, '
+                                'um Auswahl zu ändern.'),
                 ),
                 cfl.HTML(
-                    '''
-                    <p class="col-auto my-4 text-muted">
-                    Bitte &langle;<strong>Ctrl</strong>&rangle; gedrückt
-                    halten, um die Auswahl zu ändern</p>
-                    '''
+                    _(
+                        '''
+                        <p class="col-auto my-4 text-muted">
+                        Bitte &langle;<strong>Ctrl</strong>&rangle; gedrückt
+                        halten, um die Auswahl zu ändern</p>
+                        '''
+                    )
                 ),
             ),
             cfl.Row(
@@ -402,12 +415,14 @@ class AdminTrainingForm(forms.ModelForm):
                 cfl.HTML(
                     '''
                         <a href="javascript:history.back()"
-                        class="btn btn-secondary mr-3">Zurück</a>
-                    '''
+                        class="btn btn-secondary mr-3">%(back)s</a>
+                    ''' % {
+                        'back': _('Zurück')
+                    }
                 ),
                 cfl.Submit(
                     'submit',
-                    'Speichern',
+                    _('Speichern'),
                     css_class='btn btn-primary'
                 ),
             ),
@@ -427,7 +442,8 @@ class TrainingSeriesForm(forms.ModelForm):
                 'append': 'fa fa-calendar',
                 'icon_toggle': True,
             }
-        )
+        ),
+        label=_('Daten')
     )
 
     class Meta:
@@ -445,23 +461,27 @@ class TrainingSeriesForm(forms.ModelForm):
             self.fields[field].required = False
         self.helper.layout = cfl.Layout(
             cfl.HTML(
-                '''
-                <p class="my-3">Weitere Trainings zu {{training}} vom
-                {{training.start}} erstellen.<br />
-                Bitte die Daten der Trainings auswählen.</p>
-                '''
+                _(
+                    '''
+                    <p class="my-3">Weitere Trainings zu {{training}} vom
+                    {{training.start}} erstellen.<br />
+                    Bitte die Daten der Trainings auswählen.</p>
+                    '''
+                )
             ),
             'dates',
             cfl.Row(
                 cfl.HTML(
                     '''
                         <a href="javascript:history.back()"
-                        class="btn btn-secondary mr-3">Zurück</a>
-                    '''
+                        class="btn btn-secondary mr-3">%(back)s</a>
+                    ''' % {
+                        'back': _('Zurück')
+                    }
                 ),
                 cfl.Submit(
                     'submit',
-                    'Speichern',
+                    _('Speichern'),
                     css_class='btn btn-primary'
                 ),
             ),

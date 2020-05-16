@@ -1,24 +1,16 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
+{% load crispy_forms_tags i18n %}
 {% block title %}
-Mitglieder Liste
+{% trans "Mitglieder Liste" %}
 {% endblock %}
 {% block content %}
-{% for message in messages %}
-    <div class="alert alert-{{message.tags}} alert-dismissible fade show my-2" role="alert">
-    {{message}}
-    <button type="button" class="close" data-dismiss="alert", aria-label="Schliessen">
-        <span arie-hidden="true">&times;</span>
-    </button>
-    </div>
-{% endfor %}
-<h1>Mitglieder</h1>
+<h1>{% trans "Mitglieder" %}</h1>
 <div class="card">
     <div class="card-body">
         <form method="get" class="form-inline">
             {{myFilter.form|crispy}}
             <button class="btn btn-primary" type="submit">
-            Filtern
+            {% trans "Filtern" %}
             </button>
         </form>
     </div>
@@ -27,11 +19,11 @@ Mitglieder Liste
 <table class="table">
     <thead>
     <tr>
-        <th>Vorname</th>
-        <th>Nachname</th>
-        <th>Benutzername</th>
-        <th>E-Mail</th>
-        <th>Gruppen</th>
+        <th>{% trans "Vorname" %}</th>
+        <th>{% trans "Nachname" %}</th>
+        <th>{% trans "Benutzername" %}</th>
+        <th>{% trans "E-Mail" %}</th>
+        <th>{% trans "Gruppen" %}</th>
         <th></th>
     </tr>
     </thead>
@@ -55,7 +47,7 @@ Mitglieder Liste
             {% endif %}
             {% endwith %}
         </td>
-        <td class="align-middle"><a href="{% url 'member-details' user.id %}" class="btn btn-primary btn-sm ml-3">Details</a></td>
+        <td class="align-middle"><a href="{% url 'member-details' user.id %}" class="btn btn-primary btn-sm ml-3">{% trans "Details" %}</a></td>
     </tr>
     {% endfor %}
     </tbody>

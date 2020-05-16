@@ -1,5 +1,6 @@
 from django import forms as forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.utils.translation import gettext_lazy as _
 from crispy_forms import layout as cfl
 from crispy_forms.helper import FormHelper
 from tempus_dominus import widgets
@@ -18,13 +19,13 @@ class CreateUserForm(UserCreationForm):
             }
         ),
         required=False,
-        label='Geburtsdatum'
+        label=_('Geburtsdatum'),
     )
     initials = forms.CharField(
         required=False,
-        label='Initialen',
+        label=_('Initialen'),
         max_length=3,
-        min_length=2
+        min_length=2,
     )
 
     class Meta:
@@ -82,12 +83,15 @@ class CreateUserForm(UserCreationForm):
             ),
             cfl.Row(
                 cfl.HTML(
-                    """
-<a href="javascript:history.back()" class="btn btn-secondary mr-3">Zurück</a>
-                    """),
+                    '''
+<a href="javascript:history.back()" class="btn btn-secondary mr-3">%(back)s</a>
+                    ''' % {
+                        'back': _('Zurück'),
+                    }
+                ),
                 cfl.Submit(
                     'submit',
-                    'Registrieren',
+                    _('Registrieren'),
                     css_class='btn btn-primary'
                 ),
             ),

@@ -1,21 +1,22 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block titel %}
-Nachricht an Teilnehmer
+{% trans "Nachricht an Teilnehmer" %}
 {% endblock titel %}
 {% block content %}
 <nav class="nav justify-content-end flex-column flex-sm-row my-2">
-    <a class="nav-link bg-light text-dark" href="javascript:history.back()">Zurück</a>
+    <a class="nav-link bg-light text-dark" href="javascript:history.back()">{% trans "Zurück" %}</a>
 </nav>
-<p class="my-4">Mit Hilfe des nachfolgenden Formulars können Informationen an alle Beteiligten versendet werden.</p>
+<p class="my-4">{% trans "Mit Hilfe des nachfolgenden Formulars können Informationen an alle Beteiligten versendet werden." %}</p>
 <form action="" method="POST">
     {% csrf_token %}
     <div class="row">
         <div class="col-sm-6 col-lg-4 my-1">
             <div class="card">
-                <div class="card-header">Empfänger auswählen:</div>
+                <div class="card-header">{% trans "Empfänger auswählen:" %}</div>
                 <div class="card-body">
                     <fieldset class="mb-2">
-                        <legend>Haupttrainer:</legend>
+                        <legend>{% trans "Haupttrainer" %}:</legend>
                         <div class="form-check row my-0 p-2">
                             <label class="form-check-label" for="cb-{{ training.main_instructor.id }}">{{ training.main_instructor.name_or_username }}</label>
                             <input id="cb-{{ training.main_instructor.id }}" type="checkbox" name="{{training.main_instructor.id}}" value="send_message" class="mt-1 float-right" aria-label="{{training.main_instructor.name_or_username}}" checked/>
@@ -23,7 +24,7 @@ Nachricht an Teilnehmer
                     </fieldset>
                     {% if training.instructor.all.exists %}
                         <fieldset class="mb-2">
-                            <legend>Assistenztrainer:</legend>
+                            <legend>{% trans "Assistenztrainer" %}:</legend>
                             {% for instructor in training.instructor.all %}
                                 <div class="form-check row my-0 p-2 {% cycle '' 'bg-secondary text-white' %}">
                                     <label class="form-check-label" for="cb-{{ instructor.id }}">{{ instructor.name_or_username }}</label>
@@ -34,7 +35,7 @@ Nachricht an Teilnehmer
                     {% endif %}
                     {% if training.registered_participants.all.exists %}
                         <fieldset class="mb-2">
-                            <legend>Teilnehmer:</legend>
+                            <legend>{% trans "Teilnehmer" %}:</legend>
                             {% for user in training.registered_participants.all %}
                                 <div class="form-check row my-0 p-2 {% cycle '' 'bg-secondary text-white' %}">
                                     <label class="form-check-label" for="cb-{{ user.id }}">{{ user.name_or_username }}</label>
@@ -44,9 +45,9 @@ Nachricht an Teilnehmer
                         </fieldset>
                     {% endif %}
                     <fieldset class="mb-2">
-                        <legend>Kopie an Absender:</legend>
+                        <legend>{% trans "Kopie an Absender" %}:</legend>
                         <div class="form-check row my-0 p-2">
-                            <label class="form-check-label" for="cb-{{ user.id }}">Kopie an mich</label>
+                            <label class="form-check-label" for="cb-{{ user.id }}">{% trans "Kopie an mich" %}</label>
                             <input id="cb-{{ user.id }}" type="checkbox" name="{{user.id}}" value="send_message" class="mt-1 float-right" aria-label="{{user.name_or_username}}"/>
                         </div>
                     </fieldset>
@@ -55,20 +56,20 @@ Nachricht an Teilnehmer
         </div>
         <div class="col-sm-6 col-lg-8 my-1">
             <div class="card">
-                <div class="card-header">Text verfassen:</div>
+                <div class="card-header">{% trans "Text verfassen" %}:</div>
                 <div class="card-body">
                     <div class="row my-1">
                         <div class="col">
-                            <input type="text" class="form-control" name="subject" aria-label="Betreff" placeholder="Betreff:" required/>
+                            <input type="text" class="form-control" name="subject" aria-label="{% trans 'Betreff' %}" placeholder="{% trans 'Betreff' %}:" required/>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-auto">
-                            <input type="text" class="form-control" name="salutation" aria-label="Anrede" placeholder="Hallo"/>
+                            <input type="text" class="form-control" name="salutation" aria-label="{% trans 'Anrede' %}" placeholder="{% trans 'Hallo' %}"/>
                         </div>
                         <p class="col-auto ">{{user.first_name}},</p>
                     </div>
-                    <textarea name="message" class="form-control" rows="6" aria-label="Text der Nachricht", placeholder="Nachricht..." required></textarea>
+                    <textarea name="message" class="form-control" rows="6" aria-label="{% trans 'Text der Nachricht' %}", placeholder="{% trans 'Nachricht...' %}" required></textarea>
                     <input type="submit" value="Versenden" class="btn btn-success mt-3 float-right"/>
                 </div>
             </div>

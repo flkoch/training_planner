@@ -3,8 +3,9 @@ from django.contrib import auth
 from django.contrib.auth import decorators as auth_decorators
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
-from django.utils import timezone
 from django.urls import reverse
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from trainings import decorators
 from .filter import UserFilter
 from .forms import CreateUserForm
@@ -51,7 +52,10 @@ def account_edit(request):
     }
     messages.info(
         request,
-        'Das Bearbeiten der Nutzerdaten ist aktuell leider noch nicht möglich.'
+        _(
+            'Das Bearbeiten der Nutzerdaten ist aktuell leider noch nicht '
+            'möglich.'
+        )
     )
     return render(request, 'members/editForm.html', context)
 
@@ -69,8 +73,11 @@ def login(request):
                 return redirect(request.GET['next'])
             return redirect('/trainings')
         else:
-            messages.info(request, "Benutzername und Passwort gehören zu"
-                          " keinem gültigen Benutzer.")
+            messages.info(
+                request,
+                _('Benutzername und Passwort gehören zu keinem gültigen '
+                  'Benutzer.')
+            )
     context = {'username': username}
     return render(request, 'members/login.html', context)
 
@@ -93,7 +100,7 @@ def register(request):
             user.groups.add(get_object_or_404(
                 auth.models.Group, name='Participant'))
             form.save_m2m()
-            messages.success(request, 'Der Account wurde erstellt.')
+            messages.success(request, _('Der Account wurde erstellt.'))
             return redirect(login)
     context = {'form': form}
     return render(request, 'members/register.html', context)
@@ -150,7 +157,10 @@ def edit(request, id):
     }
     messages.info(
         request,
-        'Das Bearbeiten der Nutzerdaten ist aktuell leider noch nicht möglich.'
+        _(
+            'Das Bearbeiten der Nutzerdaten ist aktuell leider noch nicht '
+            'möglich.'
+        )
     )
     return render(request, 'members/editForm.html', context)
 
@@ -161,11 +171,11 @@ def user_management(request):
         print(request.POST)
         if 'check_active_participants' in request.POST:
             check_active_participants(weeks=15)
-            messages.success(request, 'Aktive Teilnehmer aktualisiert')
+            messages.success(request, _('Aktive Teilnehmer aktualisiert'))
         elif 'check_active_trainers' in request.POST:
             check_active_trainers(weeks=15)
-            messages.success(request, 'Aktive Trainer aktualisiert')
+            messages.success(request, _('Aktive Trainer aktualisiert'))
         elif 'check_trainers' in request.POST:
             check_trainers(weeks=15)
-            messages.success(request, 'Trainer aktualisiert')
+            messages.success(request, _('Trainer aktualisiert'))
     return render(request, 'members/user_management.html')

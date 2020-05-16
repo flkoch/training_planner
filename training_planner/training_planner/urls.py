@@ -14,31 +14,32 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
 from django.contrib.auth import views as auth_views
+from django.urls import path, include
+from django.utils.translation import gettext as _
 
 from website.views import welcome
 from members.views import login, logout, account, account_edit, register
 
 urlpatterns = [
     path('', welcome, name='home'),
-    path('login', login, name='login'),
-    path('logout', logout, name='logout'),
-    path('register', register, name='register'),
-    path('konto/', account, name='account'),
-    path('konto/bearbeiten', account_edit, name='account-edit'),
-    path('konto/passwort-reset',
+    path(_('login'), login, name='login'),
+    path(_('logout'), logout, name='logout'),
+    path(_('register'), register, name='register'),
+    path(_('konto/'), account, name='account'),
+    path(_('konto/bearbeiten'), account_edit, name='account-edit'),
+    path(_('konto/passwort-reset'),
          auth_views.PasswordResetView.as_view(), name='reset_password'),
-    path('konto/passwort-reset-initiiert',
+    path(_('konto/passwort-reset-initiiert'),
          auth_views.PasswordResetDoneView.as_view(),
          name='password_reset_done'),
-    path('konto/reset/<uidb64>/<token>',
+    path(_('konto/reset/<uidb64>/<token>'),
          auth_views.PasswordResetConfirmView.as_view(),
          name='password_reset_confirm'),
-    path('konto/passwort-angepasst',
+    path(_('konto/passwort-angepasst'),
          auth_views.PasswordResetCompleteView.as_view(),
          name='password_reset_complete'),
-    path('mitglieder/', include('members.urls')),
-    path('trainings/', include('trainings.urls')),
+    path(_('mitglieder/'), include('members.urls')),
+    path(_('trainings/'), include('trainings.urls')),
     path('admin/', admin.site.urls),
 ]

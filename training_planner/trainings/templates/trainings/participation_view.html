@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% load i18n %}{% load static %}{% load crispy_forms_tags %}
+{% load i18n static crispy_forms_tags %}
 {% block title %}
-Teilnehmer Statistik
+{% trans "Teilnehmer Statistik" %}
 {% endblock title %}
 {% block additionalStyles %}
     <link rel="stylesheet" href="{% static 'css/bootstrap-table.min.css' %}"/>
@@ -12,15 +12,7 @@ Teilnehmer Statistik
     <script src="{% static 'js/bootstrap-table-fixed-columns.min.js' %}"></script>
 {% endblock additionalScripts %}
 {% block content %}
-{% for message in messages %}
-    <div class="alert alert-{{message.tags}} alert-dismissible fade show my-2" role="alert">
-    {{message}}
-    <button type="button" class="close" data-dismiss="alert", aria-label="Schliessen">
-        <span arie-hidden="true">&times;</span>
-    </button>
-    </div>
-{% endfor %}
-<h1>Teilnehmer</h1>
+<h1>{% trans "Teilnehmer" %}</h1>
 <div class="card">
     <div class="card-body">
         <form method="get" class="form-inline">
@@ -31,7 +23,7 @@ Teilnehmer Statistik
                 </div>
                 <div class="col-auto">
                     <button class="btn btn-primary" type="submit">
-                        Filtern
+                        {% trans "Filtern" %}
                     </button>
                 </div>
             </div>
@@ -42,10 +34,10 @@ Teilnehmer Statistik
 <table class="table table-hover" data-toggle="table" data-fixed-columns="true" data-fixed-number="3">
     <thead>
     <tr>
-        <th class="align-middle" rowspan="2">Vorname</th>
-        <th class="align-middle" rowspan="2">Nachname</th>
-        <th class="align-middle" rowspan="2">Benutzername</th>
-        <th colspan="54" class="text-center">Trainings in KW</th>
+        <th class="align-middle" rowspan="2">{% trans "Vorname" %}</th>
+        <th class="align-middle" rowspan="2">{% trans "Nachname" %}</th>
+        <th class="align-middle" rowspan="2">{% trans "Benutzername" %}</th>
+        <th colspan="54" class="text-center">{% trans "Trainings in KW" %}</th>
     </tr>
     <tr>
         <th class="text-right">1</th>
@@ -101,7 +93,7 @@ Teilnehmer Statistik
         <th class="text-right">51</th>
         <th class="text-right">52</th>
         <th class="text-right">53</th>
-        <th class="text-right">Total</th>
+        <th class="text-right">{% trans "Total" %}</th>
     </tr>
     </thead>
     <tbody>
