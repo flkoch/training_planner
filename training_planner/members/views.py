@@ -88,7 +88,7 @@ def register(request):
         if form.is_valid():
             user = form.save(commit=False)
             if not (user.initials and user.initials.strip()):
-                user.initials = user.get_initials
+                user.initials = user.get_initials()
             user.save()
             user.groups.add(get_object_or_404(
                 auth.models.Group, name='Participant'))
