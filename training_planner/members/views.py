@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib import auth
 from django.contrib.auth import decorators as auth_decorators
+from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
@@ -100,7 +101,30 @@ def register(request):
             user.groups.add(get_object_or_404(
                 auth.models.Group, name='Participant'))
             form.save_m2m()
-            messages.success(request, _('Der Account wurde erstellt.'))
+            subject = _('Anmeldung auf training.judo-club-uster.ch')
+            message = _(str(
+                f'Hallo {user.first_name},\r\nWir freuen uns, dass Du Dich auf'
+                ' unserer Plattform angemeldet hast, um auch künftig an den '
+                'angebotenen Trainings teilnehmen zu können.\r\nUm an den '
+                'Trainings teilnehmen zu dürfen, musst Du folgende Punkte '
+                'erfüllen:\r\n1) Du musst für das entsprechende Training '
+                'angemeldet sein.\r\n2) Du musst das Zutrittsformular '
+                'ausfüllen und in jedes Training mitbringen.\r\n\r\nAlso '
+                'eigentlich ganz einfach. Wenn Du trotzdem Fragen hast, darfst'
+                ' Du Dich gerne bei den Trainern oder unter info@jcu.ch '
+                'melden.\r\nAusserdem brauchen wir für jedes Training einen '
+                'Koordinator oder eine Koordinatorin. Wenn Du dies also hin '
+                'und wieder übernehmen könntest, profitieren alle, die gerne '
+                'trainieren wollen.\r\n\r\nViel Spass im Training wünscht Dir '
+                'das JCU Trainer-Team'
+            ))
+            send_mail(subject, message, 'no-reply@judo-club-uster.ch',
+                      [user.email])
+            messages.success(
+                request,
+                _('Der Account wurde erstellt. '
+                  'Bitte überprüfe Deinen Posteingang.')
+            )
             return redirect(login)
     context = {'form': form}
     return render(request, 'members/register.html', context)
