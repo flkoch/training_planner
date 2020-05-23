@@ -19,11 +19,11 @@ class CreateUserForm(UserCreationForm):
             }
         ),
         required=False,
-        label=_('Geburtsdatum'),
+        label=_('Date of Birth'),
     )
     initials = forms.CharField(
         required=False,
-        label=_('Initialen'),
+        label=_('Initials'),
         max_length=3,
         min_length=2,
     )
@@ -86,12 +86,12 @@ class CreateUserForm(UserCreationForm):
                     '''
 <a href="javascript:history.back()" class="btn btn-secondary mr-3">%(back)s</a>
                     ''' % {
-                        'back': _('Zurück'),
+                        'back': _('Back'),
                     }
                 ),
                 cfl.Submit(
                     'submit',
-                    _('Registrieren'),
+                    _('Register'),
                     css_class='btn btn-primary'
                 ),
             ),

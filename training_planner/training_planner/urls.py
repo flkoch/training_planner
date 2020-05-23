@@ -14,32 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from django.utils.translation import gettext as _
 
 from website.views import welcome
-from members.views import login, logout, account, account_edit, register
 
 urlpatterns = [
     path('', welcome, name='home'),
-    path(_('login'), login, name='login'),
-    path(_('logout'), logout, name='logout'),
-    path(_('register'), register, name='register'),
-    path(_('konto/'), account, name='account'),
-    path(_('konto/bearbeiten'), account_edit, name='account-edit'),
-    path(_('konto/passwort-reset'),
-         auth_views.PasswordResetView.as_view(), name='reset_password'),
-    path(_('konto/passwort-reset-initiiert'),
-         auth_views.PasswordResetDoneView.as_view(),
-         name='password_reset_done'),
-    path(_('konto/reset/<uidb64>/<token>'),
-         auth_views.PasswordResetConfirmView.as_view(),
-         name='password_reset_confirm'),
-    path(_('konto/passwort-angepasst'),
-         auth_views.PasswordResetCompleteView.as_view(),
-         name='password_reset_complete'),
-    path(_('mitglieder/'), include('members.urls')),
-    path(_('trainings/'), include('trainings.urls')),
+    path(f'{_("account")}/', include('members.account_urls')),
+    path(f'{_("members")}/', include('members.urls')),
+    path(f'{_("trainings")}/', include('trainings.urls')),
     path('admin/', admin.site.urls),
 ]

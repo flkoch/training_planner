@@ -54,8 +54,7 @@ def account_edit(request):
     messages.info(
         request,
         _(
-            'Das Bearbeiten der Nutzerdaten ist aktuell leider noch nicht '
-            'möglich.'
+            'The editing of user details is not currently supported.'
         )
     )
     return render(request, 'members/editForm.html', context)
@@ -76,8 +75,7 @@ def login(request):
         else:
             messages.info(
                 request,
-                _('Benutzername und Passwort gehören zu keinem gültigen '
-                  'Benutzer.')
+                _('Username and password do not match a valid user.')
             )
     context = {'username': username}
     return render(request, 'members/login.html', context)
@@ -101,29 +99,27 @@ def register(request):
             user.groups.add(get_object_or_404(
                 auth.models.Group, name='Participant'))
             form.save_m2m()
-            subject = _('Anmeldung auf training.judo-club-uster.ch')
+            subject = _('Registration on training.judo-club-uster.ch')
             message = _(str(
-                f'Hallo {user.first_name},\r\nWir freuen uns, dass Du Dich auf'
-                ' unserer Plattform angemeldet hast, um auch künftig an den '
-                'angebotenen Trainings teilnehmen zu können.\r\nUm an den '
-                'Trainings teilnehmen zu dürfen, musst Du folgende Punkte '
-                'erfüllen:\r\n1) Du musst für das entsprechende Training '
-                'angemeldet sein.\r\n2) Du musst das Zutrittsformular '
-                'ausfüllen und in jedes Training mitbringen.\r\n\r\nAlso '
-                'eigentlich ganz einfach. Wenn Du trotzdem Fragen hast, darfst'
-                ' Du Dich gerne bei den Trainern oder unter info@jcu.ch '
-                'melden.\r\nAusserdem brauchen wir für jedes Training einen '
-                'Koordinator oder eine Koordinatorin. Wenn Du dies also hin '
-                'und wieder übernehmen könntest, profitieren alle, die gerne '
-                'trainieren wollen.\r\n\r\nViel Spass im Training wünscht Dir '
-                'das JCU Trainer-Team'
+                f'Hi {user.first_name},\r\nWe are happy to have you on our '
+                'platform, which allows you to register for and participate '
+                'in offered training sessions.\r\nIn order to participate in '
+                'the training sesseions, the follwoign criteria have to be '
+                'fulfilled:\r\n1) You must be registered for the respective '
+                'training.\r\n2) You must have the access form filled and '
+                'signed with you for all sessions.\r\n\r\nPretty simple, is '
+                'it? In case you still have questions, please contact the '
+                'instructor or write an e-mail to info@jcu.ch.\r\nIn addition '
+                'we need a coordinator for each training session. If you can '
+                'do this from time to time everyone does benefit.\r\n\r\nThe '
+                'JCU Trainer-Team wishes you good training sessions'
             ))
             send_mail(subject, message, 'no-reply@judo-club-uster.ch',
                       [user.email])
             messages.success(
                 request,
-                _('Der Account wurde erstellt. '
-                  'Bitte überprüfe Deinen Posteingang.')
+                _('The account has been created. '
+                  'Please check your inbox.')
             )
             return redirect(login)
     context = {'form': form}
@@ -182,8 +178,7 @@ def edit(request, id):
     messages.info(
         request,
         _(
-            'Das Bearbeiten der Nutzerdaten ist aktuell leider noch nicht '
-            'möglich.'
+            'The editing of user details is not currently supported.'
         )
     )
     return render(request, 'members/editForm.html', context)
@@ -195,11 +190,11 @@ def user_management(request):
         print(request.POST)
         if 'check_active_participants' in request.POST:
             check_active_participants(weeks=15)
-            messages.success(request, _('Aktive Teilnehmer aktualisiert'))
+            messages.success(request, _('Update Active Participants'))
         elif 'check_active_trainers' in request.POST:
             check_active_trainers(weeks=15)
-            messages.success(request, _('Aktive Trainer aktualisiert'))
+            messages.success(request, _('Update Active Trainer'))
         elif 'check_trainers' in request.POST:
             check_trainers(weeks=15)
-            messages.success(request, _('Trainer aktualisiert'))
+            messages.success(request, _('Update Trainer'))
     return render(request, 'members/user_management.html')

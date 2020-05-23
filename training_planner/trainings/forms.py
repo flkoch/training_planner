@@ -1,5 +1,8 @@
+from collections.abc import Iterable
 from django import forms as forms
+from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
 from crispy_forms import layout as cfl
 from crispy_forms.helper import FormHelper
@@ -8,19 +11,60 @@ import members.models as members
 from .models import Training
 
 
+def python2moment(date_time_string):
+    """
+    Transforms a python datetime string into a valid moment.js datetime string
+    by replacing the corresponding placeholders.
+    """
+    if isinstance(date_time_string, str):
+        return date_time_string.replace('%Y', 'YYYY').replace('%m', 'MM') \
+            .replace('%d', 'DD').replace('%H', 'HH').replace('%M', 'mm') \
+            .replace('%a', 'ddd').replace('%A', 'dddd').replace('%w', 'e') \
+            .replace('%b', 'MMM').replace('%B', 'MMMM').replace('%y', 'YY') \
+            .replace('%I', 'hh').replace('%p', 'a').replace('%f', 'ssssss') \
+            .replace('%S', 'ss').replace('%z', 'ZZ').replace('%j', 'DDDD') \
+            .replace('%U', 'WW').replace('%W', 'ww').replace('%%', '%')
+    elif isinstance(date_time_string, Iterable):
+        return [python2moment(item) for item in date_time_string]
+    else:
+        raise ValueError('Expecting string or iterable of strings.')
+        return None
+
+
+def moment2python(date_time_string):
+    """
+    Transforms a momentum.js datetime string into a valid python datetime
+    string by replacing the corresponding placeholders.
+    """
+    if isinstance(date_time_string, str):
+        return date_time_string.replace('YYYY', '%Y').replace('MM', '%m') \
+            .replace('DD', '%d').replace('HH', '%H').replace('mm', '%M') \
+            .replace('ddd', '%a').replace('dddd', '%A').replace('e', '%w') \
+            .replace('MMM', '%b').replace('MMMM', '%B').replace('YY', '%y') \
+            .replace('hh', '%I').replace('a', '%p').replace('ssssss', '%f')\
+            .replace('ss', '%S').replace('ZZ', '%z').replace('DDDD', '%j') \
+            .replace('WW', '%U').replace('ww', '%W').replace('%', '%%')
+    elif isinstance(date_time_string, Iterable):
+        return [moment2python(item) for item in date_time_string]
+    else:
+        raise ValueError('Expecting string or iterable of strings.')
+        return None
+
+
 class AddTrainingForm(forms.ModelForm):
     main_instructor = forms.ModelChoiceField(
         queryset=get_user_model().objects.filter(groups__name='Trainer'),
-        empty_label=_('Trainer wählen'), label=_('Haupttrainer'))
+        empty_label=_('Choose main instructor'), label=_('Main instructor'))
     instructor = forms.ModelMultipleChoiceField(
         queryset=get_user_model().objects.filter(groups__name='Trainer'),
-        required=False, label=_('Assistenztrainer'))
+        required=False, label=_('Instructor'))
     start = forms.DateTimeField(
         widget=widgets.DateTimePicker(
             options={
                 'stepping': 15,
-                'format': 'DD.MM.YYYY HH:mm',
-                'sideBySide': True
+                'format': python2moment(settings.DATETIME_INPUT_FORMATS[2]),
+                'sideBySide': True,
+                'extraFormats': python2moment(settings.DATETIME_INPUT_FORMATS),
             },
             attrs={
                 'append': 'fa fa-calendar',
@@ -77,37 +121,35 @@ class AddTrainingForm(forms.ModelForm):
                 cfl.Field(
                     'instructor',
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
-                    help_text=_('Bitte <Ctrl> gedrückt halten, '
-                                'um Auswahl zu ändern.'),
+                    help_text=_(
+                        'Please hold down <Ctrl> to change the selection.'),
                 ),
                 cfl.Field(
                     'target_group',
                     wrapper_class='col-auto',
-                    help_text=_('Bitte <Ctrl> gedrückt halten, '
-                                'um Auswahl zu ändern.'),
+                    help_text=_(
+                        'Please hold down <Ctrl> to change the selection.'),
                 ),
                 cfl.HTML(
                     _(
                         '''
                         <p class="col-auto my-4 text-muted">
-                        Bitte &langle;<strong>Ctrl</strong>&rangle; gedrückt
-                        halten, um die Auswahl zu ändern</p>
+                        Please hold down &langle;<strong>Ctrl</strong>&rangle;
+                        to change the selection.</p>
                         '''
                     )
                 ),
             ),
             cfl.Row(
                 cfl.HTML(
-                    '''
-                        <a href="javascript:history.back()"
-                        class="btn btn-secondary mr-3">%(back)s</a>
-                    ''' % {
-                        'back': _('Zurück')
-                    }
+                    format_lazy('<a href="javascript:history.back()"'
+                                'class="btn btn-secondary mr-3">{back}</a>',
+                                back=_('Back')
+                                )
                 ),
                 cfl.Submit(
                     'submit',
-                    _('Training erstellen'),
+                    _('Create Training'),
                     css_class='btn btn-primary'
                 ),
             ),
@@ -117,16 +159,18 @@ class AddTrainingForm(forms.ModelForm):
 class TrainingForm(forms.ModelForm):
     main_instructor = forms.ModelChoiceField(
         queryset=get_user_model().objects.filter(groups__name='Trainer'),
-        empty_label=_('Trainer wählen'), label=_('Haupttrainer'))
+        empty_label=_('Choose main instructor'), label=_('Main instructor'))
     instructor = forms.ModelMultipleChoiceField(
         queryset=get_user_model().objects.filter(groups__name='Trainer'),
-        required=False, label=_('Assistenztrainer'))
+        required=False, label=_('Instructor'))
     registration_open = forms.DateTimeField(
         widget=widgets.DateTimePicker(
             options={
                 'stepping': 15,
-                'format': 'DD.MM.YYYY HH:mm',
-                'sideBySide': True
+                'format': python2moment(settings.DATETIME_INPUT_FORMATS[2]),
+                'sideBySide': True,
+                'extraFormats': python2moment(settings.DATETIME_INPUT_FORMATS),
+
             },
             attrs={
                 'append': 'fa fa-calendar',
@@ -138,8 +182,10 @@ class TrainingForm(forms.ModelForm):
         widget=widgets.DateTimePicker(
             options={
                 'stepping': 15,
-                'format': 'DD.MM.YYYY HH:mm',
-                'sideBySide': True
+                'format': python2moment(settings.DATETIME_INPUT_FORMATS[2]),
+                'sideBySide': True,
+                'extraFormats': python2moment(settings.DATETIME_INPUT_FORMATS),
+
             },
             attrs={
                 'append': 'fa fa-calendar',
@@ -151,8 +197,10 @@ class TrainingForm(forms.ModelForm):
         widget=widgets.DateTimePicker(
             options={
                 'stepping': 15,
-                'format': 'DD.MM.YYYY HH:mm',
-                'sideBySide': True
+                'format': python2moment(settings.DATETIME_INPUT_FORMATS[2]),
+                'sideBySide': True,
+                'extraFormats': python2moment(settings.DATETIME_INPUT_FORMATS),
+
             },
             attrs={
                 'append': 'fa fa-calendar',
@@ -214,37 +262,35 @@ class TrainingForm(forms.ModelForm):
                 cfl.Field(
                     'instructor',
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
-                    help_text=_('Bitte <Ctrl> gedrückt halten, '
-                                'um Auswahl zu ändern.'),
+                    help_text=_(
+                        'Please hold down <Ctrl> to change the selection.'),
                 ),
                 cfl.Field(
                     'target_group',
                     wrapper_class='col-auto',
-                    help_text=_('Bitte <Ctrl> gedrückt halten, '
-                                'um Auswahl zu ändern.'),
+                    help_text=_(
+                        'Please hold down <Ctrl> to change the selection.'),
                 ),
                 cfl.HTML(
                     _(
                         '''
                         <p class="col-auto my-4 text-muted">
-                        Bitte &langle;<strong>Ctrl</strong>&rangle; gedrückt
-                        halten, um die Auswahl zu ändern</p>
+                        Please hold down &langle;<strong>Ctrl</strong>&rangle;
+                        to change the selection.</p>
                         '''
                     )
                 ),
             ),
             cfl.Row(
                 cfl.HTML(
-                    '''
-                        <a href="javascript:history.back()"
-                        class="btn btn-secondary mr-3">%(back)s</a>
-                    ''' % {
-                        'back': _('Zurück')
-                    }
+                    format_lazy('<a href="javascript:history.back()"'
+                                'class="btn btn-secondary mr-3">{back}</a>',
+                                back=_('Back')
+                                )
                 ),
                 cfl.Submit(
                     'submit',
-                    _('Speichern'),
+                    _('Save'),
                     css_class='btn btn-primary'
                 ),
             ),
@@ -256,8 +302,10 @@ class AdminTrainingForm(forms.ModelForm):
         widget=widgets.DateTimePicker(
             options={
                 'stepping': 15,
-                'format': 'DD.MM.YYYY HH:mm',
-                'sideBySide': True
+                'format': python2moment(settings.DATETIME_INPUT_FORMATS[2]),
+                'sideBySide': True,
+                'extraFormats': python2moment(settings.DATETIME_INPUT_FORMATS),
+
             },
             attrs={
                 'append': 'fa fa-calendar',
@@ -269,8 +317,10 @@ class AdminTrainingForm(forms.ModelForm):
         widget=widgets.DateTimePicker(
             options={
                 'stepping': 15,
-                'format': 'DD.MM.YYYY HH:mm',
-                'sideBySide': True
+                'format': python2moment(settings.DATETIME_INPUT_FORMATS[2]),
+                'sideBySide': True,
+                'extraFormats': python2moment(settings.DATETIME_INPUT_FORMATS),
+
             },
             attrs={
                 'append': 'fa fa-calendar',
@@ -282,8 +332,10 @@ class AdminTrainingForm(forms.ModelForm):
         widget=widgets.DateTimePicker(
             options={
                 'stepping': 15,
-                'format': 'DD.MM.YYYY HH:mm',
-                'sideBySide': True
+                'format': python2moment(settings.DATETIME_INPUT_FORMATS[2]),
+                'sideBySide': True,
+                'extraFormats': python2moment(settings.DATETIME_INPUT_FORMATS),
+
             },
             attrs={
                 'append': 'fa fa-calendar',
@@ -349,21 +401,21 @@ class AdminTrainingForm(forms.ModelForm):
                 cfl.Field(
                     'instructor',
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
-                    help_text=_('Bitte <Ctrl> gedrückt halten, '
-                                'um Auswahl zu ändern.'),
+                    help_text=_(
+                        'Please hold down <Ctrl> to change the selection.'),
                 ),
                 cfl.Field(
                     'target_group',
                     wrapper_class='col-auto',
-                    help_text=_('Bitte <Ctrl> gedrückt halten, '
-                                'um Auswahl zu ändern.'),
+                    help_text=_(
+                        'Please hold down <Ctrl> to change the selection.'),
                 ),
                 cfl.HTML(
                     _(
                         '''
                         <p class="col-auto my-4 text-muted">
-                        Bitte &langle;<strong>Ctrl</strong>&rangle; gedrückt
-                        halten, um die Auswahl zu ändern</p>
+                        Please hold down &langle;<strong>Ctrl</strong>&rangle;
+                        to change the selection.</p>
                         '''
                     )
                 ),
@@ -372,21 +424,21 @@ class AdminTrainingForm(forms.ModelForm):
                 cfl.Field(
                     'registered_participants',
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
-                    help_text=_('Bitte <Ctrl> gedrückt halten, '
-                                'um Auswahl zu ändern.'),
+                    help_text=_(
+                        'Please hold down <Ctrl> to change the selection.'),
                 ),
                 cfl.Field(
                     'participants',
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
-                    help_text=_('Bitte <Ctrl> gedrückt halten, '
-                                'um Auswahl zu ändern.'),
+                    help_text=_(
+                        'Please hold down <Ctrl> to change the selection.'),
                 ),
                 cfl.HTML(
                     _(
                         '''
                         <p class="col-auto my-4 text-muted">
-                        Bitte &langle;<strong>Ctrl</strong>&rangle; gedrückt
-                        halten, um die Auswahl zu ändern</p>
+                        Please hold down &langle;<strong>Ctrl</strong>&rangle;
+                        to change the the selection.</p>
                         '''
                     )
                 ),
@@ -413,16 +465,14 @@ class AdminTrainingForm(forms.ModelForm):
             ),
             cfl.Row(
                 cfl.HTML(
-                    '''
-                        <a href="javascript:history.back()"
-                        class="btn btn-secondary mr-3">%(back)s</a>
-                    ''' % {
-                        'back': _('Zurück')
-                    }
+                    format_lazy('<a href="javascript:history.back()"'
+                                'class="btn btn-secondary mr-3">{back}</a>',
+                                back=_('Back')
+                                )
                 ),
                 cfl.Submit(
                     'submit',
-                    _('Speichern'),
+                    _('Save'),
                     css_class='btn btn-primary'
                 ),
             ),
@@ -433,17 +483,17 @@ class TrainingSeriesForm(forms.ModelForm):
     dates = forms.DateField(
         widget=widgets.DatePicker(
             options={
-                'format': 'DD.MM.YYYY',
-                'sideBySide': True,
+                'format': python2moment(settings.DATE_INPUT_FORMATS[3]),
                 'useCurrent': False,
-                'allowMultidate': True
+                'allowMultidate': True,
+                'extraFormats': python2moment(settings.DATE_INPUT_FORMATS),
             },
             attrs={
                 'append': 'fa fa-calendar',
                 'icon_toggle': True,
             }
         ),
-        label=_('Daten')
+        label=_('Dates')
     )
 
     class Meta:
@@ -463,25 +513,25 @@ class TrainingSeriesForm(forms.ModelForm):
             cfl.HTML(
                 _(
                     '''
-                    <p class="my-3">Weitere Trainings zu {{training}} vom
-                    {{training.start}} erstellen.<br />
-                    Bitte die Daten der Trainings auswählen.</p>
+                    <p class="my-3">Create further trainings like {{training}}
+                    starting at {{training.start}}.<br />
+                    Please select the dates below. To not select todays date,
+                    finish your selection, reopen the widget and deselect
+                    today.</p>
                     '''
                 )
             ),
             'dates',
             cfl.Row(
                 cfl.HTML(
-                    '''
-                        <a href="javascript:history.back()"
-                        class="btn btn-secondary mr-3">%(back)s</a>
-                    ''' % {
-                        'back': _('Zurück')
-                    }
+                    format_lazy('<a href="javascript:history.back()"'
+                                'class="btn btn-secondary mr-3">{back}</a>',
+                                back=_('Back')
+                                )
                 ),
                 cfl.Submit(
                     'submit',
-                    _('Speichern'),
+                    _('Save'),
                     css_class='btn btn-primary'
                 ),
             ),

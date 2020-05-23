@@ -1,21 +1,21 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% block title %}
-{% trans "Trainingsübersicht" %} - {{title}}
+{% trans "Training Overview" %} - {{title}}
 {% endblock title %}
 {% block content %}
 <h1>{% trans "Trainings" %} - {{title}}</h1>
-<h2>{% trans "Haupttrainer" %}</h2>
+<h2>{% trans "Main Instructor" %}</h2>
 <div class="table-responsive-lg">
 <table class="table">
     <thead>
     <tr>
-        <th>{% trans "Wochentag" %}</th>
+        <th>{% trans "Weekday" %}</th>
         <th>{% trans "Start" %}</th>
-        <th class="d-none d-sm-table-cell">{% trans "Ort" %}</th>
+        <th class="d-none d-sm-table-cell">{% trans "Location" %}</th>
         <th>{% trans "Trainer" %}</th>
-        <th class="d-none d-lg-table-cell">{% trans "Koordinator" %}</th>
-        <th colspan="2">{% trans "Teilnahme" %}</th>
+        <th class="d-none d-lg-table-cell">{% trans "Coordinator" %}</th>
+        <th colspan="2">{% trans "Participation" %}</th>
     </tr>
     </thead>
     <tbody>
@@ -25,27 +25,27 @@
         <td class="align-middle">{{training.starttime_as_text}}</td>
         <td class="align-middle d-none d-sm-table-cell">{% if training.location %}{{training.location}}{% else %}&mdash;{% endif %}</td>
         <td class="align-middle">{{training.main_instructor}}</td>
-        <td class="align-middle d-none d-lg-table-cell">{% if training.coordinator %}{{training.coordinator.get_public_name}}{% else %}{% trans "offen" %}{% endif %}</td>
+        <td class="align-middle d-none d-lg-table-cell">{% if training.coordinator %}{{training.coordinator.get_public_name}}{% else %}{% trans "open" %}{% endif %}</td>
         <td class="align-middle">{{training.participants.all.count}}/{{training.registered_participants.all.count}}{% if training.participants.all.count == training.registered_participants.all.count %}<span class="oi oi-check text-success ml-4"></span>{% endif %}</td>
         <td class="align-middle d-none d-sm-table-cell"></td>
     </tr>
     {% empty %}
-        <td class="aling-middle" colspan="6">{% trans "Keine Trainings gefunden" %}</td>
+        <td class="aling-middle" colspan="6">{% trans "No trainings found" %}</td>
     {% endfor %}
     </tbody>
 </table>
 </div>
-<h2>{% trans "Assistenztrainer" %}</h2>
+<h2>{% trans "Instructor" %}</h2>
 <div class="table-responsive-lg">
 <table class="table">
     <thead>
     <tr>
-        <th>{% trans "Wochentag" %}</th>
+        <th>{% trans "Weekday" %}</th>
         <th>{% trans "Start" %}</th>
-        <th class="d-none d-sm-table-cell">{% trans "Ort" %}</th>
+        <th class="d-none d-sm-table-cell">{% trans "Location" %}</th>
         <th>{% trans "Trainer" %}</th>
-        <th class="d-none d-lg-table-cell">{% trans "Koordinator" %}</th>
-        <th colspan="2">{% trans "Teilnahme" %}</th>
+        <th class="d-none d-lg-table-cell">{% trans "Coordinator" %}</th>
+        <th colspan="2">{% trans "Participation" %}</th>
     </tr>
     </thead>
     <tbody>
@@ -55,12 +55,12 @@
         <td class="align-middle">{{training.starttime_as_text}}</td>
         <td class="align-middle d-none d-sm-table-cell">{% if training.location %}{{training.location}}{% else %}&mdash;{% endif %}</td>
         <td class="align-middle">{{training.main_instructor}}</td>
-        <td class="align-middle d-none d-lg-table-cell">{% if training.coordinator %}{{training.coordinator.get_public_name}}{% else %}{% trans "offen" %}{% endif %}</td>
+        <td class="align-middle d-none d-lg-table-cell">{% if training.coordinator %}{{training.coordinator.get_public_name}}{% else %}{% trans "open" %}{% endif %}</td>
         <td class="align-middle">{{training.participants.all.count}}/{{training.registered_participants.all.count}}{% if training.participants.all.count == training.registered_participants.all.count %}<span class="oi oi-check text-success ml-4"></span>{% endif %}</td>
         <td class="align-middle d-none d-sm-table-cell"></td>
     </tr>
     {% empty %}
-        <td class="aling-middle" colspan="6">{% trans "Keine Trainings gefunden" %}</td>
+        <td class="aling-middle" colspan="6">{% trans "No trainings found" %}</td>
     {% endfor %}
     </tbody>
 </table>

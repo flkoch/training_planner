@@ -7,43 +7,43 @@
 <h1>{{training}}</h1>
 <p>{{training.location.with_address}}</p>
 <nav class="nav justify-content-end flex-column flex-sm-row my-2">
-    <a class="nav-link bg-light text-dark" href="javascript:history.back()">{% trans "Zurück" %}</a>
+    <a class="nav-link bg-light text-dark" href="javascript:history.back()">{% trans "Back" %}</a>
     {% if training.can_unregister %}
-        <a class="nav-link bg-danger text-white ml-sm-3" href="{% url 'trainings-unregister' training.id %}">{% trans "Abmelden" %}</a>
+        <a class="nav-link bg-danger text-white ml-sm-3" href="{% url 'trainings-unregister' training.id %}">{% trans "Unregister" %}</a>
     {% elif training.can_register %}
-        <a class="nav-link bg-success text-white ml-sm-3" href="{% url 'trainings-register' training.id %}">{% trans "Anmelden" %}</a>
+        <a class="nav-link bg-success text-white ml-sm-3" href="{% url 'trainings-register' training.id %}">{% trans "Register" %}</a>
     {% endif %}
     {% if training.can_edit %}
-        <a class="nav-link bg-warning text-dark ml-sm-3" href="{% url 'trainings-edit' training.id %}">{% trans "Bearbeiten" %}</a>
-        <a class="nav-link bg-danger text-white ml-sm-3" href="{% url 'trainings-delete' training.id %}">{% trans "Löschen" %}</a>
+        <a class="nav-link bg-warning text-dark ml-sm-3" href="{% url 'trainings-edit' training.id %}">{% trans "Edit" %}</a>
+        <a class="nav-link bg-danger text-white ml-sm-3" href="{% url 'trainings-delete' training.id %}">{% trans "Delete" %}</a>
     {% endif %}
 </nav>
 <div class="row my-2">
     <div class="col-sm-6 col-md my-1 order-1">
         <div class="card">
-            <div class="card-header">{% trans "Informationen" %}</div>
+            <div class="card-header">{% trans "Information" %}</div>
             <div class="card-body">
                 <p class="card-text">
-                    {% trans "Datum" %}: {{training.start.date}}<br />
-                    {% trans "Uhrzeit" %}: {{training.starttime_as_text}}<br />
-                    {% trans "Trainingsdauer" %}: {{training.duration}} {% trans "Minuten" %}<br />
-                    {% trans "Haupt-Trainer" %}: {{training.main_instructor}}<br />
+                    {% trans "Date" %}: {{training.start.date}}<br />
+                    {% trans "Time" %}: {{training.starttime_as_text}}<br />
+                    {% trans "Duration" %}: {{training.duration}} {% trans "minutes" %}<br />
+                    {% trans "Main Instructor" %}: {{training.main_instructor}}<br />
                     {% with instructors=training.instructor.all %}
                         {% if instructors|length > 0 %}
-                            {% trans "Weitere Trainer" %}:
+                            {% trans "Further Instructors" %}:
                             {{instr}}
                             {% for instructor in instructors %}
                                 {{instructor}}
                                 {% if forloop.revcounter > 2 %}
                                     ,
                                 {% elif forloop.revcounter == 2%}
-                                     {% trans "und" %}
+                                     {% trans "and" %}
                                 {% endif %}
                             {% endfor %}
                             <br />
                         {% endif %}
                     {% endwith %}
-                    {% trans "Koordinator" %}: {% if training.coordinator %}{{training.coordinator}}{% if training.coordinator == user %}<br /><small class="text-muted">{% trans "Du erhälst weitere Informationen kurz vor dem Training. Wenn Du doch nicht kommen kannst, melde Dich bitte beim zuständigen Trainer. Bei Fragen wende Dich an Aline Steinbrecher (<a href="tel:0041792959637">079 296 96 37</a>)" %}</small>{% endif %}{% else %}<a href="{% url 'trainings-register-coordinator' training.id %}" class="btn btn-sm btn-secondary">{% trans "Anmelden" %}</a>{% endif %}<br />
+                    {% trans "Coordinator" %}: {% if training.coordinator %}{{training.coordinator}}{% if training.coordinator == user %}<br /><small class="text-muted">{% trans 'You will get further information just before the training. If you cannot make it, please contact the respective trainer. In case of any questions, contact Aline Steinbrecher at (<a href="tel:0041792959637">079 296 96 37</a>)' %}</small>{% endif %}{% else %}<a href="{% url 'trainings-register-coordinator' training.id %}" class="btn btn-sm btn-secondary">{% trans "Register" %}</a>{% endif %}<br />
                 </p>
             </div>
         </div>
@@ -51,7 +51,7 @@
     {% if training.description %}
     <div class="col-sm-12 col-lg my-1 order-2 order-sm-12 order-lg-2">
         <div class="card">
-            <div class="card-header">{% trans "Beschreibung" %}</div>
+            <div class="card-header">{% trans "Description" %}</div>
             <div class="card-body">
                 <p class="card-text">
                     {{training.description}}
@@ -63,13 +63,13 @@
     <div class="col-sm-6 col-md my-1 order-3">
         <div class="card">
         {% with training.registered_participants.all as participants %}
-            <div class="card-header d-flex justify-content-between">{% trans "Teilnehmer" %}<span class="badge {% if training.free_capacity > 4 %} badge-success {% elif training.free_capacity > 0%} badge-warning {% else %} badge-danger {% endif %} badge-pill align-self-center">{{participants|length}} / {{training.capacity}}</span></div>
+            <div class="card-header d-flex justify-content-between">{% trans "Participants" %}<span class="badge {% if training.free_capacity > 4 %} badge-success {% elif training.free_capacity > 0%} badge-warning {% else %} badge-danger {% endif %} badge-pill align-self-center">{{participants|length}} / {{training.capacity}}</span></div>
             <div class="card-body">
                 <ul class="list-group list-group-flush">
                     {% for participant in participants %}
                         <li class="list-group-item">{{participant.get_public_name}}</li>
                     {% empty %}
-                        <li class="list-group-item">{% trans "Bisher noch keine Anmeldungen" %}</li>
+                        <li class="list-group-item">{% trans "No registrations yet" %}</li>
                     {% endfor %}
                 </ul>
             </div>

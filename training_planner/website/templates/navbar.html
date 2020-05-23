@@ -1,13 +1,13 @@
 {% load i18n %}
-{% comment %} <a href="{% url 'home' %}", class="nav-item nav-link">{% trans "Startseite" %}</a> {% endcomment %}
+{% comment %} <a href="{% url 'home' %}", class="nav-item nav-link">{% trans "Home" %}</a> {% endcomment %}
 <a href="{% url 'trainings-overview' %}", class="nav-item nav-link">{% trans "Trainings" %}</a>
 {% if user.is_trainer or user.is_administrator %}
-<a href="{% url 'trainings-held' %}", class="nav-item nav-link">{% trans "Trainings Kontrolle" %}</a>
-<a href="{% url 'trainings-create' %}", class="nav-item nav-link">{% trans "Neues Training" %}</a>
-<a href="{% url 'members-all' %}", class="nav-item nav-link">{% trans "Mitglieder" %}</a>
+<a href="{% url 'trainings-held' %}", class="nav-item nav-link">{% trans "Trainings Control" %}</a>
+<a href="{% url 'trainings-create' %}", class="nav-item nav-link">{% trans "New Training" %}</a>
+<a href="{% url 'members-all' %}", class="nav-item nav-link">{% trans "Members" %}</a>
 {% endif %}
 {% if user.is_administrator %}
-<a href="{% url 'trainings-participation' %}" class="nav-item nav-link">{% trans "Statistik" %}</a>
+<a href="{% url 'trainings-participation' %}" class="nav-item nav-link">{% trans "Statistics" %}</a>
 {% endif %}
 {% if user.is_staff %}
 <a href="/admin" class="nav-item nav-link">{% trans "Administration" %}</a>

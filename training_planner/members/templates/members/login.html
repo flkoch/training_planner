@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% block title %}
-    {% trans "Anmelden" %}
+    {% trans "Log in" %}
 {% endblock title %}
 {% block content %}
     <div class="row justify-content-center">
@@ -9,25 +9,25 @@
             <form method="POST" action="">
             {% csrf_token %}
             <div class="form-group">
-                <label for="username" class="sr-only">{% trans "Benutzername" %}</label>
-                <input type="text" name="username" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Benutzername" value="{{username}}">
-                <small id="usernameHelp" class="sr-only">{% trans "Bitte geben Sie hier Ihren Benutzernamen ein." %}</small>
+                <label for="username" class="sr-only">{% trans "Username" %}</label>
+                <input type="text" name="username" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="username" value="{{username}}">
+                <small id="usernameHelp" class="sr-only">{% trans "Please enter your username here." %}</small>
             </div>
             <div class="form-group">
-                <label for="password" class="sr-only">{% trans "Passwort" %}</label>
-                <input type="password" name="password" class="form-control" id="password" placeholder="Passwort">
+                <label for="password" class="sr-only">{% trans "Password" %}</label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="password">
             </div>
             {% for error in form.errors %}
             <p>{{error}}</p>
             {% endfor %}
             {% if messages %}
-            <p class="card-text"><small class="text-muted">{% trans "Passwort vergessen?" %} <a href="{% url 'reset_password' %}">{% trans "Passwort zurücksetzen" %}</a></smaal></p>
+            <p class="card-text"><small class="text-muted">{% trans "Forgotten your password" %} <a href="{% url 'password_reset' %}">{% trans "Reset your password." %}</a></small></p>
             {% endif %}
             {% url 'register' as registration_link %}
             {% blocktrans %}
-            <p class="card-text"><small class="text-muted">Noch keinen Account? <a href="{{ registration_link }}">Hier</a> registrieren</smaal></p>
+            <p class="card-text"><small class="text-muted">No account? Register <a href="{{ registration_link }}">here</a>.</small></p>
             {% endblocktrans %}
-            <button type="submit" class="btn btn-primary">{% trans "Anmelden" %}</button>
+            <button type="submit" class="btn btn-primary">{% trans "Log in" %}</button>
             </form>
         </div>
     </div>

@@ -1,0 +1,837 @@
+# Training Planner
+# Copyright (C) 2020
+# This file is distributed under the same license as the TrainingPlanner package.
+# Florian Koch <flkoch@dev.fkoch.ch> 2020
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TrainingPlanner\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-23 10:23+0200\n"
+"PO-Revision-Date: 2020-05-22 15:30+0200\n"
+"Last-Translator: Florian Koch <flkoch@dev.fkoch.ch>\n"
+"Language-Team: \n"
+"Language: de-CH\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: training_planner/members/filter.py:7 training_planner/members/filter.py:26
+#: training_planner/members/templates/members/overview.html:22
+#: training_planner/trainings/templates/trainings/participation_view.html:37
+msgid "First name"
+msgstr "Vorname"
+
+#: training_planner/members/filter.py:11 training_planner/members/filter.py:30
+#: training_planner/members/templates/members/overview.html:23
+#: training_planner/trainings/templates/trainings/participation_view.html:38
+msgid "Last name"
+msgstr "Nachname"
+
+#: training_planner/members/filter.py:15
+#: training_planner/members/templates/members/details.html:22
+#: training_planner/members/templates/members/editForm.html:18
+#: training_planner/members/templates/members/login.html:12
+#: training_planner/members/templates/members/overview.html:24
+#: training_planner/trainings/templates/trainings/participation_view.html:39
+msgid "Username"
+msgstr "Benutzername"
+
+#: training_planner/members/filter.py:19
+#: training_planner/members/templates/members/details.html:23
+#: training_planner/members/templates/members/editForm.html:19
+#: training_planner/members/templates/members/overview.html:25
+msgid "E-mail"
+msgstr "E-Mail"
+
+#: training_planner/members/forms.py:22 training_planner/members/models.py:11
+msgid "Date of Birth"
+msgstr "Geburtsdatum"
+
+#: training_planner/members/forms.py:26 training_planner/members/models.py:13
+msgid "Initials"
+msgstr "Initialen"
+
+#: training_planner/members/forms.py:89
+#: training_planner/members/templates/members/details.html:9
+#: training_planner/members/templates/members/editForm.html:9
+#: training_planner/trainings/forms.py:147
+#: training_planner/trainings/forms.py:288
+#: training_planner/trainings/forms.py:470
+#: training_planner/trainings/forms.py:529
+#: training_planner/trainings/templates/trainings/details.html:10
+#: training_planner/trainings/templates/trainings/details_admin.html:10
+#: training_planner/trainings/templates/trainings/details_controlling.html:10
+#: training_planner/trainings/templates/trainings/message.html:8
+#: training_planner/website/templates/website/deleteConfirmation.html:28
+msgid "Back"
+msgstr "Zurück"
+
+#: training_planner/members/forms.py:94
+#: training_planner/members/templates/members/register.html:4
+#: training_planner/trainings/templates/trainings/details.html:14
+#: training_planner/trainings/templates/trainings/details.html:46
+#: training_planner/trainings/templates/trainings/details_admin.html:14
+#: training_planner/trainings/templates/trainings/details_admin.html:48
+#: training_planner/trainings/templates/trainings/overview.html:63
+msgid "Register"
+msgstr "Anmelden"
+
+#: training_planner/members/models.py:57 training_planner/members/models.py:94
+#: training_planner/members/models.py:129
+#: training_planner/trainings/decorators.py:29
+#: training_planner/trainings/decorators.py:58
+#: training_planner/trainings/templates/trainings/overview.html:34
+#: training_planner/trainings/templates/trainings/overview_held_trainings.html:16
+#: training_planner/trainings/templates/trainings/overview_held_trainings.html:46
+msgid "Trainer"
+msgstr "Trainer"
+
+#: training_planner/members/models.py:61 training_planner/members/models.py:89
+#: training_planner/members/models.py:112
+msgid "Active Trainer"
+msgstr "Aktiver Trainer"
+
+#: training_planner/members/models.py:65 training_planner/members/models.py:84
+#: training_planner/trainings/models.py:193
+msgid "Participant"
+msgstr "Teilnehmer"
+
+#: training_planner/members/models.py:69 training_planner/members/models.py:79
+#: training_planner/members/models.py:100
+#: training_planner/trainings/views.py:278
+#: training_planner/trainings/views.py:346
+msgid "Active Participant"
+msgstr "Aktiver Teilnehmer"
+
+#: training_planner/members/models.py:74
+#: training_planner/trainings/decorators.py:42
+#: training_planner/trainings/decorators.py:58
+#: training_planner/trainings/models.py:211
+msgid "Administrator"
+msgstr "Administrator"
+
+#: training_planner/members/models.py:80 training_planner/members/models.py:85
+#: training_planner/members/models.py:90 training_planner/members/models.py:95
+msgid "System"
+msgstr "System"
+
+#: training_planner/members/templates/members/details.html:4
+#: training_planner/members/templates/members/overview.html:50
+msgid "Details"
+msgstr "Details"
+
+#: training_planner/members/templates/members/details.html:11
+msgid "Trainings Controlling"
+msgstr "Trainings Kontrolle"
+
+#: training_planner/members/templates/members/details.html:13
+#: training_planner/members/templates/members/editForm.html:4
+#: training_planner/trainings/templates/trainings/details.html:17
+#: training_planner/trainings/templates/trainings/details_admin.html:19
+#: training_planner/trainings/templates/trainings/details_controlling.html:11
+#: training_planner/trainings/templates/trainings/overview.html:63
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: training_planner/members/templates/members/details.html:18
+#: training_planner/members/templates/members/editForm.html:14
+#: training_planner/trainings/templates/trainings/details.html:24
+#: training_planner/trainings/templates/trainings/details_admin.html:26
+msgid "Information"
+msgstr "Informationen"
+
+#: training_planner/members/templates/members/details.html:21
+#: training_planner/members/templates/members/editForm.html:17
+#: training_planner/trainings/models.py:34
+#: training_planner/trainings/models.py:55
+msgid "Name"
+msgstr "Name"
+
+#: training_planner/members/templates/members/details.html:26
+#: training_planner/members/templates/members/editForm.html:22
+#: training_planner/members/templates/members/overview.html:26
+msgid "Groups"
+msgstr "Gruppen"
+
+#: training_planner/members/templates/members/details.html:28
+#: training_planner/members/templates/members/editForm.html:28
+#: training_planner/trainings/templates/trainings/details.html:40
+#: training_planner/trainings/templates/trainings/details_admin.html:42
+msgid "and"
+msgstr "und"
+
+#: training_planner/members/templates/members/details.html:39
+#: training_planner/members/templates/members/editForm.html:40
+msgid "registered trainings"
+msgstr "Angemeldete Trainings"
+
+#: training_planner/members/templates/members/details.html:45
+#: training_planner/members/templates/members/editForm.html:46
+msgid "no future registrations"
+msgstr "Keine zukünftigen Anmeldungen"
+
+#: training_planner/members/templates/members/details.html:55
+#: training_planner/members/templates/members/editForm.html:56
+msgid "completed trainings"
+msgstr "Absolvierte Trainings"
+
+#: training_planner/members/templates/members/details.html:61
+#: training_planner/members/templates/members/editForm.html:62
+msgid "no completed trainings yet"
+msgstr "Bisher keine absolvierten Trainings"
+
+#: training_planner/members/templates/members/details.html:65
+#: training_planner/members/templates/members/editForm.html:66
+msgid "pagination for completed trainings"
+msgstr "Seitennavigation für absolvierte Trainings"
+
+#: training_planner/members/templates/members/details.html:69
+#: training_planner/members/templates/members/editForm.html:70
+msgid "current"
+msgstr "aktuell"
+
+#: training_planner/members/templates/members/login.html:4
+#: training_planner/members/templates/members/login.html:30
+#: training_planner/website/templates/base.html:47
+msgid "Log in"
+msgstr "Anmelden"
+
+#: training_planner/members/templates/members/login.html:14
+msgid "Please enter your username here."
+msgstr "Bitte gib hier Deinen Benutzernamen ein."
+
+#: training_planner/members/templates/members/login.html:17
+msgid "Password"
+msgstr "Passwort"
+
+#: training_planner/members/templates/members/login.html:24
+msgid "Forgotten your password"
+msgstr "Passwort vergessen"
+
+#: training_planner/members/templates/members/login.html:24
+msgid "Reset your password."
+msgstr "Passwort zurücksetzen."
+
+#: training_planner/members/templates/members/login.html:27
+#, python-format
+msgid ""
+"\n"
+"            <p class=\"card-text\"><small class=\"text-muted\">No account? "
+"Register <a href=\"%(registration_link)s\">here</a>.</small></p>\n"
+"            "
+msgstr ""
+"\n"
+"<p class=\"card-text\"><small class\"text-muted\">Kein Benutzerkonto? "
+"Benutzerkonto <a href=\"%(registration_link)s\"hier</a> erstellen.</small></"
+"p>\n "
+
+#: training_planner/members/templates/members/overview.html:4
+msgid "Member list"
+msgstr "Mitglieder Liste"
+
+#: training_planner/members/templates/members/overview.html:7
+#: training_planner/website/templates/navbar.html:8
+msgid "Members"
+msgstr "Mitglieder"
+
+#: training_planner/members/templates/members/overview.html:13
+#: training_planner/trainings/templates/trainings/overview.html:18
+#: training_planner/trainings/templates/trainings/participation_view.html:26
+msgid "Filter"
+msgstr "Filtern"
+
+#: training_planner/members/templates/members/user_management.html:4
+msgid "Member Administration"
+msgstr "Mitglieder Verwaltung"
+
+#: training_planner/members/templates/members/user_management.html:8
+msgid ""
+"The following buttons reassign groups based on the activity in the previous "
+"15 weeks. Those actions are potentially causing a high load on the database "
+"depending on the number of users. They should such be triggered with care."
+msgstr ""
+"Die nachfolgenden Schaltflächen weisen die Gruppen auf Grund der Aktivität "
+"in den letzten 15 Wochen neu zu. Diese Aktualisierungen können je nach "
+"Anzahl der Benutzer eine hohe Last der Datenbank verursachen. Daher sollten "
+"sie nur falls nötig und mit der entsprechenden Sorgfalt verwendet werden."
+
+#: training_planner/members/templates/members/user_management.html:13
+msgid "Active Participants"
+msgstr "Aktive Teilnehmer"
+
+#: training_planner/members/templates/members/user_management.html:17
+msgid "Active Trainers"
+msgstr "Aktiver Trainer"
+
+#: training_planner/members/templates/members/user_management.html:21
+msgid "Trainers"
+msgstr "Trainer"
+
+#: training_planner/members/views.py:57 training_planner/members/views.py:181
+msgid "The editing of user details is not currently supported."
+msgstr "Das Bearbeiten von Benutzerdaten ist aktuell nicht möglich."
+
+#: training_planner/members/views.py:78
+msgid "Username and password do not match a valid user."
+msgstr "Benutzername und Passwort gehören zu keinem gültigen Benutzer."
+
+#: training_planner/members/views.py:102
+msgid "Registration on training.judo-club-uster.ch"
+msgstr "Anmeldung auf training.judo-club-uster.ch"
+
+#: training_planner/members/views.py:121
+msgid "The account has been created. Please check your inbox."
+msgstr "Das Benutzerkonto wurde erstellt. Bitte überprüfe Deinen Posteingang."
+
+#: training_planner/members/views.py:193
+msgid "Update Active Participants"
+msgstr "Aktive Teilnehmer aktualisieren"
+
+#: training_planner/members/views.py:196
+msgid "Update Active Trainer"
+msgstr "Aktive Trainer aktualisieren"
+
+#: training_planner/members/views.py:199
+msgid "Update Trainer"
+msgstr "Trainer aktualisieren"
+
+#: training_planner/trainings/decorators.py:34
+msgid "Only trainers may access this area."
+msgstr "Nur Trainer dürfen auf diesen Bereich zugreifen."
+
+#: training_planner/trainings/decorators.py:48
+msgid "Only administrators may access this area."
+msgstr "Nur Administratoren dürfen auf diesen Bereich zugreifen."
+
+#: training_planner/trainings/decorators.py:64
+msgid "Only trainers and administrators may access this area."
+msgstr "Nur Trainer und Administratoren dürfen auf diesen Bereich zugreifen."
+
+#: training_planner/trainings/decorators.py:78
+msgid "Only administrators and the respective trainers may access this area."
+msgstr ""
+"Nur Administratoren und der entsprechende Trainer dürfen auf diesen Bereich "
+"zugreifen"
+
+#: training_planner/trainings/filter.py:10
+#: training_planner/trainings/models.py:68
+msgid "Title"
+msgstr "Bezeichnung"
+
+#: training_planner/trainings/filter.py:15
+#: training_planner/trainings/models.py:60
+#: training_planner/trainings/models.py:89
+#: training_planner/trainings/templates/trainings/overview.html:32
+msgid "Target Group"
+msgstr "Zielgruppe"
+
+#: training_planner/trainings/forms.py:57
+#: training_planner/trainings/forms.py:162
+msgid "Choose main instructor"
+msgstr "Haupttrainer auswählen"
+
+#: training_planner/trainings/forms.py:57
+#: training_planner/trainings/forms.py:162
+msgid "Main instructor"
+msgstr "Haupttrainer"
+
+#: training_planner/trainings/forms.py:60
+#: training_planner/trainings/forms.py:165
+#: training_planner/trainings/models.py:82
+#: training_planner/trainings/templates/trainings/overview_held_trainings.html:38
+msgid "Instructor"
+msgstr "Assistenztrainer"
+
+#: training_planner/trainings/forms.py:125
+#: training_planner/trainings/forms.py:131
+#: training_planner/trainings/forms.py:266
+#: training_planner/trainings/forms.py:272
+#: training_planner/trainings/forms.py:405
+#: training_planner/trainings/forms.py:411
+#: training_planner/trainings/forms.py:428
+#: training_planner/trainings/forms.py:434
+msgid "Please hold down <Ctrl> to change the selection."
+msgstr "Bitte <Ctrl> gedrückt halten, um die Auswahl zu ändern."
+
+#: training_planner/trainings/forms.py:135
+#: training_planner/trainings/forms.py:276
+#: training_planner/trainings/forms.py:415
+msgid ""
+"\n"
+"                        <p class=\"col-auto my-4 text-muted\">\n"
+"                        Please hold down &langle;<strong>Ctrl</"
+"strong>&rangle;\n"
+"                        to change the selection.</p>\n"
+"                        "
+msgstr ""
+"\n"
+"<p class=\"col-auto my-4 text-muted\">\n"
+"Bitte &langle;<strong>Ctrl</strong>&rangle; gedrückt halten, um die Auswahl "
+"zu ändern.</p>\n "
+
+#: training_planner/trainings/forms.py:152
+msgid "Create Training"
+msgstr "Training erstellen"
+
+#: training_planner/trainings/forms.py:293
+#: training_planner/trainings/forms.py:475
+#: training_planner/trainings/forms.py:534
+msgid "Save"
+msgstr "Speichern"
+
+#: training_planner/trainings/forms.py:438
+msgid ""
+"\n"
+"                        <p class=\"col-auto my-4 text-muted\">\n"
+"                        Please hold down &langle;<strong>Ctrl</"
+"strong>&rangle;\n"
+"                        to change the the selection.</p>\n"
+"                        "
+msgstr ""
+"\n"
+"<p class=\"col-auto my-4 text-muted\">\n"
+"Bitte &langle;<strongCtrl</strong>&rangle;\n"
+"gedrückt halten, um die Auswahl zu ändern.</p>\n "
+
+#: training_planner/trainings/forms.py:496
+msgid "Dates"
+msgstr "Daten"
+
+#: training_planner/trainings/forms.py:515
+msgid ""
+"\n"
+"                    <p class=\"my-3\">Create further trainings like "
+"{{training}}\n"
+"                    starting at {{training.start}}.<br />\n"
+"                    Please select the dates below. To not select todays "
+"date,\n"
+"                    finish your selection, reopen the widget and deselect\n"
+"                    today.</p>\n"
+"                    "
+msgstr ""
+"\n"
+"<p class=\"my-3\">Weitere Trainings zu {{training}} vom {{training.start}} "
+"erstellen.<br />Bitte die Daten der Trainings auswählen. Um das heutige "
+"Datum nicht auszuwählen, tätige die Auswahl, öffne den Kalendar erneut und "
+"wähle das heutige Datum ab.</p>\n "
+
+#: training_planner/trainings/models.py:14
+msgid "Street"
+msgstr "Strasse"
+
+#: training_planner/trainings/models.py:16
+msgid "House number"
+msgstr "Hausnummer"
+
+#: training_planner/trainings/models.py:18
+msgid "Postal code"
+msgstr "Postleitzahl"
+
+#: training_planner/trainings/models.py:19
+msgid "City"
+msgstr "Stadt"
+
+#: training_planner/trainings/models.py:21
+msgid "Country"
+msgstr "Land"
+
+#: training_planner/trainings/models.py:24
+msgid "Address"
+msgstr "Adresse"
+
+#: training_planner/trainings/models.py:25
+msgid "Addresses"
+msgstr "Adressen"
+
+#: training_planner/trainings/models.py:36
+#: training_planner/trainings/models.py:57
+#: training_planner/trainings/models.py:69
+#: training_planner/trainings/templates/trainings/details.html:54
+#: training_planner/trainings/templates/trainings/details_admin.html:56
+msgid "Description"
+msgstr "Beschreibung"
+
+#: training_planner/trainings/models.py:40
+#: training_planner/trainings/models.py:92
+msgid "Capacity (number of people)"
+msgstr "Kapazität (Anzahl Personen)"
+
+#: training_planner/trainings/models.py:43
+#: training_planner/trainings/templates/trainings/overview.html:33
+#: training_planner/trainings/templates/trainings/overview_held_trainings.html:15
+#: training_planner/trainings/templates/trainings/overview_held_trainings.html:45
+msgid "Location"
+msgstr "Ort"
+
+#: training_planner/trainings/models.py:44
+msgid "Locations"
+msgstr "Orte"
+
+#: training_planner/trainings/models.py:61
+msgid "Target Groups"
+msgstr "Zielgruppen"
+
+#: training_planner/trainings/models.py:70
+#: training_planner/trainings/templates/trainings/overview.html:30
+#: training_planner/trainings/templates/trainings/overview_held_trainings.html:14
+#: training_planner/trainings/templates/trainings/overview_held_trainings.html:44
+msgid "Start"
+msgstr "Beginn"
+
+#: training_planner/trainings/models.py:74
+msgid "Duration (min.)"
+msgstr "Dauer (min.)"
+
+#: training_planner/trainings/models.py:79
+#: training_planner/trainings/templates/trainings/details.html:30
+#: training_planner/trainings/templates/trainings/details_admin.html:32
+#: training_planner/trainings/templates/trainings/message.html:19
+#: training_planner/trainings/templates/trainings/overview_held_trainings.html:8
+msgid "Main Instructor"
+msgstr "Haupttrainer"
+
+#: training_planner/trainings/models.py:86
+#: training_planner/trainings/templates/trainings/details.html:46
+#: training_planner/trainings/templates/trainings/details_admin.html:48
+#: training_planner/trainings/templates/trainings/overview.html:35
+#: training_planner/trainings/templates/trainings/overview_held_trainings.html:17
+#: training_planner/trainings/templates/trainings/overview_held_trainings.html:47
+msgid "Coordinator"
+msgstr "Koordinator"
+
+#: training_planner/trainings/models.py:95
+msgid "Registered Participants"
+msgstr "Angemeldete Teilnehmer"
+
+#: training_planner/trainings/models.py:98
+#: training_planner/trainings/templates/trainings/details.html:66
+#: training_planner/trainings/templates/trainings/details_admin.html:68
+#: training_planner/trainings/templates/trainings/details_controlling.html:38
+#: training_planner/trainings/templates/trainings/message.html:38
+#: training_planner/trainings/templates/trainings/participation_view.html:15
+msgid "Participants"
+msgstr "Teilnehmer"
+
+#: training_planner/trainings/models.py:99
+msgid "Deleted"
+msgstr "Gelöscht"
+
+#: training_planner/trainings/models.py:100
+msgid "Archived"
+msgstr "Archiviert"
+
+#: training_planner/trainings/models.py:102
+msgid "Registration opening"
+msgstr "Anmeldebeginn"
+
+#: training_planner/trainings/models.py:104
+msgid "Registration closing"
+msgstr "Anmeldeschluss"
+
+#: training_planner/trainings/models.py:107
+msgid "Training"
+msgstr "Training"
+
+#: training_planner/trainings/models.py:108
+#: training_planner/trainings/templates/trainings/overview.html:7
+#: training_planner/trainings/templates/trainings/overview_held_trainings.html:7
+#: training_planner/website/templates/navbar.html:4
+msgid "Trainings"
+msgstr "Trainings"
+
+#: training_planner/trainings/templates/trainings/details.html:12
+#: training_planner/trainings/templates/trainings/details_admin.html:12
+msgid "Unregister"
+msgstr "Abmeldet"
+
+#: training_planner/trainings/templates/trainings/details.html:18
+#: training_planner/trainings/templates/trainings/details_admin.html:20
+#: training_planner/trainings/templates/trainings/details_controlling.html:12
+#: training_planner/website/templates/website/deleteConfirmation.html:6
+#: training_planner/website/templates/website/deleteConfirmation.html:29
+msgid "Delete"
+msgstr "Löschen"
+
+#: training_planner/trainings/templates/trainings/details.html:27
+#: training_planner/trainings/templates/trainings/details_admin.html:29
+#: training_planner/trainings/templates/trainings/overview.html:28
+msgid "Date"
+msgstr "Datum"
+
+#: training_planner/trainings/templates/trainings/details.html:28
+#: training_planner/trainings/templates/trainings/details_admin.html:30
+msgid "Time"
+msgstr "Zeit"
+
+#: training_planner/trainings/templates/trainings/details.html:29
+#: training_planner/trainings/templates/trainings/details_admin.html:31
+#: training_planner/trainings/templates/trainings/overview.html:31
+msgid "Duration"
+msgstr "Dauer"
+
+#: training_planner/trainings/templates/trainings/details.html:29
+#: training_planner/trainings/templates/trainings/details_admin.html:31
+msgid "minutes"
+msgstr "Minuten"
+
+#: training_planner/trainings/templates/trainings/details.html:33
+#: training_planner/trainings/templates/trainings/details_admin.html:35
+msgid "Further Instructors"
+msgstr "Weitere Trainer"
+
+#: training_planner/trainings/templates/trainings/details.html:46
+#: training_planner/trainings/templates/trainings/details_admin.html:48
+msgid ""
+"You will get further information just before the training. If you cannot "
+"make it, please contact the respective trainer. In case of any questions, "
+"contact Aline Steinbrecher at (<a href=\"tel:0041792959637\">079 296 96 37</"
+"a>)"
+msgstr ""
+"Du erhälst weitere Informationen kurz vor dem Training. Wenn Du nicht kommen "
+"kannt, kontaktiere bitte den zuständigen Trainer. Falls Du FRagen hast, "
+"melde Dich bitte bei Aline Steinbrecher unter (< href="
+"\"tel:0041792959637\">079 296 96 37</a>)"
+
+#: training_planner/trainings/templates/trainings/details.html:72
+#: training_planner/trainings/templates/trainings/details_admin.html:74
+#: training_planner/trainings/templates/trainings/details_controlling.html:27
+msgid "No registrations yet"
+msgstr "Bisher keine Anmeldungen"
+
+#: training_planner/trainings/templates/trainings/details_admin.html:17
+msgid "Mail"
+msgstr "Mail"
+
+#: training_planner/trainings/templates/trainings/details_admin.html:18
+msgid "Series"
+msgstr "Serie"
+
+#: training_planner/trainings/templates/trainings/details_controlling.html:17
+msgid "Registered"
+msgstr "Angemeldet"
+
+#: training_planner/trainings/templates/trainings/details_controlling.html:44
+msgid "No participants confirmed"
+msgstr "Keine Teilnehmer bestätigt"
+
+#: training_planner/trainings/templates/trainings/message.html:4
+msgid "Message to Participants"
+msgstr "Nachricht an Teilnehmer"
+
+#: training_planner/trainings/templates/trainings/message.html:10
+msgid ""
+"With the following form you can send information to everyone involved in the "
+"training."
+msgstr ""
+"Mit dem folgenden Formular können Informationen an alle Beteiligten für das "
+"Training verschickt werden."
+
+#: training_planner/trainings/templates/trainings/message.html:16
+msgid "Select recipients:"
+msgstr "Empfänger auswählen:"
+
+#: training_planner/trainings/templates/trainings/message.html:27
+msgid "Instructors"
+msgstr "Assitenztrainer"
+
+#: training_planner/trainings/templates/trainings/message.html:48
+msgid "Copy to sender"
+msgstr "Kopie an Absender"
+
+#: training_planner/trainings/templates/trainings/message.html:50
+msgid "Copy to myself"
+msgstr "Kopie an mich selbst"
+
+#: training_planner/trainings/templates/trainings/message.html:59
+msgid "Write message"
+msgstr "Nachricht schreiben"
+
+#: training_planner/trainings/templates/trainings/message.html:63
+msgid "Subject"
+msgstr "Betreff"
+
+#: training_planner/trainings/templates/trainings/message.html:68
+msgid "Salutation"
+msgstr "Anrede"
+
+#: training_planner/trainings/templates/trainings/message.html:68
+#: training_planner/trainings/views.py:306
+msgid "Dear"
+msgstr "Hallo"
+
+#: training_planner/trainings/templates/trainings/message.html:72
+msgid "Text of the message"
+msgstr "Text der Nachricht"
+
+#: training_planner/trainings/templates/trainings/message.html:72
+msgid "Message..."
+msgstr "Nachricht..."
+
+#: training_planner/trainings/templates/trainings/overview.html:4
+#: training_planner/trainings/templates/trainings/overview_held_trainings.html:4
+msgid "Training Overview"
+msgstr "Trainingsüberblick"
+
+#: training_planner/trainings/templates/trainings/overview.html:29
+#: training_planner/trainings/templates/trainings/overview_held_trainings.html:13
+#: training_planner/trainings/templates/trainings/overview_held_trainings.html:43
+msgid "Weekday"
+msgstr "Wochentag"
+
+#: training_planner/trainings/templates/trainings/overview.html:36
+msgid "Registrations"
+msgstr "Anmeldungen"
+
+#: training_planner/trainings/templates/trainings/overview.html:45
+msgctxt "abbreviation for minutes"
+msgid "min."
+msgstr "Min."
+
+#: training_planner/trainings/templates/trainings/overview.html:61
+#: training_planner/trainings/templates/trainings/overview_held_trainings.html:28
+#: training_planner/trainings/templates/trainings/overview_held_trainings.html:58
+msgid "open"
+msgstr "offen"
+
+#: training_planner/trainings/templates/trainings/overview.html:63
+msgid "registered"
+msgstr "angemeldet"
+
+#: training_planner/trainings/templates/trainings/overview_held_trainings.html:18
+#: training_planner/trainings/templates/trainings/overview_held_trainings.html:48
+msgid "Participation"
+msgstr "Teilnahme"
+
+#: training_planner/trainings/templates/trainings/overview_held_trainings.html:33
+#: training_planner/trainings/templates/trainings/overview_held_trainings.html:63
+msgid "No trainings found"
+msgstr "Keine Trainings gefunden"
+
+#: training_planner/trainings/templates/trainings/participation_view.html:4
+msgid "Participation Statistics"
+msgstr "Teilnehmer Statistik"
+
+#: training_planner/trainings/templates/trainings/participation_view.html:22
+msgid "Year"
+msgstr "Jahr"
+
+#: training_planner/trainings/templates/trainings/participation_view.html:40
+msgid "Trainings in calendar week"
+msgstr "Trainings in Kalenderwoche"
+
+#: training_planner/trainings/templates/trainings/participation_view.html:96
+msgid "Total"
+msgstr "Total"
+
+#: training_planner/trainings/templates/trainings/trainingForm.html:4
+msgid "Training Form"
+msgstr "Trainings Formular"
+
+#: training_planner/trainings/views.py:89
+msgid "You were successfully registered."
+msgstr "Du wurdest erfolgreich angemeldet."
+
+#: training_planner/trainings/views.py:91
+msgid "Registration failed."
+msgstr "Anmeldung fehlgeschlagen."
+
+#: training_planner/trainings/views.py:107
+msgid "Sign-off failed."
+msgstr "Abmeldung fehlgeschlagen."
+
+#: training_planner/trainings/views.py:116
+msgid "Thank you for coordinating the entrance."
+msgstr "Danke für das Koordinieren des Einlasses."
+
+#: training_planner/trainings/views.py:117
+msgid "There is already another coordinator registered."
+msgstr "Es ist bereits jemand anderes als Koordinator angemeldet."
+
+#: training_planner/trainings/views.py:118
+msgid "The coordinator cannot be the main instructor."
+msgstr "Der Koordinator kann nicht der Haupttrainer sein."
+
+#: training_planner/trainings/views.py:128
+msgid "Coordinator removed successfully."
+msgstr "Koordinator erfolgreich entfernt."
+
+#: training_planner/trainings/views.py:141
+msgid "Training added successfully."
+msgstr "Training erfolgreich erstellt."
+
+#: training_planner/trainings/views.py:146
+#: training_planner/trainings/views.py:174
+msgid "Please take care of the highlighted errors."
+msgstr "Bitte kümmere Dich um die hervorgehobenen Fehler."
+
+#: training_planner/trainings/views.py:154
+#: training_planner/website/templates/navbar.html:7
+msgid "New Training"
+msgstr "Neues Training"
+
+#: training_planner/trainings/views.py:169
+#: training_planner/trainings/views.py:281
+msgid "Changes saved successfully."
+msgstr "Änderungen erfolgreich gespeichert."
+
+#: training_planner/trainings/views.py:221
+msgid "Create Training Series"
+msgstr "Trainings Serie erstellen"
+
+#: training_planner/trainings/views.py:237
+msgid "Delete Training"
+msgstr "Training löschen"
+
+#: training_planner/trainings/views.py:246
+msgid "You may only access your own trainings."
+msgstr "Du kannst nur auf eigene Trainings zugreifen."
+
+#: training_planner/trainings/views.py:301
+msgid "You cannot send an empty message."
+msgstr "Du kannst keine leere Nachricht verschicken."
+
+#: training_planner/trainings/views.py:340
+msgid "No valid year, showing results for this year."
+msgstr "Kein gültiges Jahr, zeige Ergebnisse für dieses Jahr."
+
+#: training_planner/website/templates/base.html:31
+msgid "Expand navigation"
+msgstr "Navigation ausklappen"
+
+#: training_planner/website/templates/base.html:45
+msgid "Log out"
+msgstr "Abmelden"
+
+#: training_planner/website/templates/base.html:60
+msgid "Close"
+msgstr "Schliessen"
+
+#: training_planner/website/templates/navbar.html:6
+msgid "Trainings Control"
+msgstr "Trainings Kontrolle"
+
+#: training_planner/website/templates/navbar.html:11
+msgid "Statistics"
+msgstr "Statistik"
+
+#: training_planner/website/templates/navbar.html:14
+msgid "Administration"
+msgstr "Administration"
+
+#: training_planner/website/templates/website/deleteConfirmation.html:13
+msgid "Should the following objects be deleted?"
+msgstr "Sollen die folgenden Objekte gelöscht werden?"
+
+#: training_planner/website/templates/website/deleteConfirmation.html:23
+msgid "Should the following object be deleted?"
+msgstr "Soll das folgende Objekt gelöscht werden?"
+
+#: training_planner/website/templates/website/welcome.html:4
+msgid "Training planner - Judo Club Uster"
+msgstr "Trainingsplaner - Judo Club Uster"
+
+#: training_planner/website/templates/website/welcome.html:7
+msgid "Welcome to the trainings plannner of Judo Club Uster!"
+msgstr "Willkommen zum Trainingsplaner des Judo Club Uster!"

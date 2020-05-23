@@ -3,6 +3,7 @@ from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth import get_user_model
 from django.utils import timezone
+from django.utils.formats import date_format
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
@@ -10,18 +11,18 @@ from django.utils.translation import gettext_noop
 
 
 class Address(models.Model):
-    street = models.CharField(max_length=150, verbose_name=_('Strasse'))
+    street = models.CharField(max_length=150, verbose_name=_('Street'))
     house_number = models.CharField(
-        max_length=10, verbose_name=_('Hausnummer'), blank=True, null=True)
+        max_length=10, verbose_name=_('House number'), blank=True, null=True)
     area_code = models.CharField(
-        max_length=15, verbose_name=_('Potsleitzahl'), blank=True, null=True)
-    city = models.CharField(max_length=180, verbose_name=_('Stadt'))
+        max_length=15, verbose_name=_('Postal code'), blank=True, null=True)
+    city = models.CharField(max_length=180, verbose_name=_('City'))
     country = models.CharField(
-        max_length=100, verbose_name=_('Land'), blank=True, null=True)
+        max_length=100, verbose_name=_('Country'), blank=True, null=True)
 
     class Meta:
-        verbose_name = _('Adresse')
-        verbose_name_plural = _('Adressen')
+        verbose_name = _('Address')
+        verbose_name_plural = _('Addresses')
 
     def __str__(self):
         line = f'{self.street} {self.house_number}, {self.area_code} ' \
@@ -32,15 +33,15 @@ class Address(models.Model):
 class Location(models.Model):
     name = models.CharField(max_length=50, verbose_name=_('Name'))
     description = models.TextField(
-        verbose_name=_('Beschreibung'), blank=True, null=True)
+        verbose_name=_('Description'), blank=True, null=True)
     address = models.OneToOneField(
         Address, blank=True, null=True, on_delete=models.CASCADE)
     capacity = models.PositiveSmallIntegerField(
-        verbose_name=_('Kapazität (Anzahl Personen)'), blank=True, null=True)
+        verbose_name=_('Capacity (number of people)'), blank=True, null=True)
 
     class Meta:
-        verbose_name = _('Lokalität')
-        verbose_name_plural = _('Lokalitäten')
+        verbose_name = _('Location')
+        verbose_name_plural = _('Locations')
 
     def __str__(self):
         return self.name
@@ -53,54 +54,54 @@ class Location(models.Model):
 class TargetGroup(models.Model):
     name = models.CharField(max_length=50, verbose_name=_('Name'))
     description = models.TextField(
-        verbose_name=_('Beschreibung'), max_length=500, blank=True, null=True)
+        verbose_name=_('Description'), max_length=500, blank=True, null=True)
 
     class Meta:
-        verbose_name = _('Zielgruppe')
-        verbose_name_plural = _('Zielgruppen')
+        verbose_name = _('Target Group')
+        verbose_name_plural = _('Target Groups')
 
     def __str__(self):
         return self.name
 
 
 class Training(models.Model):
-    title = models.CharField(max_length=100, verbose_name=_('Bezeichnung'))
-    description = models.TextField(verbose_name=_('Beschreibung'), blank=True)
+    title = models.CharField(max_length=100, verbose_name=_('Title'))
+    description = models.TextField(verbose_name=_('Description'), blank=True)
     start = models.DateTimeField(verbose_name=_('Start'))
     duration = models.PositiveSmallIntegerField(validators=[
         MinValueValidator(1),
         MaxValueValidator(240)],
-        verbose_name=_('Dauer (min)'))
+        verbose_name=_('Duration (min.)'))
     location = models.ForeignKey(
         Location, on_delete=models.SET_NULL, blank=True, null=True)
     main_instructor = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT,
-        related_name='instructor', verbose_name=_('Haupttrainer'))
+        related_name='instructor', verbose_name=_('Main Instructor'))
     instructor = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, related_name=_('assistant'),
-        default=None, blank=True, verbose_name=_('Assistenztrainer'))
+        settings.AUTH_USER_MODEL, related_name='assistant',
+        default=None, blank=True, verbose_name=_('Instructor'))
     coordinator = models.ForeignKey(settings.AUTH_USER_MODEL,
                                     on_delete=models.PROTECT,
                                     related_name='coordinated_trainings',
-                                    verbose_name=_('Trainingskoordinator'),
+                                    verbose_name=_('Coordinator'),
                                     null=True, blank=True, default=None)
     target_group = models.ManyToManyField(
-        TargetGroup, verbose_name=_('Zielgruppe'))
+        TargetGroup, verbose_name=_('Target Group'))
     capacity = models.PositiveSmallIntegerField(validators=[
         MinValueValidator(1), MaxValueValidator(50)],
-        verbose_name=_('Kapazität (Anzahl Teilnehmer)'), default=15)
+        verbose_name=_('Capacity (number of people)'), default=15)
     registered_participants = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name='trainings_registered',
-        blank=True, default=None, verbose_name=_('Angemeldete Teilnehmer'))
+        blank=True, default=None, verbose_name=_('Registered Participants'))
     participants = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name='trainings', blank=True,
-        default=None, verbose_name=_('Teilnehmer'))
-    deleted = models.BooleanField(verbose_name=_('Gelöscht'), default=False)
-    archived = models.BooleanField(verbose_name=_('Archiviert'), default=False)
+        default=None, verbose_name=_('Participants'))
+    deleted = models.BooleanField(verbose_name=_('Deleted'), default=False)
+    archived = models.BooleanField(verbose_name=_('Archived'), default=False)
     registration_open = models.DateTimeField(
-        verbose_name=_('Anmeldebeginn'), default=timezone.now)
+        verbose_name=_('Registration opening'), default=timezone.now)
     registration_close = models.DateTimeField(
-        verbose_name=_('Anmeldeschluss'))
+        verbose_name=_('Registration closing'))
 
     class Meta:
         verbose_name = _('Training')
@@ -115,33 +116,55 @@ class Training(models.Model):
 
     @property
     def weekday_as_text(self):
-        return _(self.start.strftime('%A'))
+        return self.start.strftime('%A')
 
     @property
     def starttime_as_text(self):
-        return _(timezone.localtime(self.start).strftime('%H:%M'))
+        return date_format(
+            timezone.localtime(self.start),
+            format='TIME_FORMAT',
+            use_l10n=True,
+        )
 
     @property
     def opentime_as_text(self):
-        return _(timezone.localtime(self.registration_open).strftime('%H:%M'))
+        return date_format(
+            timezone.localtime(self.registration_open),
+            format='TIME_FORMAT',
+            use_l10n=True,
+        )
 
     @property
     def closetime_as_text(self):
-        return _(timezone.localtime(self.registration_close).strftime('%H:%M'))
+        return date_format(
+            timezone.localtime(self.registration_close),
+            format='TIME_FORMAT',
+            use_l10n=True,
+        )
 
     @property
     def startdate_as_text(self):
-        return _(timezone.localtime(self.start).strftime('%d. %B %Y'))
+        return date_format(
+            timezone.localtime(self.start),
+            format='DATE_FORMAT',
+            use_l10n=True,
+        )
 
     @property
     def opendate_as_text(self):
-        return _(timezone.localtime(self.registration_open)
-                 .strftime('%d. %B %Y'))
+        return date_format(
+            timezone.localtime(self.registration_open),
+            format='DATE_FORMAT',
+            use_l10n=True,
+        )
 
     @property
     def closedate_as_text(self):
-        return _(timezone.localtime(self.registration_close)
-                 .strftime('%d. %B %Y'))
+        return date_format(
+            timezone.localtime(self.registration_close),
+            format='DATE_FORMAT',
+            use_l10n=True,
+        )
 
     @property
     def target_groups_as_text(self):

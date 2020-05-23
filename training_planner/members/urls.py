@@ -5,7 +5,8 @@ from . import views as members
 
 urlpatterns = [
     path('', members.all, name='members-all'),
-    path(_('verwaltung'), members.user_management, name='user-management'),
-    path('<int:id>', members.details, name='member-details'),
-    path(_('<int:id>/bearbeiten'), members.edit, name='member-edit'),
+    path(f'{_("management/")}',
+         members.user_management, name='user-management'),
+    path('<int:id>/', members.details, name='member-details'),
+    path(f'<int:id>/{_("edit")}/', members.edit, name='member-edit'),
 ]

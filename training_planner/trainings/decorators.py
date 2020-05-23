@@ -31,7 +31,7 @@ def trainer_only(view_func):
             return view_func(request, *args, **kwargs)
         else:
             messages.info(
-                request, _('Nur Trainer dürfen auf diesen Bereich zugreifen.'))
+                request, _('Only trainers may access this area.'))
             return redirect('trainings-overview')
     return wrapper_func
 
@@ -45,7 +45,7 @@ def admin_only(view_func):
         else:
             messages.info(
                 request,
-                _('Nur Administratoren dürfen auf diesen Bereich zugreifen.')
+                _('Only administrators may access this area.')
             )
             return redirect('trainings-overview')
     return wrapper_func
@@ -61,8 +61,7 @@ def trainer_or_admin_only(view_func):
         else:
             messages.info(
                 request,
-                _('Dieser Bereich ist nur für Trainer und Administratoren '
-                  'zugänglich.')
+                _('Only trainers and administrators may access this area.')
             )
             return redirect('trainings-overview')
     return wrapper_func
@@ -76,8 +75,8 @@ def protect_training(view_func):
         else:
             messages.info(
                 request,
-                _('Nur die zuständigen Trainer und Administratoren dürfen '
-                  'auf diesen Bereich zugreifen.')
+                _('Only administrators and the respective trainers may access '
+                  'this area.')
             )
             return redirect('trainings-overview')
     return wrapper_func

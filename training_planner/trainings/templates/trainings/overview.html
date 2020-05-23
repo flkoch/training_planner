@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% block title %}
-{% trans "Trainingsübersicht" %}
+{% trans "Training Overview" %}
 {% endblock title %}
 {% block content %}
 <h1>{% trans "Trainings" %}</h1>
@@ -15,7 +15,7 @@
                 </div>
             {% endfor %}
             <button class="btn btn-primary" type="submit">
-            {% trans "Filtern" %}
+            {% trans "Filter" %}
             </button>
         </form>
     </div>
@@ -25,15 +25,15 @@
 <table class="table">
     <thead>
     <tr>
-        <th class="d-none-d-xl-table-cell">{% trans "Datum" %}</th>
-        <th>{% trans "Wochentag" %}</th>
+        <th class="d-none-d-xl-table-cell">{% trans "Date" %}</th>
+        <th>{% trans "Weekday" %}</th>
         <th>{% trans "Start" %}</th>
-        <th class="d-none d-lg-table-cell">{% trans "Dauer" %}</th>
-        <th class="d-none d-md-table-cell">{% trans "Zielgruppe" %}</th>
-        <th class="d-none d-sm-table-cell">{% trans "Ort" %}</th>
+        <th class="d-none d-lg-table-cell">{% trans "Duration" %}</th>
+        <th class="d-none d-md-table-cell">{% trans "Target Group" %}</th>
+        <th class="d-none d-sm-table-cell">{% trans "Location" %}</th>
         <th>{% trans "Trainer" %}</th>
-        <th class="d-none d-lg-table-cell">{% trans "Koordinator" %}</th>
-        <th colspan="2">{% trans "Anmeldungen" %}</th>
+        <th class="d-none d-lg-table-cell">{% trans "Coordinator" %}</th>
+        <th colspan="2">{% trans "Registrations" %}</th>
     </tr>
     </thead>
     <tbody>
@@ -58,9 +58,9 @@
         </td>
         <td class="align-middle d-none d-sm-table-cell">{% if training.location %}{{training.location}}{% else %}&mdash;{% endif %}</td>
         <td class="align-middle">{{training.main_instructor}}</td>
-        <td class="align-middle d-none d-lg-table-cell">{% if training.coordinator %}{{training.coordinator.get_public_name}}{% else %}{% trans "offen" %}{% endif %}</td>
+        <td class="align-middle d-none d-lg-table-cell">{% if training.coordinator %}{{training.coordinator.get_public_name}}{% else %}{% trans "open" %}{% endif %}</td>
         <td class="align-middle">{{training.registered_participants.all.count}}/{{training.capacity}}</td>
-        <td class="align-middle d-none d-sm-table-cell">{% if training.can_edit %}<a href="{% url 'trainings-edit' training.id %}" class="btn btn-warning btn-sm ml-3">{% trans "Bearbeiten" %}</a>{% elif training.is_registered %}<span class="oi oi-check ml-3 text-success" title="{% trans 'angemeldet' %}%" aria-hidden="true"></span>{% elif training.can_register %}<a href="{% url 'trainings-register' training.id %}" class="btn btn-primary btn-sm ml-3">{% trans "Anmelden" %}</a>{% endif %}</td>
+        <td class="align-middle d-none d-sm-table-cell">{% if training.can_edit %}<a href="{% url 'trainings-edit' training.id %}" class="btn btn-warning btn-sm ml-3">{% trans "Edit" %}</a>{% elif training.is_registered %}<span class="oi oi-check ml-3 text-success" title="{% trans 'registered' %}%" aria-hidden="true"></span>{% elif training.can_register %}<a href="{% url 'trainings-register' training.id %}" class="btn btn-primary btn-sm ml-3">{% trans "Register" %}</a>{% endif %}</td>
     </tr>
     {% endfor %}
     </tbody>

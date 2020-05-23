@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags i18n %}
 {% block title %}
-{% trans "Mitglieder Liste" %}
+{% trans "Member list" %}
 {% endblock %}
 {% block content %}
-<h1>{% trans "Mitglieder" %}</h1>
+<h1>{% trans "Members" %}</h1>
 <div class="card">
     <div class="card-body">
         <form method="get" class="form-inline">
             {{myFilter.form|crispy}}
             <button class="btn btn-primary" type="submit">
-            {% trans "Filtern" %}
+            {% trans "Filter" %}
             </button>
         </form>
     </div>
@@ -19,11 +19,11 @@
 <table class="table">
     <thead>
     <tr>
-        <th>{% trans "Vorname" %}</th>
-        <th>{% trans "Nachname" %}</th>
-        <th>{% trans "Benutzername" %}</th>
-        <th>{% trans "E-Mail" %}</th>
-        <th>{% trans "Gruppen" %}</th>
+        <th>{% trans "First name" %}</th>
+        <th>{% trans "Last name" %}</th>
+        <th>{% trans "Username" %}</th>
+        <th>{% trans "E-mail" %}</th>
+        <th>{% trans "Groups" %}</th>
         <th></th>
     </tr>
     </thead>

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n static crispy_forms_tags %}
 {% block title %}
-{% trans "Teilnehmer Statistik" %}
+{% trans "Participation Statistics" %}
 {% endblock title %}
 {% block additionalStyles %}
     <link rel="stylesheet" href="{% static 'css/bootstrap-table.min.css' %}"/>
@@ -12,18 +12,18 @@
     <script src="{% static 'js/bootstrap-table-fixed-columns.min.js' %}"></script>
 {% endblock additionalScripts %}
 {% block content %}
-<h1>{% trans "Teilnehmer" %}</h1>
+<h1>{% trans "Participants" %}</h1>
 <div class="card">
     <div class="card-body">
         <form method="get" class="form-inline">
             <div class="form-row col-12">
                 {{myFilter.form|crispy}}
                 <div class="col-auto">
-                    <input type="number" class="form-control" placeholder="{% trans 'Jahr' %}" aria-label="{% trans 'Jahr' %}" min="1" max="9999" name="year" value="{{year}}">
+                    <input type="number" class="form-control" placeholder="{% trans 'Year' %}" aria-label="{% trans 'Year' %}" min="1" max="9999" name="year" value="{{year}}">
                 </div>
                 <div class="col-auto">
                     <button class="btn btn-primary" type="submit">
-                        {% trans "Filtern" %}
+                        {% trans "Filter" %}
                     </button>
                 </div>
             </div>
@@ -34,10 +34,10 @@
 <table class="table table-hover" data-toggle="table" data-fixed-columns="true" data-fixed-number="3">
     <thead>
     <tr>
-        <th class="align-middle" rowspan="2">{% trans "Vorname" %}</th>
-        <th class="align-middle" rowspan="2">{% trans "Nachname" %}</th>
-        <th class="align-middle" rowspan="2">{% trans "Benutzername" %}</th>
-        <th colspan="54" class="text-center">{% trans "Trainings in KW" %}</th>
+        <th class="align-middle" rowspan="2">{% trans "First name" %}</th>
+        <th class="align-middle" rowspan="2">{% trans "Last name" %}</th>
+        <th class="align-middle" rowspan="2">{% trans "Username" %}</th>
+        <th colspan="54" class="text-center">{% trans "Trainings in calendar week" %}</th>
     </tr>
     <tr>
         <th class="text-right">1</th>

@@ -8,9 +8,9 @@ import datetime
 
 class User(AbstractUser):
     birth_date = models.DateField(
-        verbose_name=_('Geburtsdatum'), null=True, blank=True)
+        verbose_name=_('Date of Birth'), null=True, blank=True)
     initials = models.CharField(
-        max_length=3, verbose_name=_('Initialen'), null=True, blank=True)
+        max_length=3, verbose_name=_('Initials'), null=True, blank=True)
 
     def __str__(self):
         full_name = self.get_full_name()
