@@ -24,9 +24,7 @@
             <p class="card-text"><small class="text-muted">{% trans "Forgotten your password" %} <a href="{% url 'password_reset' %}">{% trans "Reset your password." %}</a></small></p>
             {% endif %}
             {% url 'register' as registration_link %}
-            {% blocktrans %}
-            <p class="card-text"><small class="text-muted">No account? Register <a href="{{ registration_link }}">here</a>.</small></p>
-            {% endblocktrans %}
+            {% blocktrans %}<p class="card-text"><small class="text-muted">No account? Register <a href="{{ registration_link }}">here</a>.</small></p>{% endblocktrans %}
             <button type="submit" class="btn btn-primary">{% trans "Log in" %}</button>
             </form>
         </div>

@@ -69,8 +69,9 @@ class AddTrainingForm(forms.ModelForm):
             attrs={
                 'append': 'fa fa-calendar',
                 'icon_toggle': True,
-            }
-        )
+            },
+        ),
+        label=_('Start'),
     )
 
     class Meta:
@@ -132,20 +133,19 @@ class AddTrainingForm(forms.ModelForm):
                 ),
                 cfl.HTML(
                     _(
-                        '''
-                        <p class="col-auto my-4 text-muted">
-                        Please hold down &langle;<strong>Ctrl</strong>&rangle;
-                        to change the selection.</p>
-                        '''
+                        '<p class="col-auto my-4 text-muted">'
+                        'Please hold down &langle;<strong>Ctrl</strong>'
+                        '&rangle; to change the selection.</p>'
                     )
                 ),
             ),
             cfl.Row(
                 cfl.HTML(
-                    format_lazy('<a href="javascript:history.back()"'
-                                'class="btn btn-secondary mr-3">{back}</a>',
-                                back=_('Back')
-                                )
+                    format_lazy(
+                        '<a href="javascript:history.back()" '
+                        'class="btn btn-secondary mr-3">{back}</a>',
+                        back=_('Back')
+                    )
                 ),
                 cfl.Submit(
                     'submit',
@@ -176,7 +176,8 @@ class TrainingForm(forms.ModelForm):
                 'append': 'fa fa-calendar',
                 'icon_toggle': True,
             }
-        )
+        ),
+        label=_('Registration opening'),
     )
     registration_close = forms.DateTimeField(
         widget=widgets.DateTimePicker(
@@ -191,7 +192,8 @@ class TrainingForm(forms.ModelForm):
                 'append': 'fa fa-calendar',
                 'icon_toggle': True,
             }
-        )
+        ),
+        label=_('Registration closing'),
     )
     start = forms.DateTimeField(
         widget=widgets.DateTimePicker(
@@ -206,7 +208,8 @@ class TrainingForm(forms.ModelForm):
                 'append': 'fa fa-calendar',
                 'icon_toggle': True,
             }
-        )
+        ),
+        label=_('Start'),
     )
 
     class Meta:
@@ -263,30 +266,31 @@ class TrainingForm(forms.ModelForm):
                     'instructor',
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
                     help_text=_(
-                        'Please hold down <Ctrl> to change the selection.'),
+                        'Please hold down <Ctrl> to change the selection.'
+                    ),
                 ),
                 cfl.Field(
                     'target_group',
                     wrapper_class='col-auto',
                     help_text=_(
-                        'Please hold down <Ctrl> to change the selection.'),
+                        'Please hold down <Ctrl> to change the selection.'
+                    ),
                 ),
                 cfl.HTML(
                     _(
-                        '''
-                        <p class="col-auto my-4 text-muted">
-                        Please hold down &langle;<strong>Ctrl</strong>&rangle;
-                        to change the selection.</p>
-                        '''
+                        '<p class="col-auto my-4 text-muted">'
+                        'Please hold down &langle;<strong>Ctrl</strong>'
+                        '&rangle; to change the selection.</p>'
                     )
                 ),
             ),
             cfl.Row(
                 cfl.HTML(
-                    format_lazy('<a href="javascript:history.back()"'
-                                'class="btn btn-secondary mr-3">{back}</a>',
-                                back=_('Back')
-                                )
+                    format_lazy(
+                        '<a href="javascript:history.back()" '
+                        'class="btn btn-secondary mr-3">{back}</a>',
+                        back=_('Back')
+                    )
                 ),
                 cfl.Submit(
                     'submit',
@@ -305,13 +309,13 @@ class AdminTrainingForm(forms.ModelForm):
                 'format': python2moment(settings.DATETIME_INPUT_FORMATS[2]),
                 'sideBySide': True,
                 'extraFormats': python2moment(settings.DATETIME_INPUT_FORMATS),
-
             },
             attrs={
                 'append': 'fa fa-calendar',
                 'icon_toggle': True,
             }
-        )
+        ),
+        label=_('Registration opening'),
     )
     registration_close = forms.DateTimeField(
         widget=widgets.DateTimePicker(
@@ -320,13 +324,13 @@ class AdminTrainingForm(forms.ModelForm):
                 'format': python2moment(settings.DATETIME_INPUT_FORMATS[2]),
                 'sideBySide': True,
                 'extraFormats': python2moment(settings.DATETIME_INPUT_FORMATS),
-
             },
             attrs={
                 'append': 'fa fa-calendar',
                 'icon_toggle': True,
             }
-        )
+        ),
+        label=_('Registration closing'),
     )
     start = forms.DateTimeField(
         widget=widgets.DateTimePicker(
@@ -335,13 +339,13 @@ class AdminTrainingForm(forms.ModelForm):
                 'format': python2moment(settings.DATETIME_INPUT_FORMATS[2]),
                 'sideBySide': True,
                 'extraFormats': python2moment(settings.DATETIME_INPUT_FORMATS),
-
             },
             attrs={
                 'append': 'fa fa-calendar',
                 'icon_toggle': True,
             }
-        )
+        ),
+        label=_('Start'),
     )
 
     class Meta:
@@ -402,21 +406,21 @@ class AdminTrainingForm(forms.ModelForm):
                     'instructor',
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
                     help_text=_(
-                        'Please hold down <Ctrl> to change the selection.'),
+                        'Please hold down <Ctrl> to change the selection.'
+                    ),
                 ),
                 cfl.Field(
                     'target_group',
                     wrapper_class='col-auto',
                     help_text=_(
-                        'Please hold down <Ctrl> to change the selection.'),
+                        'Please hold down <Ctrl> to change the selection.'
+                    ),
                 ),
                 cfl.HTML(
                     _(
-                        '''
-                        <p class="col-auto my-4 text-muted">
-                        Please hold down &langle;<strong>Ctrl</strong>&rangle;
-                        to change the selection.</p>
-                        '''
+                        '<p class="col-auto my-4 text-muted">'
+                        'Please hold down &langle;<strong>Ctrl</strong>'
+                        '&rangle; to change the selection.</p>'
                     )
                 ),
             ),
@@ -425,21 +429,21 @@ class AdminTrainingForm(forms.ModelForm):
                     'registered_participants',
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
                     help_text=_(
-                        'Please hold down <Ctrl> to change the selection.'),
+                        'Please hold down <Ctrl> to change the selection.'
+                    ),
                 ),
                 cfl.Field(
                     'participants',
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
                     help_text=_(
-                        'Please hold down <Ctrl> to change the selection.'),
+                        'Please hold down <Ctrl> to change the selection.'
+                    ),
                 ),
                 cfl.HTML(
                     _(
-                        '''
-                        <p class="col-auto my-4 text-muted">
-                        Please hold down &langle;<strong>Ctrl</strong>&rangle;
-                        to change the the selection.</p>
-                        '''
+                        '<p class="col-auto my-4 text-muted">'
+                        'Please hold down &langle;<strong>Ctrl</strong>'
+                        '&rangle; to change the selection.</p>'
                     )
                 ),
             ),
@@ -465,10 +469,11 @@ class AdminTrainingForm(forms.ModelForm):
             ),
             cfl.Row(
                 cfl.HTML(
-                    format_lazy('<a href="javascript:history.back()"'
-                                'class="btn btn-secondary mr-3">{back}</a>',
-                                back=_('Back')
-                                )
+                    format_lazy(
+                        '<a href="javascript:history.back()" '
+                        'class="btn btn-secondary mr-3">{back}</a>',
+                        back=_('Back')
+                    )
                 ),
                 cfl.Submit(
                     'submit',
@@ -512,22 +517,21 @@ class TrainingSeriesForm(forms.ModelForm):
         self.helper.layout = cfl.Layout(
             cfl.HTML(
                 _(
-                    '''
-                    <p class="my-3">Create further trainings like {{training}}
-                    starting at {{training.start}}.<br />
-                    Please select the dates below. To not select todays date,
-                    finish your selection, reopen the widget and deselect
-                    today.</p>
-                    '''
+                    '<p class="my-3">Create further trainings like '
+                    '{{training}} starting at {{training.start}}.<br />'
+                    'Please select the dates below. To not select todays '
+                    'date, finish your selection, reopen the widget and '
+                    'deselect today.</p>'
                 )
             ),
             'dates',
             cfl.Row(
                 cfl.HTML(
-                    format_lazy('<a href="javascript:history.back()"'
-                                'class="btn btn-secondary mr-3">{back}</a>',
-                                back=_('Back')
-                                )
+                    format_lazy(
+                        '<a href="javascript:history.back()" '
+                        'class="btn btn-secondary mr-3">{back}</a>',
+                        back=_('Back')
+                    )
                 ),
                 cfl.Submit(
                     'submit',

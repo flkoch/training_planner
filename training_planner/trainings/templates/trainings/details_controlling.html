@@ -27,7 +27,7 @@
                         <div class="list-group-item border-0">{% trans "No registrations yet" %}</div>
                     {% endfor %}
                     {% if training.registered_participants.all.count > 0 %}
-                        <input type="submit" class="btn btn-primary my-3" value="Save"/>
+                        <input type="submit" class="btn btn-primary my-3" value="{% trans 'Save' %}"/>
                     {% endif %}
                 </form>
             </div>

@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
-from django.utils.translation import gettext_noop
 from .models import Training
 
 
@@ -26,7 +25,7 @@ def allowed_users(allowed_roles=[]):
 def trainer_only(view_func):
     def wrapper_func(request, *args, **kwargs):
         if request.user.is_authenticated and \
-            request.user.groups.filter(name=gettext_noop('Trainer')) \
+            request.user.groups.filter(name='Trainer') \
                 .exists():
             return view_func(request, *args, **kwargs)
         else:
@@ -39,7 +38,7 @@ def trainer_only(view_func):
 def admin_only(view_func):
     def wrapper_func(request, *args, **kwargs):
         if request.user.is_authenticated and \
-            request.user.groups.filter(name=gettext_noop('Administrator')) \
+            request.user.groups.filter(name='Administrator') \
                 .exists():
             return view_func(request, *args, **kwargs)
         else:
@@ -55,7 +54,7 @@ def trainer_or_admin_only(view_func):
     def wrapper_func(request, *args, **kwargs):
         if request.user.is_authenticated and \
                 request.user.groups.filter(name__in=[
-                    gettext_noop('Trainer'), gettext_noop('Administrator'),
+                    'Trainer', 'Administrator',
                 ]).exists():
             return view_func(request, *args, **kwargs)
         else:

@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, Group
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from django.utils.translation import gettext_noop
 import datetime
 
 
@@ -54,50 +53,50 @@ class User(AbstractUser):
 
     @property
     def is_trainer(self):
-        return self.groups.filter(name=gettext_noop('Trainer')).exists()
+        return self.groups.filter(name='Trainer').exists()
 
     @property
     def is_active_trainer(self):
-        return self.groups.filter(name=gettext_noop('Active Trainer')).exists()
+        return self.groups.filter(name='Active Trainer').exists()
 
     @property
     def is_participant(self):
-        return self.groups.filter(name=gettext_noop('Participant')).exists()
+        return self.groups.filter(name='Participant').exists()
 
     @property
     def is_active_participant(self):
-        return self.groups.filter(name=gettext_noop('Active Participant')) \
+        return self.groups.filter(name='Active Participant') \
             .exists()
 
     @property
     def is_administrator(self):
-        return self.groups.filter(name=gettext_noop('Administrator')).exists()
+        return self.groups.filter(name='Administrator').exists()
 
 
 def active_participant():
     return User.objects.filter(
-        groups__name=gettext_noop('Active Participant')
-    ).exclude(groups__name=gettext_noop('System'))
+        groups__name='Active Participant'
+    ).exclude(groups__name='System')
 
 
 def participant():
-    return User.objects.filter(groups__name=gettext_noop('Participant')) \
-        .exclude(groups__name=gettext_noop('System'))
+    return User.objects.filter(groups__name='Participant') \
+        .exclude(groups__name='System')
 
 
 def active_trainer():
-    return User.objects.filter(groups__name=gettext_noop('Active Trainer')) \
-        .exclude(groups__name=gettext_noop('System'))
+    return User.objects.filter(groups__name='Active Trainer') \
+        .exclude(groups__name='System')
 
 
 def trainer():
-    return User.objects.filter(groups__name=gettext_noop('Trainer')) \
-        .exclude(groups__name=gettext_noop('System'))
+    return User.objects.filter(groups__name='Trainer') \
+        .exclude(groups__name='System')
 
 
 def check_active_participants(**kwargs):
     users = participant()
-    group = Group.objects.get(name=gettext_noop('Active Participant'))
+    group = Group.objects.get(name='Active Participant')
     active_users = users.filter(
         trainings__start__gte=timezone.now() - datetime.timedelta(**kwargs)
     )
@@ -109,7 +108,7 @@ def check_active_participants(**kwargs):
 
 def check_active_trainers(**kwargs):
     trainers = trainer()
-    group = Group.objects.get(name=gettext_noop('Active Trainer'))
+    group = Group.objects.get(name='Active Trainer')
     time = timezone.now() - datetime.timedelta(**kwargs)
     active_instructors = trainers.filter(instructor__start__gte=time)
     active_assistants = trainers.filter(assistant__start__gte=time)
@@ -126,7 +125,7 @@ def check_trainers(**kwargs):
     time = timezone.now() - datetime.timedelta(**kwargs)
     instructors = User.objects.filter(instructor__start__gte=time)
     assistants = User.objects.filter(assistant__start__gte=time)
-    group = Group.objects.get(name=gettext_noop('Trainer'))
+    group = Group.objects.get(name='Trainer')
     group.user_set.add(
         *instructors.union(assistants).values_list('id', flat=True)
     )

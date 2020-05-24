@@ -6,6 +6,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
 from trainings import decorators
 from .filter import UserFilter
@@ -53,9 +54,7 @@ def account_edit(request):
     }
     messages.info(
         request,
-        _(
-            'The editing of user details is not currently supported.'
-        )
+        _('The editing of user details is not currently supported.')
     )
     return render(request, 'members/editForm.html', context)
 
@@ -100,20 +99,24 @@ def register(request):
                 auth.models.Group, name='Participant'))
             form.save_m2m()
             subject = _('Registration on training.judo-club-uster.ch')
-            message = _(str(
-                f'Hi {user.first_name},\r\nWe are happy to have you on our '
-                'platform, which allows you to register for and participate '
-                'in offered training sessions.\r\nIn order to participate in '
-                'the training sesseions, the follwoign criteria have to be '
-                'fulfilled:\r\n1) You must be registered for the respective '
-                'training.\r\n2) You must have the access form filled and '
-                'signed with you for all sessions.\r\n\r\nPretty simple, is '
-                'it? In case you still have questions, please contact the '
-                'instructor or write an e-mail to info@jcu.ch.\r\nIn addition '
-                'we need a coordinator for each training session. If you can '
-                'do this from time to time everyone does benefit.\r\n\r\nThe '
-                'JCU Trainer-Team wishes you good training sessions'
-            ))
+            message = format_lazy(
+                _(
+                    'Hi {name},\nWe are happy to have you on our '
+                    'platform, which allows you to register for and '
+                    'participate in offered training sessions.\nIn order to '
+                    'participate in the training sesseions, the follwoign '
+                    'criteria have to be fulfilled:\n1) You must be '
+                    'registered for the respective training.\n2) You must '
+                    'have the access form filled and signed with you for all '
+                    'sessions.\n\nPretty simple, is it? In case you still '
+                    'have questions, please contact the instructor or write '
+                    'an e-mail to info@jcu.ch.\nIn addition we need a '
+                    'coordinator for each training session. If you can do '
+                    'this from time to time everyone does benefit.\n\nThe '
+                    'JCU Trainer-Team wishes you good training sessions'
+                ),
+                name=user.first_name
+            )
             send_mail(subject, message, 'no-reply@judo-club-uster.ch',
                       [user.email])
             messages.success(

@@ -5,7 +5,6 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.utils.formats import date_format
 from django.utils.translation import gettext_lazy as _
-from django.utils.translation import gettext_noop
 
 # Create your models here.
 
@@ -73,7 +72,8 @@ class Training(models.Model):
         MaxValueValidator(240)],
         verbose_name=_('Duration (min.)'))
     location = models.ForeignKey(
-        Location, on_delete=models.SET_NULL, blank=True, null=True)
+        Location, on_delete=models.SET_NULL, related_name='trainings',
+        verbose_name=_('Location'), blank=True, null=True)
     main_instructor = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT,
         related_name='instructor', verbose_name=_('Main Instructor'))
@@ -116,7 +116,7 @@ class Training(models.Model):
 
     @property
     def weekday_as_text(self):
-        return self.start.strftime('%A')
+        return date_format(self.start, 'l')
 
     @property
     def starttime_as_text(self):
@@ -190,7 +190,7 @@ class Training(models.Model):
     def can_register(self, user=None):
         if isinstance(user, get_user_model()):
             if self.is_instructor(user) or \
-                not user.groups.filter(name=gettext_noop('Participant')) \
+                not user.groups.filter(name='Participant') \
                     .exists():
                 return False
         return self.during_registration and \
@@ -208,7 +208,7 @@ class Training(models.Model):
 
     def can_edit(self, user):
         return self.is_instructor(user) or \
-            user.groups.filter(name=gettext_noop('Administrator')).exists()
+            user.groups.filter(name='Administrator').exists()
 
     def register(self, user):
         if self.can_register(user):

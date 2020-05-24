@@ -1,4 +1,3 @@
-
 from django.contrib.auth import views as auth_views
 from django.urls import path
 from django.utils.translation import gettext_lazy as _
@@ -6,25 +5,25 @@ from . import views as members
 
 urlpatterns = [
     path('', members.account, name='account'),
-    path(f'{_("login")}/', members.login, name='login'),
-    path(f'{_("logout")}/', members.logout, name='logout'),
-    path(f'{_("register")}/', members.register, name='register'),
-    path(f'{_("edit")}/', members.account_edit, name='account-edit'),
-    path(f'{_("password")}/{_("change")}/',
+    path(_('login/'), members.login, name='login'),
+    path(_('logout/'), members.logout, name='logout'),
+    path(_('register/'), members.register, name='register'),
+    path(_('edit/'), members.account_edit, name='account-edit'),
+    path(_('password/change/'),
          auth_views.PasswordChangeView.as_view(),
          name='password_change'),
-    path(f'{_("password")}/{_("change")}/{_("done")}/',
+    path(_('password/change/done/'),
          auth_views.PasswordChangeDoneView.as_view(),
          name='password_change_done'),
-    path(f'{_("password")}/{_("reset")}/',
+    path(_('password/reset/'),
          auth_views.PasswordResetView.as_view(), name='password_reset'),
-    path(f'{_("password")}/{_("reset")}/{_("done")}/',
+    path(_('password/reset/done/'),
          auth_views.PasswordResetDoneView.as_view(),
          name='password_reset_done'),
-    path(f'{_("password")}/{_("reset")}/<uidb64>/<token>/',
+    path(_('password/reset/<uidb64>/<token>/'),
          auth_views.PasswordResetConfirmView.as_view(),
          name='password_reset_confirm'),
-    path(f'{_("password")}/{_("reset")}/{_("completed")}/',
+    path(_('password/reset/completed/'),
          auth_views.PasswordResetCompleteView.as_view(),
          name='password_reset_complete'),
 ]

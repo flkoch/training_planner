@@ -9,7 +9,6 @@ from django.db.models.functions import ExtractWeek
 from django.utils.text import format_lazy
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from django.utils.translation import gettext_noop
 import datetime
 from members.filter import UserStatisticsFilter
 from .models import Training
@@ -63,17 +62,25 @@ def details(request, id):
     training.can_unregister = training.can_unregister(request.user)
     if training.before_registration:
         messages.info(
-            request, format_lazy('The registration will open on {date:s} at '
-                                 '{time:s}.', date=training.opendate_as_text,
-                                 time=training.opentime_as_text)
+            request,
+            format_lazy(
+                _('The registration will open on {date:s} at {time:s}.'),
+                date=training.opendate_as_text,
+                time=training.opentime_as_text
+            )
         )
     elif training.after_registration:
         messages.info(
-            request, format_lazy(
-                'The registration is closed since {date:s} at {time:s}. '
-                'For short-term registrations or unregistrations please '
-                'contact the trainer.', date=training.closedate_as_text,
-                time=training.closetime_as_text)
+            request,
+            format_lazy(
+                _(
+                    'The registration is closed since {date:s} at {time:s}. '
+                    'For short-term registrations or unregistrations please '
+                    'contact the trainer.'
+                ),
+                date=training.closedate_as_text,
+                time=training.closetime_as_text
+            )
         )
     context = {'training': training}
     if request.user.groups.filter(name="Trainer").exists():
@@ -99,7 +106,7 @@ def unregister(request, id):
         messages.success(
             request,
             format_lazy(
-                'You have been successfully signed off for {training:s}.',
+                _('You have been successfully signed off for {training:s}.'),
                 training=training,
             )
         )
@@ -177,7 +184,7 @@ def edit(request, id):
         form = formClass(instance=training)
     context = {
         'form': form,
-        'title': format_lazy('Edit {training:s}', training=training.title)
+        'title': format_lazy(_('Edit {training:s}'), training=training.title)
     }
     return render(request, 'trainings/trainingForm.html', context)
 
@@ -210,7 +217,10 @@ def make_training_series(request, id):
             training.target_group.add(*target_groups)
         messages.success(
             request,
-            format_lazy('Trainings created on {days:d} days.', days=len(dates))
+            format_lazy(
+                _('Trainings created on {days:d} days.'),
+                days=len(dates)
+            )
         )
         return redirect(overview)
     training = get_object_or_404(Training, id=id)
@@ -231,7 +241,7 @@ def delete(request, id):
         training.save()
         messages.success(
             request,
-            format_lazy('{training} has been deleted', training=training)
+            format_lazy(_('{training} has been deleted'), training=training)
         )
         return redirect(overview)
     context = {'item': training, 'title': _('Delete Training')}
@@ -275,7 +285,7 @@ def controlling(request, id):
         training.participants.clear()
         training.participants.add(*participants)
         group = auth.models.Group.objects.get(
-            name=gettext_noop('Active Participant')
+            name='Active Participant'
         )
         group.user_set.add(*participants)
         messages.success(request, _('Changes saved successfully.'))
@@ -318,7 +328,10 @@ def message(request, id):
         send_mass_mail(mails)
         messages.success(
             request,
-            format_lazy('{user:d} messages have been sent.', user=len(user_id))
+            format_lazy(
+                _('{user:d} messages have been sent.'),
+                user=len(user_id)
+            )
         )
         return redirect('trainings-details', id)
     return render(request, 'trainings/message.html', context)
@@ -343,7 +356,7 @@ def participation_view(request, year=None):
         else:
             year = timezone.now().year
     users = auth.get_user_model().objects.filter(
-        groups__name=gettext_noop('Active Participant')
+        groups__name='Active Participant'
     ).filter(trainings__start__year=year).annotate(
         total_trainings=Count('trainings')
     ).annotate(
