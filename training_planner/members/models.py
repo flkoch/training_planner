@@ -5,6 +5,26 @@ from django.utils.translation import gettext_lazy as _
 import datetime
 
 
+def _participant():
+    return _('Participant')
+
+
+def _active_participant():
+    return _('Active Participant')
+
+
+def _trainer():
+    return _('Trainer')
+
+
+def _active_trainer():
+    return _('Active Trainer')
+
+
+def _administrator():
+    return _('Administrator')
+
+
 class User(AbstractUser):
     birth_date = models.DateField(
         verbose_name=_('Date of Birth'), null=True, blank=True)
@@ -40,6 +60,19 @@ class User(AbstractUser):
                 lastname += name[0] + '. '
             return self.first_name + ' ' + lastname[:-1]
         return self.username
+
+    def get_groups_locale(self):
+        group_names = {
+            'Participant': _participant,
+            'Active Participant': _active_participant,
+            'Trainer': _trainer,
+            'Active Trainer': _active_trainer,
+            'Administrator': _administrator,
+        }
+        groups_locale = [func() for func in [group_names.get(str(group), None)
+                                             for group in self.groups.all()]
+                         if func is not None]
+        return groups_locale
 
     @property
     def name(self):

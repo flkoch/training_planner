@@ -17,7 +17,7 @@
                     {% trans "Name" %}: {{page_user.name}}<br />
                     {% trans "Username" %}: {{page_user.username}}<br />
                     {% trans "E-mail" %}: {{page_user.email}}<br />
-                    {% with groups=page_user.groups.all %}
+                    {% with groups=page_user.get_groups_locale %}
                         {% if groups|length > 0 %}
                             {% trans "Groups" %}:
                             {% for group in groups %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TrainingPlanner\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-24 17:56+0200\n"
+"POT-Creation-Date: 2020-05-24 18:14+0200\n"
 "PO-Revision-Date: 2020-05-23 15:30+0200\n"
 "Last-Translator: Florian Koch <flkoch@dev.fkoch.ch>\n"
 "Language-Team: \n"
@@ -85,11 +85,11 @@ msgstr "Benutzername"
 msgid "E-mail"
 msgstr "E-Mail"
 
-#: training_planner/members/forms.py:23 training_planner/members/models.py:10
+#: training_planner/members/forms.py:23 training_planner/members/models.py:30
 msgid "Date of Birth"
 msgstr "Geburtsdatum"
 
-#: training_planner/members/forms.py:27 training_planner/members/models.py:12
+#: training_planner/members/forms.py:27 training_planner/members/models.py:32
 msgid "Initials"
 msgstr "Initialen"
 
@@ -117,6 +117,29 @@ msgstr "Zurück"
 #: training_planner/trainings/templates/trainings/overview.html:63
 msgid "Register"
 msgstr "Anmelden"
+
+#: training_planner/members/models.py:9
+msgid "Participant"
+msgstr "Teilnehmer"
+
+#: training_planner/members/models.py:13
+msgid "Active Participant"
+msgstr "Aktiver Teilnehmer"
+
+#: training_planner/members/models.py:17
+#: training_planner/trainings/templates/trainings/overview.html:34
+#: training_planner/trainings/templates/trainings/overview_held_trainings.html:16
+#: training_planner/trainings/templates/trainings/overview_held_trainings.html:46
+msgid "Trainer"
+msgstr "Trainer"
+
+#: training_planner/members/models.py:21
+msgid "Active Trainer"
+msgstr "Aktiver Trainer"
+
+#: training_planner/members/models.py:25
+msgid "Administrator"
+msgstr "Administrator"
 
 #: training_planner/members/templates/members/details.html:4
 #: training_planner/members/templates/members/overview.html:50
@@ -727,12 +750,6 @@ msgstr "Trainingsüberblick"
 msgid "Weekday"
 msgstr "Wochentag"
 
-#: training_planner/trainings/templates/trainings/overview.html:34
-#: training_planner/trainings/templates/trainings/overview_held_trainings.html:16
-#: training_planner/trainings/templates/trainings/overview_held_trainings.html:46
-msgid "Trainer"
-msgstr "Trainer"
-
 #: training_planner/trainings/templates/trainings/overview.html:36
 msgid "Registrations"
 msgstr "Anmeldungen"
@@ -971,18 +988,6 @@ msgstr "Trainingsplaner - Judo Club Uster"
 #: training_planner/website/templates/website/welcome.html:7
 msgid "Welcome to the trainings plannner of Judo Club Uster!"
 msgstr "Willkommen zum Trainingsplaner des Judo Club Uster!"
-
-#~ msgid "Active Trainer"
-#~ msgstr "Aktiver Trainer"
-
-#~ msgid "Participant"
-#~ msgstr "Teilnehmer"
-
-#~ msgid "Active Participant"
-#~ msgstr "Aktiver Teilnehmer"
-
-#~ msgid "Administrator"
-#~ msgstr "Administrator"
 
 #~ msgid "System"
 #~ msgstr "System"
