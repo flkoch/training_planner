@@ -13,10 +13,6 @@
     {% elif training.can_register %}
         <a class="nav-link bg-success text-white ml-sm-3" href="{% url 'trainings-register' training.id %}">{% trans "Register" %}</a>
     {% endif %}
-    {% if training.can_edit %}
-        <a class="nav-link bg-warning text-dark ml-sm-3" href="{% url 'trainings-edit' training.id %}">{% trans "Edit" %}</a>
-        <a class="nav-link bg-danger text-white ml-sm-3" href="{% url 'trainings-delete' training.id %}">{% trans "Delete" %}</a>
-    {% endif %}
 </nav>
 <div class="row my-2">
     <div class="col-sm-6 col-md my-1 order-1">

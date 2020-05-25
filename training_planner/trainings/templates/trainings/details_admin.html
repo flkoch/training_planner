@@ -6,19 +6,27 @@
 {% block content %}
 <h1>{{training}}</h1>
 <p>{{training.location.with_address}}</p>
-<nav class="nav justify-content-end flex-column flex-sm-row my-2">
-    <a class="nav-link bg-light text-dark" href="javascript:history.back()">{% trans "Back" %}</a>
-    {% if training.can_unregister %}
-        <a class="nav-link bg-danger text-white ml-sm-3" href="{% url 'trainings-unregister' training.id %}">{% trans "Unregister" %}</a>
-    {% elif training.can_register %}
-        <a class="nav-link bg-success text-white ml-sm-3" href="{% url 'trainings-register' training.id %}">{% trans "Register" %}</a>
-    {% endif %}
-    {% if training.can_edit %}
-        <a class="nav-link bg-warning text-dark ml-sm-3" href="{% url 'trainings-message' training.id %}">{% trans "Mail" %}</a>
-        <a class="nav-link bg-info text-white ml-sm-3" href="{% url 'trainings-series' training.id %}">{% trans "Series" %}</a>
-        <a class="nav-link bg-warning text-dark ml-sm-3" href="{% url 'trainings-edit' training.id %}">{% trans "Edit" %}</a>
-        <a class="nav-link bg-danger text-white ml-sm-3" href="{% url 'trainings-delete' training.id %}">{% trans "Delete" %}</a>
-    {% endif %}
+<nav>
+    <ul class="nav justify-content-end flex-column flex-sm-row my-2">
+        <li class="nav-item"><a class="nav-link bg-light text-dark" href="javascript:history.back()">{% trans "Back" %}</a></li>
+        {% if training.can_unregister %}
+            <li class="nav-item"><a class="nav-link bg-danger text-white ml-sm-3" href="{% url 'trainings-unregister' training.id %}">{% trans "Unregister" %}</a></li>
+        {% elif training.can_register %}
+            <li class="nav-item"><a class="nav-link bg-success text-white ml-sm-3" href="{% url 'trainings-register' training.id %}">{% trans "Register" %}</a></li>
+        {% endif %}
+        {% if training.can_edit %}
+            <li class="nav-item dropdown ml-sm-3">
+                <a class="nav-link dropdown-toggle bg-secondary text-light" role="button" id="dropdownEditMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">{% trans "Further Actions" %}</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownEditMenu">
+                    <a class="dropdown-item" href="{% url 'trainings-message' training.id %}">{% trans "Mail" %}</a>
+                    <a class="dropdown-item" href="{% url 'trainings-controlling' training.id %}">{% trans "Trainings Controlling" %}</a>
+                    <a class="dropdown-item" href="{% url 'trainings-edit' training.id %}">{% trans "Edit" %}</a>
+                    <a class="dropdown-item" href="{% url 'trainings-series' training.id %}">{% trans "Series" %}</a>
+                    <a class="dropdown-item" href="{% url 'trainings-delete' training.id %}">{% trans "Delete" %}</a>
+                </div>
+            </li>
+        {% endif %}
+    </ul>
 </nav>
 <div class="row my-2">
     <div class="col-sm-6 col-md my-1 order-1">
