@@ -283,6 +283,22 @@ class TrainingForm(forms.ModelForm):
                         '&rangle; to change the selection.</p>'
                     )
                 ),
+                cfl.Row(
+                    cfl.Field(
+                        'registered_participants',
+                        wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                        help_text=_(
+                            'Please hold down <Ctrl> to change the selection.'
+                        ),
+                    ),
+                    cfl.HTML(
+                        _(
+                            '<p class="col-auto my-4 text-muted">'
+                            'Please hold down &langle;<strong>Ctrl</strong>'
+                            '&rangle; to change the selection.</p>'
+                        )
+                    ),
+                ),
             ),
             cfl.Row(
                 cfl.HTML(
