@@ -1,5 +1,6 @@
-from django.shortcuts import redirect
 from django.contrib import messages
+from django.shortcuts import redirect
+from django.utils.translation import gettext_lazy as _
 from .models import Training
 
 
@@ -24,11 +25,12 @@ def allowed_users(allowed_roles=[]):
 def trainer_only(view_func):
     def wrapper_func(request, *args, **kwargs):
         if request.user.is_authenticated and \
-                request.user.groups.filter(name='Trainer').exists():
+            request.user.groups.filter(name='Trainer') \
+                .exists():
             return view_func(request, *args, **kwargs)
         else:
             messages.info(
-                request, 'Nur Trainer dürfen auf diesen Bereich zugreifen.')
+                request, _('Only trainers may access this area.'))
             return redirect('trainings-overview')
     return wrapper_func
 
@@ -36,12 +38,13 @@ def trainer_only(view_func):
 def admin_only(view_func):
     def wrapper_func(request, *args, **kwargs):
         if request.user.is_authenticated and \
-                request.user.groups.filter(name='Administrator').exists():
+            request.user.groups.filter(name='Administrator') \
+                .exists():
             return view_func(request, *args, **kwargs)
         else:
             messages.info(
                 request,
-                'Nur Administratoren dürfen auf diesen Bereich zugreifen.'
+                _('Only administrators may access this area.')
             )
             return redirect('trainings-overview')
     return wrapper_func
@@ -50,14 +53,14 @@ def admin_only(view_func):
 def trainer_or_admin_only(view_func):
     def wrapper_func(request, *args, **kwargs):
         if request.user.is_authenticated and \
-            request.user.groups.filter(name__in=['Trainer', 'Administrator']) \
-                .exists():
+                request.user.groups.filter(name__in=[
+                    'Trainer', 'Administrator',
+                ]).exists():
             return view_func(request, *args, **kwargs)
         else:
             messages.info(
                 request,
-                'Dieser Bereich ist nur für Trainer und Administratoren '
-                'zugänglich.'
+                _('Only trainers and administrators may access this area.')
             )
             return redirect('trainings-overview')
     return wrapper_func
@@ -70,7 +73,9 @@ def protect_training(view_func):
             return view_func(request, *args, **kwargs)
         else:
             messages.info(
-                request, 'Nur die zuständigen Trainer und Administratoren '
-                'dürfen auf diesen Bereich zugreifen.')
+                request,
+                _('Only administrators and the respective trainers may access '
+                  'this area.')
+            )
             return redirect('trainings-overview')
     return wrapper_func

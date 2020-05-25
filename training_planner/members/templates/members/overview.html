@@ -1,24 +1,16 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
+{% load crispy_forms_tags i18n %}
 {% block title %}
-Mitglieder Liste
+{% trans "Member list" %}
 {% endblock %}
 {% block content %}
-{% for message in messages %}
-    <div class="alert alert-{{message.tags}} alert-dismissible fade show my-2" role="alert">
-    {{message}}
-    <button type="button" class="close" data-dismiss="alert", aria-label="Schliessen">
-        <span arie-hidden="true">&times;</span>
-    </button>
-    </div>
-{% endfor %}
-<h1>Mitglieder</h1>
+<h1>{% trans "Members" %}</h1>
 <div class="card">
     <div class="card-body">
         <form method="get" class="form-inline">
             {{myFilter.form|crispy}}
             <button class="btn btn-primary" type="submit">
-            Filtern
+            {% trans "Filter" %}
             </button>
         </form>
     </div>
@@ -27,11 +19,11 @@ Mitglieder Liste
 <table class="table">
     <thead>
     <tr>
-        <th>Vorname</th>
-        <th>Nachname</th>
-        <th>Benutzername</th>
-        <th>E-Mail</th>
-        <th>Gruppen</th>
+        <th>{% trans "First name" %}</th>
+        <th>{% trans "Last name" %}</th>
+        <th>{% trans "Username" %}</th>
+        <th>{% trans "E-mail" %}</th>
+        <th>{% trans "Groups" %}</th>
         <th></th>
     </tr>
     </thead>
@@ -43,7 +35,7 @@ Mitglieder Liste
         <td class="align-middle"><a href="{% url 'member-details' user.id %}">{{user.username}}</a></td>
         <td class="align-middle"><a href="mailto:{{user.email}}">{{user.email}}</a></td>
         <td class="align-middle">
-            {% with user_groups=user.groups.all %}
+            {% with user_groups=user.get_groups_locale %}
             {% if user_groups|length > 1 %}
             <ul>
             {% for group in user_groups %}
@@ -55,7 +47,7 @@ Mitglieder Liste
             {% endif %}
             {% endwith %}
         </td>
-        <td class="align-middle"><a href="{% url 'member-details' user.id %}" class="btn btn-primary btn-sm ml-3">Details</a></td>
+        <td class="align-middle"><a href="{% url 'member-details' user.id %}" class="btn btn-primary btn-sm ml-3">{% trans "Details" %}</a></td>
     </tr>
     {% endfor %}
     </tbody>

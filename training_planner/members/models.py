@@ -1,14 +1,35 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 import datetime
+
+
+def _participant():
+    return _('Participant')
+
+
+def _active_participant():
+    return _('Active Participant')
+
+
+def _trainer():
+    return _('Trainer')
+
+
+def _active_trainer():
+    return _('Active Trainer')
+
+
+def _administrator():
+    return _('Administrator')
 
 
 class User(AbstractUser):
     birth_date = models.DateField(
-        verbose_name="Geburtsdatum", null=True, blank=True)
+        verbose_name=_('Date of Birth'), null=True, blank=True)
     initials = models.CharField(
-        max_length=3, verbose_name="Initialen", null=True, blank=True)
+        max_length=3, verbose_name=_('Initials'), null=True, blank=True)
 
     def __str__(self):
         full_name = self.get_full_name()
@@ -40,6 +61,19 @@ class User(AbstractUser):
             return self.first_name + ' ' + lastname[:-1]
         return self.username
 
+    def get_groups_locale(self):
+        group_names = {
+            'Participant': _participant,
+            'Active Participant': _active_participant,
+            'Trainer': _trainer,
+            'Active Trainer': _active_trainer,
+            'Administrator': _administrator,
+        }
+        groups_locale = [func() for func in [group_names.get(str(group), None)
+                                             for group in self.groups.all()]
+                         if func is not None]
+        return groups_locale
+
     @property
     def name(self):
         return self.get_full_name()
@@ -64,7 +98,8 @@ class User(AbstractUser):
 
     @property
     def is_active_participant(self):
-        return self.groups.filter(name='Active Participant').exists()
+        return self.groups.filter(name='Active Participant') \
+            .exists()
 
     @property
     def is_administrator(self):
@@ -72,8 +107,9 @@ class User(AbstractUser):
 
 
 def active_participant():
-    return User.objects.filter(groups__name='Active Participant') \
-        .exclude(groups__name='System')
+    return User.objects.filter(
+        groups__name='Active Participant'
+    ).exclude(groups__name='System')
 
 
 def participant():

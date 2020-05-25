@@ -1,37 +1,31 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block title %}
-    Anmelden
+    {% trans "Log in" %}
 {% endblock title %}
 {% block content %}
-    {% for message in messages %}
-        <div class="alert alert-{{message.tags}} alert-dismissible fade show my-2" role="alert">
-        {{message}}
-        <button type="button" class="close" data-dismiss="alert", aria-label="Schliessen">
-            <span arie-hidden="true">&times;</span>
-        </button>
-        </div>
-    {% endfor %}
     <div class="row justify-content-center">
         <div class="card col-sm-6 col-md-4 col-lg-4 col-xl-3 p-3 m-2 m-sm-5">
             <form method="POST" action="">
             {% csrf_token %}
             <div class="form-group">
-                <label for="username" class="sr-only">Benutzername</label>
-                <input type="text" name="username" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Benutzername" value="{{username}}">
-                <small id="usernameHelp" class="sr-only">Bitte geben Sie hier Ihren Benutzernamen ein.</small>
+                <label for="username" class="sr-only">{% trans "Username" %}</label>
+                <input type="text" name="username" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="username" value="{{username}}">
+                <small id="usernameHelp" class="sr-only">{% trans "Please enter your username here." %}</small>
             </div>
             <div class="form-group">
-                <label for="password" class="sr-only">Passwort</label>
-                <input type="password" name="password" class="form-control" id="password" placeholder="Passwort">
+                <label for="password" class="sr-only">{% trans "Password" %}</label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="password">
             </div>
             {% for error in form.errors %}
             <p>{{error}}</p>
             {% endfor %}
             {% if messages %}
-            <p class="card-text"><small class="text-muted">Passwort vergessen? <a href="{% url 'reset_password' %}">Passwort zurücksetzen</a></smaal></p>
+            <p class="card-text"><small class="text-muted">{% trans "Forgotten your password" %} <a href="{% url 'password_reset' %}">{% trans "Reset your password." %}</a></small></p>
             {% endif %}
-            <p class="card-text"><small class="text-muted">Noch keinen Account? <a href="{% url 'register' %}">Hier</a> registrieren</smaal></p>
-            <button type="submit" class="btn btn-primary">Anmelden</button>
+            {% url 'register' as registration_link %}
+            {% blocktrans %}<p class="card-text"><small class="text-muted">No account? Register <a href="{{ registration_link }}">here</a>.</small></p>{% endblocktrans %}
+            <button type="submit" class="btn btn-primary">{% trans "Log in" %}</button>
             </form>
         </div>
     </div>

@@ -1,31 +1,24 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block title %}
-Mitglieder Administration
+{% trans "Member Administration" %}
 {% endblock title %}
 {% block content %}
-{% for message in messages %}
-    <div class="alert alert-{{message.tags}} alert-dismissible fade show my-2" role="alert">
-    {{message}}
-    <button type="button" class="close" data-dismiss="alert", aria-label="Schliessen">
-        <span arie-hidden="true">&times;</span>
-    </button>
-    </div>
-{% endfor %}
 <div class="row">
-    <p>Die nachfolgenden Buttons weisen die Gruppen neu zu, entsprechend der Aktivität in den letzten 15 Wochen. Dieser Vorgang kann bei grossen Nutzerzahlen sehr arbeitsintensiv sein und sollte daher nicht unnötig oft ausgeführt werden.</p>
+    <p>{% trans "The following buttons reassign groups based on the activity in the previous 15 weeks. Those actions are potentially causing a high load on the database depending on the number of users. They should such be triggered with care." %}</p>
 </div>
 <div class="row my-3">
     <form method="POST" action="" class="col-auto">
         {% csrf_token %}
-        <button type="submit" class="btn btn-primary" name="check_active_participants">Aktive Teilnehmer</button>
+        <button type="submit" class="btn btn-primary" name="check_active_participants">{% trans "Active Participants" %}</button>
     </form>
     <form method="POST" action="" class="col-auto">
         {% csrf_token %}
-        <button type="submit" class="btn btn-primary" name="check_active_trainers">Aktive Trainer</button>
+        <button type="submit" class="btn btn-primary" name="check_active_trainers">{% trans "Active Trainers" %}</button>
     </form>
     <form method="POST" action="" class="col-auto">
         {% csrf_token %}
-        <button type="submit" class="btn btn-primary" name="check_trainers">Trainer</button>
+        <button type="submit" class="btn btn-primary" name="check_trainers">{% trans "Trainers" %}</button>
     </form>
 </div>
 {% endblock content %}

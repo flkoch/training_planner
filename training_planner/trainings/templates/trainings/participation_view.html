@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% load i18n %}{% load static %}{% load crispy_forms_tags %}
+{% load i18n static crispy_forms_tags %}
 {% block title %}
-Teilnehmer Statistik
+{% trans "Participation Statistics" %}
 {% endblock title %}
 {% block additionalStyles %}
     <link rel="stylesheet" href="{% static 'css/bootstrap-table.min.css' %}"/>
@@ -12,26 +12,18 @@ Teilnehmer Statistik
     <script src="{% static 'js/bootstrap-table-fixed-columns.min.js' %}"></script>
 {% endblock additionalScripts %}
 {% block content %}
-{% for message in messages %}
-    <div class="alert alert-{{message.tags}} alert-dismissible fade show my-2" role="alert">
-    {{message}}
-    <button type="button" class="close" data-dismiss="alert", aria-label="Schliessen">
-        <span arie-hidden="true">&times;</span>
-    </button>
-    </div>
-{% endfor %}
-<h1>Teilnehmer</h1>
+<h1>{% trans "Participants" %}</h1>
 <div class="card">
     <div class="card-body">
         <form method="get" class="form-inline">
             <div class="form-row col-12">
                 {{myFilter.form|crispy}}
                 <div class="col-auto">
-                    <input type="number" class="form-control" placeholder="{% trans 'Jahr' %}" aria-label="{% trans 'Jahr' %}" min="1" max="9999" name="year" value="{{year}}">
+                    <input type="number" class="form-control" placeholder="{% trans 'Year' %}" aria-label="{% trans 'Year' %}" min="1" max="9999" name="year" value="{{year}}">
                 </div>
                 <div class="col-auto">
                     <button class="btn btn-primary" type="submit">
-                        Filtern
+                        {% trans "Filter" %}
                     </button>
                 </div>
             </div>
@@ -42,10 +34,10 @@ Teilnehmer Statistik
 <table class="table table-hover" data-toggle="table" data-fixed-columns="true" data-fixed-number="3">
     <thead>
     <tr>
-        <th class="align-middle" rowspan="2">Vorname</th>
-        <th class="align-middle" rowspan="2">Nachname</th>
-        <th class="align-middle" rowspan="2">Benutzername</th>
-        <th colspan="54" class="text-center">Trainings in KW</th>
+        <th class="align-middle" rowspan="2">{% trans "First name" %}</th>
+        <th class="align-middle" rowspan="2">{% trans "Last name" %}</th>
+        <th class="align-middle" rowspan="2">{% trans "Username" %}</th>
+        <th colspan="54" class="text-center">{% trans "Trainings in calendar week" %}</th>
     </tr>
     <tr>
         <th class="text-right">1</th>
@@ -101,7 +93,7 @@ Teilnehmer Statistik
         <th class="text-right">51</th>
         <th class="text-right">52</th>
         <th class="text-right">53</th>
-        <th class="text-right">Total</th>
+        <th class="text-right">{% trans "Total" %}</th>
     </tr>
     </thead>
     <tbody>

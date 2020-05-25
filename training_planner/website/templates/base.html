@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -27,7 +28,7 @@
     {% block mainNavigationBar %}
     <nav id="mainnav" class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
         <div class="container">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Navigation ausklappen">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="{% trans 'Expand navigation' %}">
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'logo.png' %}" width="30" height="30" alt="Judo Club Uster"/></a>
@@ -41,9 +42,9 @@
                 {% block userMenu %}
                     {% if user.is_authenticated %}
                     <span class="nav-item"><a class="nav-link" href="{% url 'account' %}">{{request.user}}</span>
-                    <span class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Abmelden</a></span>
+                    <span class="nav-item"><a class="nav-link" href="{% url 'logout' %}">{% trans "Log out" %}</a></span>
                     {% else %}
-                    <span class="nav-item"><a class="nav-link" href="{% url 'login' %}">Anmelden</a></span>
+                    <span class="nav-item"><a class="nav-link" href="{% url 'login' %}">{% trans "Log in" %}</a></span>
                     {% endif %}
                 {% endblock userMenu %}
             </div>
@@ -52,6 +53,16 @@
     </nav>
     {% endblock mainNavigationBar %}
     <main class="container">
+        {% block messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{message.tags}} alert-dismissible fade show my-2" role="alert">
+                    {{message}}
+                    <button type="button" class="close" data-dismiss="alert", aria-label="{% trans 'Close' %}">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endblock messages %}
         {% block content %}
         {% endblock content %}
     </main>

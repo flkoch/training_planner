@@ -1,17 +1,8 @@
 {% extends 'base.html' %}
-{% load static %}
-{% load crispy_forms_tags %}
+{% load static i18n crispy_forms_tags %}
 {% block title %}
-{{title}} - Training Form
+{{title}} - {% trans "Training Form" %}
 {% endblock title %}
 {% block content %}
-{% for message in messages %}
-    <div class="alert alert-{{message.tags}} alert-dismissible fade show my-2" role="alert">
-    {{message}}
-    <button type="button" class="close" data-dismiss="alert", aria-label="Schliessen">
-        <span arie-hidden="true">&times;</span>
-    </button>
-    </div>
-{% endfor %}
 {% crispy form %}
 {% endblock content %}

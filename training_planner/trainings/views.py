@@ -1,11 +1,14 @@
 from operator import itemgetter
 from django.shortcuts import render, redirect, get_object_or_404
-from django.utils import timezone
+from django.conf import settings
 from django.contrib import messages, auth
 from django.contrib.auth import decorators as auth_decorators
 from django.core.mail import send_mass_mail
 from django.db.models import Count
 from django.db.models.functions import ExtractWeek
+from django.utils.text import format_lazy
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 import datetime
 from members.filter import UserStatisticsFilter
 from .models import Training
@@ -59,13 +62,26 @@ def details(request, id):
     training.can_unregister = training.can_unregister(request.user)
     if training.before_registration:
         messages.info(
-            request, f'Die Anmeldung wird am {training.opendate_as_text} um '
-            f'{training.opentime_as_text} Uhr geöffnet.')
+            request,
+            format_lazy(
+                _('The registration will open on {date:s} at {time:s}.'),
+                date=training.opendate_as_text,
+                time=training.opentime_as_text
+            )
+        )
     elif training.after_registration:
         messages.info(
-            request, f'Die Anmeldung ist seit dem {training.closedate_as_text}'
-            f' um {training.closetime_as_text} geschlossen. Für kurzfristige '
-            'An- oder Abmeldungen kontaktiere bitte den zuständigen Trainer.')
+            request,
+            format_lazy(
+                _(
+                    'The registration is closed since {date:s} at {time:s}. '
+                    'For short-term registrations or unregistrations please '
+                    'contact the trainer.'
+                ),
+                date=training.closedate_as_text,
+                time=training.closetime_as_text
+            )
+        )
     context = {'training': training}
     if request.user.groups.filter(name="Trainer").exists():
         return render(request, 'trainings/details_admin.html', context)
@@ -77,9 +93,9 @@ def register(request, id):
     training = get_object_or_404(Training, id=id)
     if training.register(request.user):
         messages.success(
-            request, f'Du wurdest erfolgreich angemeldet.')
+            request, _('You were successfully registered.'))
     else:
-        messages.info(request, 'Anmeldung ist fehlgeschlagen.')
+        messages.info(request, _('Registration failed.'))
     return redirect('trainings-details', id)
 
 
@@ -88,9 +104,14 @@ def unregister(request, id):
     training = get_object_or_404(Training, id=id)
     if training.unregister(request.user):
         messages.success(
-            request, f'Du wurdest erfolgreich von {training} abgemeldet.')
+            request,
+            format_lazy(
+                _('You have been successfully signed off for {training:s}.'),
+                training=training,
+            )
+        )
     else:
-        messages.info(request, 'Abmelden ist fehlgeschlagen.')
+        messages.info(request, _('Sign-off failed.'))
     return redirect('trainings-overview')
 
 
@@ -99,9 +120,9 @@ def register_as_coordinator(request, id):
     training = get_object_or_404(Training, id=id)
     index = training.register_as_coordinator(request.user)
     msg = {
-        0: ('success', 'Vielen Dank, dass Du den Einlass koordinierst.'),
-        1: ('info', 'Es ist bereits ein anderer Koordinator angemeldet.'),
-        2: ('warning', 'Der Koordinator kann nicht der Haupt-Trainer sein.'),
+        0: ('success', _('Thank you for coordinating the entrance.')),
+        1: ('info', _('There is already another coordinator registered.')),
+        2: ('warning', _('The coordinator cannot be the main instructor.'))
     }
     _simple_message(request, msg, index)
     return redirect('trainings-details', id)
@@ -111,7 +132,7 @@ def register_as_coordinator(request, id):
 def unregister_coordinator(request, id):
     training = get_object_or_404(Training, id=id)
     training.unregister_coordinator()
-    messages.info(request, "Koordinator erfolgreich entfernt")
+    messages.info(request, _('Coordinator removed successfully.'))
     return redirect('trainings-details', id)
 
 
@@ -124,17 +145,20 @@ def create(request):
             training.set_registration_times()
             training.save()
             form.save_m2m()
-            messages.success(request, 'Training erfolgreich hinzugefügt')
+            messages.success(request, _('Training added successfully.'))
             return redirect(details, training.id)
         else:
-            messages.warning((request, 'Bitte die angezeigten Fehler beheben'))
+            messages.warning(
+                request,
+                _('Please take care of the highlighted errors.')
+            )
     else:
         form = AddTrainingForm(initial={
             'main_instructor': request.user,
             'capacity': 10,
             'duration': 45,
         })
-    context = {'form': form, 'title': 'Neues Training'}
+    context = {'form': form, 'title': _('New Training')}
     return render(request, 'trainings/trainingForm.html', context)
 
 
@@ -149,13 +173,19 @@ def edit(request, id):
         form = formClass(request.POST, instance=training)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Änderungen erfolgreich gespeichert')
+            messages.success(request, _('Changes saved successfully.'))
             return redirect(details, id)
         else:
-            messages.warning((request, 'Bitte die angezeigten Fehler beheben'))
+            messages.warning(
+                request,
+                _('Please take care of the highlighted errors.')
+            )
     else:
         form = formClass(instance=training)
-    context = {'form': form, 'title': f"{training.title} bearbeiten"}
+    context = {
+        'form': form,
+        'title': format_lazy(_('Edit {training:s}'), training=training.title)
+    }
     return render(request, 'trainings/trainingForm.html', context)
 
 
@@ -171,7 +201,10 @@ def make_training_series(request, id):
             training.pk = None
             training.start = timezone.make_aware(
                 datetime.datetime.combine(
-                    datetime.datetime.strptime(date, '%d.%m.%Y'),
+                    datetime.datetime.strptime(
+                        date,
+                        settings.DATE_INPUT_FORMATS[3],
+                    ),
                     timezone.make_naive(training.start).time()
                 ),
                 timezone.get_current_timezone()
@@ -184,7 +217,10 @@ def make_training_series(request, id):
             training.target_group.add(*target_groups)
         messages.success(
             request,
-            f'Trainings an {len(dates)} Tagen erstellt.'
+            format_lazy(
+                _('Trainings created on {days:d} days.'),
+                days=len(dates)
+            )
         )
         return redirect(overview)
     training = get_object_or_404(Training, id=id)
@@ -192,7 +228,7 @@ def make_training_series(request, id):
     context = {
         'form': form,
         'training': training,
-        'title': 'Neue Trainings Serie'
+        'title': _('Create Training Series')
     }
     return render(request, 'trainings/trainingForm.html', context)
 
@@ -203,9 +239,12 @@ def delete(request, id):
     if request.method == 'POST':
         training.deleted = True
         training.save()
-        messages.success(request, f'{training} wurde gelöscht')
+        messages.success(
+            request,
+            format_lazy(_('{training} has been deleted'), training=training)
+        )
         return redirect(overview)
-    context = {'item': training, 'title': 'Training löschen'}
+    context = {'item': training, 'title': _('Delete Training')}
     return render(request, 'website/deleteConfirmation.html', context)
 
 
@@ -214,7 +253,7 @@ def held(request, id=None):
     if id is None:
         user = request.user
     elif not request.user.groups.filter(name='Administrator').exists():
-        messages.info(request, 'Zugriff nur auf eigene Trainings.')
+        messages.info(request, _('You may only access your own trainings.'))
         return redirect('trainings-held')
     else:
         user = get_object_or_404(auth.get_user_model(), id=id)
@@ -245,9 +284,11 @@ def controlling(request, id):
                         if 'participated' in value]
         training.participants.clear()
         training.participants.add(*participants)
-        group = auth.models.Group.objects.get(name='Active Participant')
+        group = auth.models.Group.objects.get(
+            name='Active Participant'
+        )
         group.user_set.add(*participants)
-        messages.success(request, 'Änderungen gespeichert')
+        messages.success(request, _('Changes saved successfully.'))
     context = {'training': training}
     return render(request, 'trainings/details_controlling.html', context)
 
@@ -267,12 +308,12 @@ def message(request, id):
                 if message.rstrip == '':
                     messages.warning(
                         request,
-                        'Eine leere Nachricht kann nicht gesendet werden'
+                        _('You cannot send an empty message.')
                     )
                     return render(request, 'trainings/messages.html', context)
             elif key == 'salutation':
                 if value == '':
-                    salutation = 'Hallo'
+                    salutation = _('Dear')
                 else:
                     salutation = value.rstrip()
             elif key == 'subject':
@@ -286,7 +327,11 @@ def message(request, id):
         mails = tuple([tuple(mail) for mail in mails])
         send_mass_mail(mails)
         messages.success(
-            request, f'Es wurden {len(user_id)} Nachrichten versendet.'
+            request,
+            format_lazy(
+                _('{user:d} messages have been sent.'),
+                user=len(user_id)
+            )
         )
         return redirect('trainings-details', id)
     return render(request, 'trainings/message.html', context)
@@ -299,14 +344,13 @@ def participation_view(request, year=None):
             try:
                 year = int(request.GET['year'])
             except ValueError:
-                print("ValueError")
                 pass
             if (not isinstance(year, int)) or \
                     datetime.MINYEAR > year or \
                     datetime.MAXYEAR < year:
                 messages.info(
                     request,
-                    'Ungültiges Jahr, zeige Werte für aktuelles Kalendarjahr.'
+                    _('No valid year, showing results for this year.')
                 )
                 year = timezone.now().year
         else:

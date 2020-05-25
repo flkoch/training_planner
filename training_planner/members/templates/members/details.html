@@ -1,43 +1,31 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block title %}
-{{page_user}} - Details
+{{page_user}} - {% trans "Details" %}
 {% endblock title %}
 {% block content %}
 <h1>{{page_user}}</h1>
-{% for message in messages %}
-    <div class="alert alert-{{message.tags}} alert-dismissible fade show my-2" role="alert">
-    {{message}}
-    <button type="button" class="close" data-dismiss="alert", aria-label="Schliessen">
-        <span arie-hidden="true">&times;</span>
-    </button>
-    </div>
-{% endfor %}
-<nav class="nav nav-pills justify-content-end flex-column flex-sm-row my-2">
-    <a class="nav-link bg-light text-dark" href="javascript:history.back()">Zurück</a>
+<nav class="nav justify-content-end flex-column flex-sm-row my-2">
+    <a class="nav-link bg-light text-dark" href="javascript:history.back()">{% trans "Back" %}</a>
     {% if page_user.is_trainer %}
-    <a class="nav-link bg-success text-light ml-sm-3" href="{% url 'trainings-held-trainer' page_user.id %}">Trainings-Kontrolle</a>
+    <a class="nav-link bg-success text-light ml-sm-3" href="{% url 'trainings-held-trainer' page_user.id %}">{% trans "Trainings Controlling" %}</a>
     {% endif %}
-    <a class="nav-link bg-warning text-dark ml-sm-3" href="{{edit_link}}">Bearbeiten</a>
+    <a class="nav-link bg-warning text-dark ml-sm-3" href="{{edit_link}}">{% trans "Edit" %}</a>
 </nav>
 <div class="row my-2">
     <div class="col-sm-6 col-md my-1 order-1">
         <div class="card">
-            <div class="card-header">Informationen</div>
+            <div class="card-header">{% trans "Information" %}</div>
             <div class="card-body">
                 <p class="card-text">
-                    Name: {{page_user.name}}<br />
-                    Benutzername: {{page_user.username}}<br />
-                    E-Mail: {{page_user.email}}<br />
-                    {% with groups=page_user.groups.all %}
+                    {% trans "Name" %}: {{page_user.name}}<br />
+                    {% trans "Username" %}: {{page_user.username}}<br />
+                    {% trans "E-mail" %}: {{page_user.email}}<br />
+                    {% with groups=page_user.get_groups_locale %}
                         {% if groups|length > 0 %}
-                            Gruppen:
+                            {% trans "Groups" %}:
                             {% for group in groups %}
-                                {{group}}
-                                {% if forloop.revcounter > 2 %}
-                                    ,
-                                {% elif forloop.revcounter == 2%}
-                                     und
-                                {% endif %}
+                                {{group}}{% if forloop.revcounter > 2 %}, {% elif forloop.revcounter == 2%} {% trans "and" %} {% endif %}
                             {% endfor %}
                         {% endif %}
                     {% endwith %}
@@ -48,13 +36,13 @@
     {% with reg_trainings as trainings %}
     <div class="col-sm-6 col-md my-1 order-3">
         <div class="card">
-            <div class="card-header d-flex justify-content-between">angemeldete Trainings<span class="badge badge-info badge-pill align-self-center">{{trainings|length}}</span></div>
+            <div class="card-header d-flex justify-content-between">{% trans "registered trainings" %}<span class="badge badge-info badge-pill align-self-center">{{trainings|length}}</span></div>
             <div class="card-body">
                 <ul class="list-group list-group-flush">
                     {% for training in trainings %}
                         <li class="list-group-item"><a href="{% url 'trainings-details' training.id %}">{{training.start.date}}: {{training}}</a></li>
                     {% empty %}
-                        <li class="list-group-item">Keine zukünftigen Anmeldungen</li>
+                        <li class="list-group-item">{% trans "no future registrations" %}</li>
                     {% endfor %}
                 </ul>
             </div>
@@ -64,21 +52,21 @@
     {% with part_trainings as trainings %}
     <div class="col-sm-6 col-md my-1 order-3">
         <div class="card">
-            <div class="card-header d-flex justify-content-between">absolvierte Trainings<span class="badge badge-success badge-pill align-self-center">{{trainings.paginator.count}}</span></div>
+            <div class="card-header d-flex justify-content-between">{% trans "completed trainings" %}<span class="badge badge-success badge-pill align-self-center">{{trainings.paginator.count}}</span></div>
             <div class="card-body">
                 <ul class="list-group list-group-flush">
                     {% for training in trainings %}
                         <li class="list-group-item"><a href="{% url 'trainings-details' training.id %}">{{training.start.date}}: {{training}}</a></li>
                     {% empty %}
-                        <li class="list-group-item">Bisher noch keine absolvierten Trainings</li>
+                        <li class="list-group-item">{% trans "no completed trainings yet" %}</li>
                     {% endfor %}
                 </ul>
                 {% if trainings.has_other_pages %}
-                    <nav aria-label="Seitenwahl für absolvierte Trainings">
+                    <nav aria-label="{% trans 'pagination for completed trainings' %}">
                     <ul class="pagination pagination-sm mt-3 justify-content-center">
                     {% for page in trainings.paginator.page_range %}
                         {% if page == trainings.number %}
-                            <li class="page-item active"><a href="#" class="page-link" aria-current="page">{{page}}<span class="sr-only">(aktuell)</span></a></li>
+                            <li class="page-item active"><a href="#" class="page-link" aria-current="page">{{page}}<span class="sr-only">({% trans "current" %})</span></a></li>
                         {% elif page == trainings.start_index or page == trainings.end_index or page == trainings.previous_page_number or page == trainings.next_page_number %}
                             <li class="page-item"><a href="?page={{page}}" class="page-link">{{page}}</a></li>
                         {% endif %}

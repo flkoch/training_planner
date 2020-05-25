@@ -1,52 +1,47 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block title %}
 {{training}}
 {% endblock title %}
 {% block content %}
 <h1>{{training}}</h1>
 <p>{{training.location.with_address}}</p>
-{% for message in messages %}
-    <div class="alert alert-{{message.tags}} alert-dismissible fade show my-2" role="alert">
-    {{message}}
-    <button type="button" class="close" data-dismiss="alert", aria-label="Schliessen">
-        <span arie-hidden="true">&times;</span>
-    </button>
-    </div>
-{% endfor %}
 <nav class="nav justify-content-end flex-column flex-sm-row my-2">
-    <a class="nav-link bg-light text-dark" href="javascript:history.back()">Zurück</a>
-    <a class="nav-link bg-warning text-dark ml-sm-3" href="{% url 'trainings-edit' training.id %}">Bearbeiten</a>
-    <a class="nav-link bg-danger text-white ml-sm-3" href="{% url 'trainings-delete' training.id %}">Löschen</a>
+    <a class="nav-link bg-light text-dark" href="javascript:history.back()">{% trans "Back" %}</a>
+    <a class="nav-link bg-warning text-dark ml-sm-3" href="{% url 'trainings-edit' training.id %}">{% trans "Edit" %}</a>
+    <a class="nav-link bg-danger text-white ml-sm-3" href="{% url 'trainings-delete' training.id %}">{% trans "Delete" %}</a>
 </nav>
 <div class="row my-2">
     <div class="col-sm-6 my-1 order-1">
         <div class="card">
-            <div class="card-header">Angemeldet</div>
+            <div class="card-header">{% trans "Registered" %}</div>
             <div class="card-body">
                 <form method="POST" action="">
-                {% csrf_token %}
-                {% for participant in training.registered_participants.all %}
-                    <div class="form-check row my-0 p-2 {% cycle '' 'bg-secondary text-white' %}">
-                        <label class="form-check-label" for="cb-{{ participant.id }}">{{ participant.name_or_username }}</label>
-                        <input id="cb-{{ participant.id }}" type="checkbox" name="{{participant.id}}" value="participated" class="mt-1 float-right" aria-label="{{participant.name_or_username}}" {% if participant in training.participants.all %}checked{% endif %}/>
-                    </div>
+                    {% csrf_token %}
+                    {% for participant in training.registered_participants.all %}
+                        <div class="form-check row my-0 p-2 {% cycle '' 'bg-secondary text-white' %}">
+                            <label class="form-check-label" for="cb-{{ participant.id }}">{{ participant.name_or_username }}</label>
+                            <input id="cb-{{ participant.id }}" type="checkbox" name="{{participant.id}}" value="participated" class="mt-1 float-right" aria-label="{{participant.name_or_username}}" {% if participant in training.participants.all %}checked{% endif %}/>
+                        </div>
                     {% empty %}
-                        <div class="list-group-item">Bisher keine Anmeldungen</div>
+                        <div class="list-group-item border-0">{% trans "No registrations yet" %}</div>
                     {% endfor %}
-                <input type="submit" class="btn btn-primary my-3" value="Speichern"/>
+                    {% if training.registered_participants.all.count > 0 %}
+                        <input type="submit" class="btn btn-primary my-3" value="{% trans 'Save' %}"/>
+                    {% endif %}
                 </form>
             </div>
         </div>
     </div>
     <div class="col-sm-6 my-1 order-1">
         <div class="card">
-            <div class="card-header">Teilnehmer</div>
+            <div class="card-header">{% trans "Participants" %}</div>
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
                         {% for participant in training.participants.all %}
                             <li class="list-group-item">{{participant.get_public_name}}</li>
                         {% empty %}
-                            <li class="list-group-item">Bisher noch keine Teilnehmer erfasst.</li>
+                            <li class="list-group-item">{% trans "No participants confirmed" %}</li>
                         {% endfor %}
                     </ul>
                 </div>
