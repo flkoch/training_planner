@@ -34,10 +34,10 @@
             <div class="card-header">{% trans "Information" %}</div>
             <div class="card-body">
                 <p class="card-text">
-                    {% trans "Date" %}: {{training.startdate_as_text}}<br />
-                    {% trans "Time" %}: {{training.starttime_as_text}}<br />
-                    {% trans "Duration" %}: {{training.duration}} {% trans "minutes" %}<br />
-                    {% trans "Main Instructor" %}: {{training.main_instructor}}<br />
+                    {% trans "Date" %}: {{training.startdate_as_text}}<br>
+                    {% trans "Time" %}: {{training.starttime_as_text}}<br>
+                    {% trans "Duration" %}: {{training.duration}} {% trans "minutes" %}<br>
+                    {% trans "Main Instructor" %}: {{training.main_instructor}}<br>
                     {% with instructors=training.instructor.all %}
                         {% if instructors|length > 0 %}
                             {% trans "Further Instructors" %}:
@@ -50,10 +50,10 @@
                                      {% trans "and" %}
                                 {% endif %}
                             {% endfor %}
-                            <br />
+                            <br>
                         {% endif %}
                     {% endwith %}
-                    {% trans "Coordinator" %}: {% if training.coordinator %}{{training.coordinator}}<a href="{% url 'trainings-unregister-coordinator' training.id %}" class="text-danger mx-1"><span class="oi oi-circle-x"></span></a>{% if training.coordinator == user %}<br /><small class="text-muted">{% trans 'You will get further information just before the training. If you cannot make it, please contact the respective trainer. In case of any questions, contact Aline Steinbrecher at (<a href="tel:0041792959637">079 296 96 37</a>)' %}</small>{% endif %}{% else %}<a href="{% url 'trainings-register-coordinator' training.id %}" class="btn btn-sm btn-secondary">{% trans "Register" %}</a>{% endif %}<br />
+                    {% trans "Coordinator" %}: {% if training.coordinator %}{{training.coordinator}}<a href="{% url 'trainings-unregister-coordinator' training.id %}" class="text-danger mx-1"><span class="oi oi-circle-x"></span></a>{% if training.coordinator == user %}<br><small class="text-muted">{% trans 'You will get further information just before the training. If you cannot make it, please contact the respective trainer. In case of any questions, contact Aline Steinbrecher at (<a href="tel:0041792959637">079 296 96 37</a>)' %}</small>{% endif %}{% else %}<a href="{% url 'trainings-register-coordinator' training.id %}" class="btn btn-sm btn-secondary">{% trans "Register" %}</a>{% endif %}<br>
                 </p>
             </div>
         </div>

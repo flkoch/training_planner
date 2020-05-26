@@ -534,7 +534,7 @@ class TrainingSeriesForm(forms.ModelForm):
             cfl.HTML(
                 _(
                     '<p class="my-3">Create further trainings like '
-                    '{{training}} starting at {{training.start}}.<br />'
+                    '{{training}} starting at {{training.start}}.<br>'
                     'Please select the dates below. To not select todays '
                     'date, finish your selection, reopen the widget and '
                     'deselect today.</p>'

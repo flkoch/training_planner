@@ -497,11 +497,11 @@ msgstr "Daten"
 #: training_planner/trainings/forms.py:536
 msgid ""
 "<p class=\"my-3\">Create further trainings like {{training}} starting at "
-"{{training.start}}.<br />Please select the dates below. To not select todays "
+"{{training.start}}.<br>Please select the dates below. To not select todays "
 "date, finish your selection, reopen the widget and deselect today.</p>"
 msgstr ""
 "<p class=\"my-3\">Weitere Trainings zu {{training}} vom {{training.start}} "
-"erstellen.<br />Bitte die Daten der Trainings auswählen. Um das heutige "
+"erstellen.<br>Bitte die Daten der Trainings auswählen. Um das heutige "
 "Datum nicht auszuwählen, tätige die Auswahl, öffne den Kalendar erneut und "
 "wähle das heutige Datum ab.</p>"
 
@@ -997,8 +997,8 @@ msgid "This website is operated and maintained by:"
 msgstr "Diese Webseite wird unterhalten von:"
 
 #: training_planner/website/templates/website/about.html:9
-msgid "Judo Club Uster<br />Gerbestrasse 5<br />8610 Uster<br />Switzerland"
-msgstr "Judo Club Uster<br />Gerbestrasse 5<br />8610 Uster<br />Schweiz"
+msgid "Judo Club Uster<br>Gerbestrasse 5<br>8610 Uster<br>Switzerland"
+msgstr "Judo Club Uster<br>Gerbestrasse 5<br>8610 Uster<br>Schweiz"
 
 #: training_planner/website/templates/website/about.html:10
 msgid "Privacy Policy"
