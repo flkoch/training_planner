@@ -618,7 +618,7 @@ msgstr "Trainings"
 #: training_planner/trainings/templates/trainings/details.html:12
 #: training_planner/trainings/templates/trainings/details_admin.html:13
 msgid "Unregister"
-msgstr "Abmeldet"
+msgstr "Abmelden"
 
 #: training_planner/trainings/templates/trainings/details.html:23
 #: training_planner/trainings/templates/trainings/details_admin.html:37
