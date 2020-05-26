@@ -18,10 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 from django.utils.translation import gettext as _
 
-from website.views import welcome
+from website.views import welcome, about
 
 urlpatterns = i18n_patterns(
     path('', welcome, name='home'),
+    path(_('about/'), about, name='about'),
     path(_('account/'), include('members.account_urls')),
     path(_('members/'), include('members.urls')),
     path(_('trainings/'), include('trainings.urls')),

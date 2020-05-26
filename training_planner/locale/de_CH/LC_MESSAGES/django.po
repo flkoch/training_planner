@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TrainingPlanner\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-25 15:39+0200\n"
-"PO-Revision-Date: 2020-05-25 15:40+0200\n"
+"POT-Creation-Date: 2020-05-26 10:29+0200\n"
+"PO-Revision-Date: 2020-05-26 10:30+0200\n"
 "Last-Translator: Florian Koch <flkoch@dev.fkoch.ch>\n"
 "Language-Team: \n"
 "Language: de-CH\n"
@@ -363,8 +363,6 @@ msgid "Update Trainer"
 msgstr "Trainer aktualisieren"
 
 #: training_planner/training_planner/settings.py:123
-#, fuzzy
-#| msgid "German"
 msgid "German (Swiss)"
 msgstr "Deutsch"
 
@@ -373,14 +371,18 @@ msgid "English"
 msgstr "Englisch"
 
 #: training_planner/training_planner/urls.py:25
+msgid "about/"
+msgstr "impressum/"
+
+#: training_planner/training_planner/urls.py:26
 msgid "account/"
 msgstr "konto/"
 
-#: training_planner/training_planner/urls.py:26
+#: training_planner/training_planner/urls.py:27
 msgid "members/"
 msgstr "mitglieder/"
 
-#: training_planner/training_planner/urls.py:27
+#: training_planner/training_planner/urls.py:28
 msgid "trainings/"
 msgstr "trainings/"
 
@@ -966,6 +968,10 @@ msgstr "Abmelden"
 msgid "Close"
 msgstr "Schliessen"
 
+#: training_planner/website/templates/base.html:74
+msgid "About"
+msgstr "Über uns"
+
 #: training_planner/website/templates/navbar.html:6
 msgid "Trainings Control"
 msgstr "Trainings Kontrolle"
@@ -977,6 +983,236 @@ msgstr "Statistik"
 #: training_planner/website/templates/navbar.html:14
 msgid "Administration"
 msgstr "Administration"
+
+#: training_planner/website/templates/website/about.html:4
+msgid "Training Planner - About"
+msgstr "Trainingsplaner - Über uns"
+
+#: training_planner/website/templates/website/about.html:7
+msgid "About Us"
+msgstr "Über uns"
+
+#: training_planner/website/templates/website/about.html:8
+msgid "This website is operated and maintained by:"
+msgstr "Diese Webseite wird unterhalten von:"
+
+#: training_planner/website/templates/website/about.html:9
+msgid "Judo Club Uster<br />Gerbestrasse 5<br />8610 Uster<br />Switzerland"
+msgstr "Judo Club Uster<br />Gerbestrasse 5<br />8610 Uster<br />Schweiz"
+
+#: training_planner/website/templates/website/about.html:10
+msgid "Privacy Policy"
+msgstr "Datenschutzerklärung"
+
+#: training_planner/website/templates/website/about.html:11
+msgid ""
+"This website is used to showcase the training offering and facilitate "
+"registration for the individual training sessions. For registering for a "
+"certain training session as well as for seeing the details related to any "
+"training session, the user must create an account. Related to that account "
+"we save the following data: first and last name, date of birth, e-mail "
+"address, password and a relation to all trainings the user has taken part "
+"in, either as instructor, participant or coordinator."
+msgstr ""
+"Diese Webseite wird genutzt um das Trainingsangebot darzustellen und die "
+"Anmeldung zu einzelnen Einheiten zu ermöglichen. Für die Anmeldung zu einer "
+"Bestimmten Trainingseinheit sowie um die Detail für die Trainings einzusehen "
+"ist ein Nutzerkonto nötig. In Zusammenhang mit diesem Nutzerkonto werden die "
+"folgenden Daten gespeichert: Vor- und Nachname, Geburtsdatum, E-Mail "
+"Adresse, Passwort und eine Verknüpfung zu allen Trainingseinheiten, an denen "
+"der Nutzer als Trainer, Teilnehmer oder Koordinator teilgenommen hat. Aus "
+"Gründen der besseren Lesbarkeit wird jeweils die männliche Form verwendet, "
+"wobei sinngemäss auch Nutzer anderen Geschlechts mit gemeint sind."
+
+#: training_planner/website/templates/website/about.html:12
+msgid ""
+"By creating an account and the continued use, the respective user agrees to "
+"the processing of his or her data in agreement with this privacy policy. An "
+"account can be deleted at any time by sending a request clearly stating the "
+"intend to have the account deleted to <a href='mailto:info@jcu.ch'>info@jcu."
+"ch</a>. Afterwards the account will be suspended and the data be deleted "
+"after eight weeks."
+msgstr ""
+"Durch das Erstellen eines Benutzerkontos und die weitere Verwendung stimmt "
+"der Benutzer der Verarbeitung seiner Daten in Übereinstimmung mit der "
+"vorliegenden Datenschutzerklärung zu. Das Benutzerkonto kann jederzeit "
+"gelöscht werden, indem ein E-Mail mit der klaren Absichtserklärung der "
+"Löschung des Benutzerkontos an <a href='mailto:info@jcu.ch'>info@jcu.ch</a> "
+"geschickt wird. Daraufhin wird das Benutzerkonto gesperrt und die Daten "
+"werden nach acht Wochen gelöscht."
+
+#: training_planner/website/templates/website/about.html:13
+msgid ""
+"The names of trainers and coordinators for trainings are displayed publicly. "
+"Only users with an account can see further details, such as other "
+"participants registered for the training. However, regular users only get to "
+"see the first name and the initials of the other participants last names. "
+"Trainer names are always shown in full. Only trainers and other staff have "
+"access to see the remaining user details. Passwords are never saved in clear "
+"text but only in hashed form."
+msgstr ""
+"Die Namen der Trainer und Koordinatoren werden für die jeweiligen Trainings "
+"öffentlich angezeigt. Nur Nutzer mit einem Benutzerkonto können sich weitere "
+"Trainingsdetails, wie zum Beispiel andere angemeldete Teilnehmer, anzeigen "
+"lassen. Dabei sehen gewöhnliche Nutzer jeweils nur die Vornamen und die "
+"Initialen der Nachnamen der anderen Teilnehmer. Die Namen der Trainer werden "
+"vollständig dargestellt. Nur Trainer und Funktionäre können die übrigen "
+"Nutzerdaten einsehen. Passwörter werden niemals im Klartext sondern jeweils "
+"nur in Form eines Hashwertes gespeichert."
+
+#: training_planner/website/templates/website/about.html:14
+msgid ""
+"The date of birth can be looked up by trainers to check if the registered "
+"attendees actually fit the training session. The e-mail adresses can be used "
+"by trainers and staff to send messages through the platform directly. "
+"Furthermore, users can reset their password by clicking on the respective "
+"link once they failed to log in. In case there are several accounts using "
+"the same e-mail address, like in the case of a mother creating accounts for "
+"her children, the automatic password reset fails. In such a case please "
+"contact us at <a href='mailto:info@jcu.ch'>info@jcu.ch</a>."
+msgstr ""
+"Das Geburtsdatum kann durch Trainer abgerufen werden, um die "
+"Alterszusammensetzung der Trainingsgruppe zu überprüfen. Die E-Mail Adresse "
+"kann von Trainern und Funktionären genutzt werden um Nachricht direkt durch "
+"die Plattform zu verschicken. Ausserdem ermöglicht die hinterlegte E-Mail "
+"Adresse das Passwort selbsständig zurück zu setzen, indem man auf den "
+"entsprechenden Link klickt, welcher nach einem fehlerhaften Anmeldeversuch "
+"angezeigt wird. Im Falle, dass mehrere Konten mit der selben E-Mail Adresse "
+"erstellt wurden, zum Beispiel wenn ein Vater Konten für seine Kinder "
+"erstellt, kann das automatische Zurücksetzen des Passworts scheitern. In "
+"solchen Fällen kontaktiert uns unter < href='mailto:info@jcu.ch'>info@jcu."
+"ch</a>."
+
+#: training_planner/website/templates/website/about.html:15
+msgid ""
+"Apart from the user supplied data, each request to the server is recorded in "
+"so called log-files. These contain information on the requested site, the "
+"time of the request, the address (ip address) the request came from, the "
+"user agent and possibly further request parameters. These logs are used for "
+"occasionally checking the function of the it infrastructure."
+msgstr ""
+"Abgesehen von den Daten, die Nutzer direkt auf der Webseite erfassen, wird "
+"jeder Aufruf einer Seite in sogenannten Log-Dateien vermerkt. Diese Dateien "
+"enthalten Informationen zu der aufgerufenen Seite, der Zeit des Aufrufs, der "
+"IP-Adresse von der der Aufruf kam, dem Namen des Programms, das für den "
+"Aufruf verwendet wurde, sowie allenfalls weiterer Anfrage-Parameter. Diese "
+"Log-Dateien werden gelegentlich genutzt um die Funktionalität der IT "
+"Infrastrktur sicherzustellen."
+
+#: training_planner/website/templates/website/about.html:16
+msgid ""
+"None of the collected data is monetised or shared with third parties, except "
+"where this is required by law, as in the case of a positive COVID-19 test "
+"result and the subsequent investigations for people having had contact with "
+"that person. All the data resides on servers within Switzerland or the "
+"European Union. Thus it either falls under the Swiss Privacy Act or the "
+"General Data Protection Regulation (GDPR). The servers are protected against "
+"unautorised access according to the current technical standard. Access to "
+"the site is done through TLS encrypted connections, as can be verified by "
+"the lock icon near the address bar in most modern browsers. However, the "
+"usual risks of using electronic communication and online storage of data "
+"remain."
+msgstr ""
+"Die erhobenen Daten werden weder zu kommerziellen Zwecken verwendet noch an "
+"Dritte weitergegeben, asugenommen in Fällen, wo dies durch die Behörden "
+"angeordnet wird, wie zum Beispiel im Falle eines positiven COVID-19 Befunds "
+"und der anschliessenden Ermittlung der Kontakpersonen. Die Daten werden "
+"komplett auf Servern in der Schweiz oder der Europäischen Union gespeichert. "
+"Damit fallen sie entweder unter das Eidgenässische Datenschutz Gesetz oder "
+"die Europäische Dateschutz Grundverordnung (GDPR). Die Server sind durch "
+"aktuelle technische Massnahmen vor dem unbefugten Zugriff geschützt. Der "
+"Zugriff erfolgt durch TLS verschlüsselte Verbindungen, was am Schloss-Symbol "
+"neben der Adresszeile der meisten modernen Browser zu erkennen ist. Trotzdem "
+"bleiben die üblichen Restrisiken bei der elektronischen Datenübermittlung "
+"und -speicherung."
+
+#: training_planner/website/templates/website/about.html:17
+msgid "How to use this platform"
+msgstr "Wie die Plattform genutzt wird"
+
+#: training_planner/website/templates/website/about.html:18
+msgid ""
+"Everyone can open an account by supplying the required information. The user "
+"is required to enter genuine information or leave the fields empty if "
+"allowed. As the tool is used to comply with current legal requirements of "
+"attandence records, we reserve the right to cancel any accounts which do not "
+"comply with these terms of use."
+msgstr ""
+"Jeder kann ein Benutzerkonto eröffnen, indem er die notwendigen Daten "
+"einträgt. Dabei ist der Nutzer verpflichtet wahrheitsgetreue Angaben zu "
+"machen und Felder allenfalls frei zu lassen, falls dies möglich ist. Da die "
+"Plattform genutzt wird um den aktuell geltenden Bestimmungen zur "
+"Anwesenheitskontrolle nachzukommen, behalten wir uns das Recht vor, "
+"Benutzerkonten, die gegen diese Bestimmungen verstossen, zu löschen."
+
+#: training_planner/website/templates/website/about.html:19
+msgid ""
+"Every user with a user account can register for training sessions in the "
+"respective registration period. If the user opens the detail view of any "
+"training outside the registration period, a notice is shown displaying the "
+"opening of the registration if the registration has not yet been opened or "
+"the closing date in case the registration is already closed. Furthermore, "
+"there is a limited number of available spots per training. If there is no "
+"more free spots, users cannot register for the respective training session. "
+"Thus it is only fair to cancel the registration if you cannot attend the "
+"training, to allow others to take that spot."
+msgstr ""
+"Jeder Nutzer mit einem Benutzerkonto kann sich für Trainingseinheiten "
+"während der jeweiligen Anmeldephase anmelden. Beim Öffnen der Detailansicht "
+"ausserhalb der Anmeldeperiode erhält der Nutzer einen Hinweis auf den "
+"Anmeldebeginn, falls die Anmeldung noch nicht geöffnet wurde, oder den "
+"Anmeldeschluss, falls die Anmeldung bereits geschlossen wurde. Ausserdem ist "
+"die Anzahl der Plätze pro Training beschränkt. Falls es keine freien Plätze "
+"mehr gibt, können sich keine weiteren Teilnehmer anmelden. Daher is es nur "
+"fair sich auch wieder abzumelden, wenn man nicht am Training teilnehmen "
+"kann, damit andere die Möglichkeit haben selbst teilzunehmen."
+
+#: training_planner/website/templates/website/about.html:20
+msgid ""
+"In addition users can register as coordinators. Coordinators have to "
+"controll the entrance and make sure everyone complies with the current "
+"rules. If someone does not comply, the coordinator may not grant access to "
+"that person. Parents taking the role as coordinators do not have to register "
+"individually but can simply register as coordinator via the accout of their "
+"child. They are however free to create their own account."
+msgstr ""
+"Zusätzlich können sich Nutzer als Koordinatoren anmelden. Koordinatoren "
+"kontrollieren den Zutritt und stellen sicher, dass sich alle Teilnehmer an "
+"die aktuell gültigen Regeln halten. Der Koordinator darf niemandem Zutritt "
+"gewähren, der gegen die Regeln verstösst. Eltern, die sich als Koordinator "
+"zur Verfügung stellen wollen, müssen dafür nicht eigens ein Benutzerkonto "
+"eröffnen sondern können dies direkt über das Konto ihrer Kinder tun. "
+"Natürlich dürfen sie sich auch einen eiges Benutzerkonto erstellen."
+
+#: training_planner/website/templates/website/about.html:21
+msgid ""
+"On their account page users can see all the data they have entered and the "
+"trainings they have registered for and those they attended. Also they are "
+"able to change their account details if that should be neccessary."
+msgstr ""
+"Auf der Benutzerkonto-Seite sehen die Nutzer alle erfassten Daten und "
+"Trainings, für die sie angemeldet sind und an denen sie teilgenommen haben. "
+"Ausserdem können sie ihre Daten bearbeiten."
+
+#: training_planner/website/templates/website/about.html:22
+msgid "Training Planner"
+msgstr "Trainingsplaner"
+
+#: training_planner/website/templates/website/about.html:23
+msgid ""
+"The training planner is an open-source <a href='https://www.djangoproject."
+"com/' target='_blank'>Django</a> web app, which was developped by <a "
+"href='mailto:flkoch@dev.fkoch.ch'>Florian Koch (flkoch@dev.fkoch.ch)</a> to "
+"allow for training registration and attandence records. It is accessible "
+"from <a href='https://github.com/flkoch/training_planner' "
+"target='_blank'>GitHub</a>."
+msgstr ""
+"Der Trainingsplaner ist eine quelloffene <a href='https://www.djangoproject."
+"com/' target='_blank'>Django</a> Webapplikation, welche durch <a "
+"href='mailto:flkoch@dev.fkoch.ch'>Florian Koch (flkoch@dev.fkoch.ch)</a> "
+"entwickelt wurde um die Trainingsanmeldung und Anwesenheitskontrolle zu "
+"vereinfachen. Der Quellcode ist auf <a href='https://github.com/flkoch/"
+"training_planner' target='_blank'>GitHub</a> abrufbar."
 
 #: training_planner/website/templates/website/deleteConfirmation.html:13
 msgid "Should the following objects be deleted?"

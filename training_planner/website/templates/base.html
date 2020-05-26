@@ -67,9 +67,12 @@
         {% endblock content %}
     </main>
     {% block footerBar %}
-    <footer class="container-fluid bg-dark">
-        <div class="container">
+    <footer class="container-fluid bg-dark text-light mt-5">
+        <div class="container py-2">
             {% block footer %}
+            <nav class="nav flex-column flex-sm-row">
+                <a class="nav-link text-light" href="{% url 'about' %}">{% trans "About" %}</a>
+            </nav>
             {% endblock footer %}
         </div>
     </footer>
