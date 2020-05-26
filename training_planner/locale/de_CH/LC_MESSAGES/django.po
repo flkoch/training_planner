@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TrainingPlanner\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-26 10:29+0200\n"
-"PO-Revision-Date: 2020-05-26 10:30+0200\n"
+"POT-Creation-Date: 2020-05-26 10:46+0200\n"
+"PO-Revision-Date: 2020-05-26 10:47+0200\n"
 "Last-Translator: Florian Koch <flkoch@dev.fkoch.ch>\n"
 "Language-Team: \n"
 "Language: de-CH\n"
@@ -501,9 +501,9 @@ msgid ""
 "date, finish your selection, reopen the widget and deselect today.</p>"
 msgstr ""
 "<p class=\"my-3\">Weitere Trainings zu {{training}} vom {{training.start}} "
-"erstellen.<br>Bitte die Daten der Trainings auswählen. Um das heutige "
-"Datum nicht auszuwählen, tätige die Auswahl, öffne den Kalendar erneut und "
-"wähle das heutige Datum ab.</p>"
+"erstellen.<br>Bitte die Daten der Trainings auswählen. Um das heutige Datum "
+"nicht auszuwählen, tätige die Auswahl, öffne den Kalendar erneut und wähle "
+"das heutige Datum ab.</p>"
 
 #: training_planner/trainings/models.py:13
 msgid "Street"
@@ -855,15 +855,17 @@ msgid "participation/"
 msgstr "teilnahme/"
 
 #: training_planner/trainings/views.py:67
-msgid "The registration will open on {date:s} at {time:s}."
-msgstr "Die Anmeldung wird am {date:s} um {time:s} geöffnet."
+#, python-brace-format
+msgid "The registration will open on {date} at {time}."
+msgstr "Die Anmeldung wird am {date} um {time} geöffnet."
 
 #: training_planner/trainings/views.py:77
+#, python-brace-format
 msgid ""
-"The registration is closed since {date:s} at {time:s}. For short-term "
+"The registration is closed since {date} at {time}. For short-term "
 "registrations or unregistrations please contact the trainer."
 msgstr ""
-"Die Anmeldung ist seit dem {date:s} um {time:s} geschlossen. Für An- oder "
+"Die Anmeldung ist seit dem {date} um {time} geschlossen. Für An- oder "
 "Abmeldungen kontaktiere bitte den Trainer."
 
 #: training_planner/trainings/views.py:96
@@ -875,8 +877,8 @@ msgid "Registration failed."
 msgstr "Anmeldung fehlgeschlagen."
 
 #: training_planner/trainings/views.py:109
-msgid "You have been successfully signed off for {training:s}."
-msgstr "Du wurdest erfolgreich von {training:s} abgemeldet."
+msgid "You have been successfully signed off for {training!s}."
+msgstr "Du wurdest erfolgreich von {training!s} abgemeldet."
 
 #: training_planner/trainings/views.py:114
 msgid "Sign-off failed."
@@ -918,8 +920,9 @@ msgid "Changes saved successfully."
 msgstr "Änderungen erfolgreich gespeichert."
 
 #: training_planner/trainings/views.py:187
-msgid "Edit {training:s}"
-msgstr "{training:s} Bearbeiten"
+#, python-brace-format
+msgid "Edit {training}"
+msgstr "{training} Bearbeiten"
 
 #: training_planner/trainings/views.py:221
 #, python-brace-format

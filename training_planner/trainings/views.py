@@ -64,7 +64,7 @@ def details(request, id):
         messages.info(
             request,
             format_lazy(
-                _('The registration will open on {date:s} at {time:s}.'),
+                _('The registration will open on {date} at {time}.'),
                 date=training.opendate_as_text,
                 time=training.opentime_as_text
             )
@@ -74,7 +74,7 @@ def details(request, id):
             request,
             format_lazy(
                 _(
-                    'The registration is closed since {date:s} at {time:s}. '
+                    'The registration is closed since {date} at {time}. '
                     'For short-term registrations or unregistrations please '
                     'contact the trainer.'
                 ),
@@ -106,7 +106,7 @@ def unregister(request, id):
         messages.success(
             request,
             format_lazy(
-                _('You have been successfully signed off for {training:s}.'),
+                _('You have been successfully signed off for {training!s}.'),
                 training=training,
             )
         )
@@ -184,7 +184,7 @@ def edit(request, id):
         form = formClass(instance=training)
     context = {
         'form': form,
-        'title': format_lazy(_('Edit {training:s}'), training=training.title)
+        'title': format_lazy(_('Edit {training}'), training=training.title)
     }
     return render(request, 'trainings/trainingForm.html', context)
 
