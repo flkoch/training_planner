@@ -171,7 +171,7 @@ def create(request):
             'duration': 45,
         })
     context = {'form': form, 'title': _('New Training')}
-    return render(request, 'trainings/trainingForm.html', context)
+    return render(request, 'trainings/training_form.html', context)
 
 
 @protect_training
@@ -198,7 +198,7 @@ def edit(request, id):
         'form': form,
         'title': format_lazy(_('Edit {training}'), training=training.title)
     }
-    return render(request, 'trainings/trainingForm.html', context)
+    return render(request, 'trainings/training_form.html', context)
 
 
 @protect_training
@@ -242,7 +242,7 @@ def make_training_series(request, id):
         'training': training,
         'title': _('Create Training Series')
     }
-    return render(request, 'trainings/trainingForm.html', context)
+    return render(request, 'trainings/training_form.html', context)
 
 
 @protect_training
