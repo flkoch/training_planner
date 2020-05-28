@@ -33,7 +33,7 @@ class Location(models.Model):
     name = models.CharField(max_length=50, verbose_name=_('Name'))
     description = models.TextField(
         verbose_name=_('Description'), blank=True, null=True)
-    address = models.OneToOneField(
+    address = models.ForeignKey(
         Address, blank=True, null=True, on_delete=models.CASCADE)
     capacity = models.PositiveSmallIntegerField(
         verbose_name=_('Capacity (number of people)'), blank=True, null=True)
