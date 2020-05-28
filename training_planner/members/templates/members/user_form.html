@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags i18n %}
 {% block title %}
-    {% trans "Register" %}
+    {{ title }}
 {% endblock title %}
 {% block content %}
+    <h1>{{ title }}</h1>
     {% crispy form %}
 {% endblock content %}

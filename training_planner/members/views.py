@@ -10,53 +10,11 @@ from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
 from trainings import decorators
 from .filter import UserFilter
-from .forms import CreateUserForm
+from .forms import CreateUserForm, ChangeUserForm
 from .models import User, check_active_participants, check_active_trainers, \
     check_trainers
 
 # Create your views here.
-
-
-@auth_decorators.login_required
-def account(request):
-    user = request.user
-    reg_trainings = user.trainings_registered.filter(
-        start__gte=timezone.now()).order_by('start')
-    part_trainings = user.trainings.filter(
-        start__lte=timezone.now()).order_by('-start')
-    paginator = Paginator(part_trainings, 10)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page((page_number))
-    context = {
-        'page_user': user,
-        'edit_link': reverse('account-edit'),
-        'reg_trainings': reg_trainings,
-        'part_trainings': page_obj,
-    }
-    return render(request, 'members/details.html', context)
-
-
-@auth_decorators.login_required
-def account_edit(request):
-    user = request.user
-    reg_trainings = user.trainings_registered.filter(
-        start__gte=timezone.now()).order_by('start')
-    part_trainings = user.trainings.filter(
-        start__lte=timezone.now()).order_by('-start')
-    paginator = Paginator(part_trainings, 10)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page((page_number))
-    context = {
-        'page_user': user,
-        'edit_link': reverse('account-edit'),
-        'reg_trainings': reg_trainings,
-        'part_trainings': page_obj,
-    }
-    messages.info(
-        request,
-        _('The editing of user details is not currently supported.')
-    )
-    return render(request, 'members/editForm.html', context)
 
 
 @decorators.unauthorised_user
@@ -125,8 +83,11 @@ def register(request):
                   'Please check your inbox.')
             )
             return redirect(login)
-    context = {'form': form}
-    return render(request, 'members/register.html', context)
+    context = {
+        'title': _('Register'),
+        'form': form,
+    }
+    return render(request, 'members/user_form.html', context)
 
 
 @auth_decorators.permission_required('members.view_user')
@@ -140,10 +101,13 @@ def all(request):
 
 
 @auth_decorators.permission_required('members.view_user')
-def details(request, id):
-    user = get_object_or_404(auth.get_user_model(), id=id)
-    if request.user == user:
-        return redirect('account')
+def details(request, id=None):
+    if id is None:
+        user = request.user
+        edit_link = reverse('account-edit')
+    else:
+        user = get_object_or_404(auth.get_user_model(), id=id)
+        edit_link = reverse('member-edit', args=[id])
     reg_trainings = user.trainings_registered.filter(
         start__gte=timezone.now()).order_by('start')
     part_trainings = user.trainings.filter(
@@ -153,7 +117,7 @@ def details(request, id):
     page_obj = paginator.get_page((page_number))
     context = {
         'page_user': user,
-        'edit_link': reverse('member-edit', args=[id]),
+        'edit_link': edit_link,
         'reg_trainings': reg_trainings,
         'part_trainings': page_obj,
     }
@@ -161,30 +125,29 @@ def details(request, id):
 
 
 @auth_decorators.permission_required('members.edit_user')
-def edit(request, id):
-    user = get_object_or_404(auth.get_user_model(), id=id)
-    if request.user == user:
-        return redirect('account-edit')
-    reg_trainings = user.trainings_registered.filter(
-        start__gte=timezone.now()).order_by('start')
-    part_trainings = user.trainings.filter(
-        start__lte=timezone.now()).order_by('-start')
-    paginator = Paginator(part_trainings, 10)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page((page_number))
+def edit(request, id=None):
+    if id is None:
+        user = request.user
+    else:
+        user = get_object_or_404(auth.get_user_model(), id=id)
+    if request.method == 'POST':
+        form = ChangeUserForm(request.POST)
+        if form.is_valid():
+            user.first_name = form.cleaned_data['first_name']
+            user.last_name = form.cleaned_data['last_name']
+            user.email = form.cleaned_data['email']
+            user.initials = ''.join(
+                c for c in form.cleaned_data['initials'] if c.isalpha()
+            ).upper()
+            user.birth_date = form.cleaned_data['birth_date']
+            user.save()
+            return redirect('member-details', id=id)
+    form = ChangeUserForm(instance=user)
     context = {
-        'page_user': user,
-        'edit_link': reverse('member-edit', args=[id]),
-        'reg_trainings': reg_trainings,
-        'part_trainings': page_obj,
+        'title': _('Edit User'),
+        'form': form,
     }
-    messages.info(
-        request,
-        _(
-            'The editing of user details is not currently supported.'
-        )
-    )
-    return render(request, 'members/editForm.html', context)
+    return render(request, 'members/user_form.html', context)
 
 
 @decorators.admin_only

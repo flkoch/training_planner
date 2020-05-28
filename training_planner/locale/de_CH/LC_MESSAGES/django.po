@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TrainingPlanner\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-28 10:27+0200\n"
-"PO-Revision-Date: 2020-05-28 10:32+0200\n"
+"POT-Creation-Date: 2020-05-28 12:10+0200\n"
+"PO-Revision-Date: 2020-05-28 12:15+0200\n"
 "Last-Translator: Florian Koch <flkoch@dev.fkoch.ch>\n"
 "Language-Team: \n"
 "Language: de-CH\n"
@@ -71,7 +71,6 @@ msgstr "Nachname"
 
 #: training_planner/members/filter.py:15
 #: training_planner/members/templates/members/details.html:22
-#: training_planner/members/templates/members/editForm.html:18
 #: training_planner/members/templates/members/login.html:12
 #: training_planner/members/templates/members/overview.html:29
 #: training_planner/trainings/templates/trainings/participation_view.html:39
@@ -80,22 +79,22 @@ msgstr "Benutzername"
 
 #: training_planner/members/filter.py:19
 #: training_planner/members/templates/members/details.html:23
-#: training_planner/members/templates/members/editForm.html:19
 #: training_planner/members/templates/members/overview.html:30
 msgid "E-mail"
 msgstr "E-Mail"
 
-#: training_planner/members/forms.py:23 training_planner/members/models.py:30
+#: training_planner/members/forms.py:23 training_planner/members/forms.py:114
+#: training_planner/members/models.py:30
 msgid "Date of Birth"
 msgstr "Geburtsdatum"
 
-#: training_planner/members/forms.py:27 training_planner/members/models.py:32
+#: training_planner/members/forms.py:27 training_planner/members/forms.py:118
+#: training_planner/members/models.py:32
 msgid "Initials"
 msgstr "Initialen"
 
-#: training_planner/members/forms.py:90
+#: training_planner/members/forms.py:90 training_planner/members/forms.py:165
 #: training_planner/members/templates/members/details.html:9
-#: training_planner/members/templates/members/editForm.html:9
 #: training_planner/trainings/forms.py:147
 #: training_planner/trainings/forms.py:308
 #: training_planner/trainings/forms.py:491
@@ -108,8 +107,7 @@ msgstr "Initialen"
 msgid "Back"
 msgstr "Zurück"
 
-#: training_planner/members/forms.py:95
-#: training_planner/members/templates/members/register.html:4
+#: training_planner/members/forms.py:95 training_planner/members/views.py:87
 #: training_planner/trainings/templates/trainings/details.html:14
 #: training_planner/trainings/templates/trainings/details.html:42
 #: training_planner/trainings/templates/trainings/details_admin.html:15
@@ -117,6 +115,14 @@ msgstr "Zurück"
 #: training_planner/trainings/templates/trainings/overview.html:65
 msgid "Register"
 msgstr "Anmelden"
+
+#: training_planner/members/forms.py:170
+#: training_planner/trainings/forms.py:313
+#: training_planner/trainings/forms.py:496
+#: training_planner/trainings/forms.py:554
+#: training_planner/trainings/templates/trainings/details_controlling.html:30
+msgid "Save"
+msgstr "Speichern"
 
 #: training_planner/members/models.py:9
 msgid "Participant"
@@ -152,7 +158,6 @@ msgid "Trainings Controlling"
 msgstr "Trainings Kontrolle"
 
 #: training_planner/members/templates/members/details.html:13
-#: training_planner/members/templates/members/editForm.html:4
 #: training_planner/trainings/templates/trainings/details_admin.html:23
 #: training_planner/trainings/templates/trainings/details_controlling.html:11
 #: training_planner/trainings/templates/trainings/overview.html:65
@@ -160,59 +165,49 @@ msgid "Edit"
 msgstr "Bearbeiten"
 
 #: training_planner/members/templates/members/details.html:18
-#: training_planner/members/templates/members/editForm.html:14
 #: training_planner/trainings/templates/trainings/details.html:20
 #: training_planner/trainings/templates/trainings/details_admin.html:34
 msgid "Information"
 msgstr "Informationen"
 
 #: training_planner/members/templates/members/details.html:21
-#: training_planner/members/templates/members/editForm.html:17
 #: training_planner/trainings/models.py:33
 #: training_planner/trainings/models.py:54
 msgid "Name"
 msgstr "Name"
 
 #: training_planner/members/templates/members/details.html:26
-#: training_planner/members/templates/members/editForm.html:22
 #: training_planner/members/templates/members/overview.html:31
 msgid "Groups"
 msgstr "Gruppen"
 
 #: training_planner/members/templates/members/details.html:28
-#: training_planner/members/templates/members/editForm.html:28
 #: training_planner/trainings/templates/trainings/details.html:36
 #: training_planner/trainings/templates/trainings/details_admin.html:50
 msgid "and"
 msgstr "und"
 
 #: training_planner/members/templates/members/details.html:39
-#: training_planner/members/templates/members/editForm.html:40
 msgid "registered trainings"
 msgstr "Angemeldete Trainings"
 
 #: training_planner/members/templates/members/details.html:45
-#: training_planner/members/templates/members/editForm.html:46
 msgid "no future registrations"
 msgstr "Keine zukünftigen Anmeldungen"
 
 #: training_planner/members/templates/members/details.html:55
-#: training_planner/members/templates/members/editForm.html:56
 msgid "completed trainings"
 msgstr "Absolvierte Trainings"
 
 #: training_planner/members/templates/members/details.html:61
-#: training_planner/members/templates/members/editForm.html:62
 msgid "no completed trainings yet"
 msgstr "Bisher keine absolvierten Trainings"
 
 #: training_planner/members/templates/members/details.html:65
-#: training_planner/members/templates/members/editForm.html:66
 msgid "pagination for completed trainings"
 msgstr "Seitennavigation für absolvierte Trainings"
 
 #: training_planner/members/templates/members/details.html:69
-#: training_planner/members/templates/members/editForm.html:70
 msgid "current"
 msgstr "aktuell"
 
@@ -304,19 +299,15 @@ msgstr "verwaltung/"
 msgid "<int:id>/edit/"
 msgstr "<int:id>/bearbeiten/"
 
-#: training_planner/members/views.py:57 training_planner/members/views.py:184
-msgid "The editing of user details is not currently supported."
-msgstr "Das Bearbeiten von Benutzerdaten ist aktuell nicht möglich."
-
-#: training_planner/members/views.py:77
+#: training_planner/members/views.py:35
 msgid "Username and password do not match a valid user."
 msgstr "Benutzername und Passwort gehören zu keinem gültigen Benutzer."
 
-#: training_planner/members/views.py:101
+#: training_planner/members/views.py:59
 msgid "Registration on training.judo-club-uster.ch"
 msgstr "Anmeldung auf training.judo-club-uster.ch"
 
-#: training_planner/members/views.py:104
+#: training_planner/members/views.py:62
 #, python-brace-format
 msgid ""
 "Hi {name},\n"
@@ -352,19 +343,23 @@ msgstr ""
 "\n"
 "Viel Spass im Training wünscht Dir das JCU Trainer-Team"
 
-#: training_planner/members/views.py:124
+#: training_planner/members/views.py:82
 msgid "The account has been created. Please check your inbox."
 msgstr "Das Benutzerkonto wurde erstellt. Bitte überprüfe Deinen Posteingang."
 
-#: training_planner/members/views.py:196
+#: training_planner/members/views.py:147
+msgid "Edit User"
+msgstr "Benutzer Bearbeiten"
+
+#: training_planner/members/views.py:159
 msgid "Update Active Participants"
 msgstr "Aktive Teilnehmer aktualisieren"
 
-#: training_planner/members/views.py:199
+#: training_planner/members/views.py:162
 msgid "Update Active Trainer"
 msgstr "Aktive Trainer aktualisieren"
 
-#: training_planner/members/views.py:202
+#: training_planner/members/views.py:165
 msgid "Update Trainer"
 msgstr "Trainer aktualisieren"
 
@@ -507,13 +502,6 @@ msgstr "Anmeldebeginn"
 #: training_planner/trainings/models.py:104
 msgid "Registration closing"
 msgstr "Anmeldeschluss"
-
-#: training_planner/trainings/forms.py:313
-#: training_planner/trainings/forms.py:496
-#: training_planner/trainings/forms.py:554
-#: training_planner/trainings/templates/trainings/details_controlling.html:30
-msgid "Save"
-msgstr "Speichern"
 
 #: training_planner/trainings/forms.py:517
 msgid "Dates"
@@ -1261,6 +1249,9 @@ msgstr "Trainingsplaner - Judo Club Uster"
 #: training_planner/website/templates/website/welcome.html:7
 msgid "Welcome to the trainings plannner of Judo Club Uster!"
 msgstr "Willkommen zum Trainingsplaner des Judo Club Uster!"
+
+#~ msgid "The editing of user details is not currently supported."
+#~ msgstr "Das Bearbeiten von Benutzerdaten ist aktuell nicht möglich."
 
 #~ msgid "System"
 #~ msgstr "System"
