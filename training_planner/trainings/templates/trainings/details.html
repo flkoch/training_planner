@@ -27,9 +27,22 @@
                     {% with instructors=training.instructor.all %}
                         {% if instructors|length > 0 %}
                             {% trans "Further Instructors" %}:
-                            {{instr}}
                             {% for instructor in instructors %}
                                 {{instructor}}
+                                {% if forloop.revcounter > 2 %}
+                                    ,
+                                {% elif forloop.revcounter == 2%}
+                                     {% trans "and" %}
+                                {% endif %}
+                            {% endfor %}
+                            <br>
+                        {% endif %}
+                    {% endwith %}
+                    {% with targets=training.target_group.all %}
+                        {% if targets|length > 0 %}
+                            {% trans "Target Groups" %}:
+                            {% for target in targets %}
+                                {{target}}
                                 {% if forloop.revcounter > 2 %}
                                     ,
                                 {% elif forloop.revcounter == 2%}
