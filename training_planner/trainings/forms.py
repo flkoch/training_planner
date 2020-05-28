@@ -8,7 +8,7 @@ from crispy_forms import layout as cfl
 from crispy_forms.helper import FormHelper
 from tempus_dominus import widgets
 import members.models as members
-from .models import Training
+from .models import Training, Location, TargetGroup
 
 
 def _python2moment(date_time_string):
@@ -91,6 +91,10 @@ class AddTrainingForm(forms.ModelForm):
             members.trainer().order_by('first_name', 'last_name')
         self.fields['instructor'].queryset = \
             members.trainer().order_by('first_name', 'last_name')
+        self.fields['location'].queryset = \
+            Location.objects.all().order_by('name')
+        self.fields['target_group'].queryset = \
+            TargetGroup.objects.all().order_by('name')
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.action = ''
@@ -233,8 +237,14 @@ class TrainingForm(forms.ModelForm):
             members.trainer().order_by('first_name', 'last_name')
         self.fields['instructor'].queryset = \
             members.trainer().order_by('first_name', 'last_name')
+        self.fields['registered_participants'].queryset = \
+            members.participant().order_by('first_name', 'last_name')
         self.fields['coordinator'].queryset = \
             members.participant().order_by('first_name', 'last_name')
+        self.fields['location'].queryset = \
+            Location.objects.all().order_by('name')
+        self.fields['target_group'].queryset = \
+            TargetGroup.objects.all().order_by('name')
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.action = ''
@@ -396,6 +406,10 @@ class AdminTrainingForm(forms.ModelForm):
             members.participant().order_by('first_name', 'last_name')
         self.fields['coordinator'].queryset = \
             members.participant().order_by('first_name', 'last_name')
+        self.fields['location'].queryset = \
+            Location.objects.all().order_by('name')
+        self.fields['target_group'].queryset = \
+            TargetGroup.objects.all().order_by('name')
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.action = ''
