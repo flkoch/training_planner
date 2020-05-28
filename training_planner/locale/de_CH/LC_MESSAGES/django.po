@@ -51,7 +51,7 @@ msgstr "passwort/neu/erledigt/"
 
 #: training_planner/members/account_urls.py:23
 msgid "password/reset/<uidb64>/<token>/"
-msgstr "passwort/neu/<uibd64>/<token>/"
+msgstr "passwort/neu/<uidb64>/<token>/"
 
 #: training_planner/members/account_urls.py:26
 msgid "password/reset/completed/"
