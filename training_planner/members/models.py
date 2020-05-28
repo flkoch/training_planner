@@ -31,6 +31,9 @@ class User(AbstractUser):
     initials = models.CharField(
         max_length=3, verbose_name=_('Initials'), null=True, blank=True)
 
+    class Meta:
+        ordering = ['last_name', 'first_name']
+
     def __str__(self):
         full_name = self.get_full_name()
         if not full_name.strip():
