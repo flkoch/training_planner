@@ -1,26 +1,28 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n crispy_forms_tags %}
 {% block title %}
 {% trans "Training Overview" %}
 {% endblock title %}
+{% block additionalScripts %}
+{{ myFilter.form.media }}
+{% endblock additionalScripts %}
 {% block content %}
 <h1>{% trans "Trainings" %}</h1>
-{% comment '' %}
-<div class="card">
-    <div class="card-body">
-        <form method="get" class="form-inline">
-            {% for item in myFilter.form %}
-                <div class="input-group">
-                    <label for="">{{item.label}}</label>: {{item}}
-                </div>
-            {% endfor %}
-            <button class="btn btn-primary" type="submit">
-            {% trans "Filter" %}
-            </button>
-        </form>
+<div class="nav justify-content-end">
+    <button class="btn btn-secondary my-2" type="button" data-toggle="collapse" data-target="#filter" aria-expanded="false" aria-controls="filter">{% trans "Toggle Filter" %}</button>
+</div>
+<div class="collapse my-2" id="filter">
+    <div class="card">
+        <div class="card-body">
+            <form method="get">
+                {{ myFilter.form|crispy }}
+                <button class="btn btn-primary m-2" type="submit">
+                {% trans "Filter" %}
+                </button>
+            </form>
+        </div>
     </div>
 </div>
-{% endcomment %}
 <div class="table-responsive-lg">
 <table class="table">
     <thead>

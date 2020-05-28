@@ -5,14 +5,19 @@
 {% endblock %}
 {% block content %}
 <h1>{% trans "Members" %}</h1>
-<div class="card">
-    <div class="card-body">
-        <form method="get" class="form-inline">
-            {{myFilter.form|crispy}}
-            <button class="btn btn-primary" type="submit">
-            {% trans "Filter" %}
-            </button>
-        </form>
+<div class="nav justify-content-end">
+    <button class="btn btn-secondary my-2" type="button" data-toggle="collapse" data-target="#filter" aria-expanded="false" aria-controls="filter">{% trans "Toggle Filter" %}</button>
+</div>
+<div class="collapse my-2" id="filter">
+    <div class="card">
+        <div class="card-body">
+            <form method="get">
+                {{myFilter.form|crispy}}
+                <button class="btn btn-primary" type="submit">
+                {% trans "Filter" %}
+                </button>
+            </form>
+        </div>
     </div>
 </div>
 <div class="table-responsive-lg">

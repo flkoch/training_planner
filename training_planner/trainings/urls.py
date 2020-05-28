@@ -30,4 +30,5 @@ urlpatterns = [
          name='trainings-held-trainer'),
     path(_('participation/'), trainings.participation_view,
          name='trainings-participation'),
+    path(_('all/'), trainings.all_trainings, name='trainings-all'),
 ]

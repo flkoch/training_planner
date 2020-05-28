@@ -14,7 +14,7 @@ from members.filter import UserStatisticsFilter
 from .models import Training
 from .forms import AddTrainingForm, AdminTrainingForm, TrainingForm, \
     TrainingSeriesForm
-from .filter import TrainingFilter
+from .filter import TrainingFilter, TrainingAdminFilter
 from .decorators import trainer_only, protect_training, admin_only, \
     trainer_or_admin_only
 # Create your views here.
@@ -50,6 +50,18 @@ def overview(request):
     for training in trainings:
         training.can_edit = training.can_edit(request.user)
         training.is_registered = training.is_registered(request.user)
+    context = {'trainings': trainings, 'myFilter': myFilter}
+    return render(request, 'trainings/overview.html', context)
+
+
+@admin_only
+def all_trainings(request):
+    trainings = Training.objects.all().order_by(
+        'start', 'title')
+    myFilter = TrainingAdminFilter(request.GET, queryset=trainings)
+    trainings = myFilter.qs
+    for training in trainings:
+        training.can_edit = True
     context = {'trainings': trainings, 'myFilter': myFilter}
     return render(request, 'trainings/overview.html', context)
 

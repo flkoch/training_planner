@@ -33,11 +33,11 @@
         </button>
         <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'logo.png' %}" width="30" height="30" alt="Judo Club Uster"/></a>
         <div class="collapse navbar-collapse" id="navbarMain">
-            <div class="navbar-nav">
+            <ul class="navbar-nav">
                 {% block mainNavigation %}
                 {% include 'navbar.html' %}
                 {% endblock mainNavigation %}
-            </div>
+            </ul>
             <div class="ml-auto navbar-nav">
                 {% block userMenu %}
                     {% if user.is_authenticated %}
