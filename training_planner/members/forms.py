@@ -86,7 +86,7 @@ class CreateUserForm(UserCreationForm):
                 cfl.HTML(
                     format_lazy(
                         '<a href="javascript:history.back()" class="btn '
-                        'btn-secondary mr-3">%(back)s</a>',
+                        'btn-secondary mr-3">{back}</a>',
                         back=_('Back'),
                     )
                 ),
