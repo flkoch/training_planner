@@ -11,41 +11,41 @@ import members.models as members
 from .models import Training
 
 
-def python2moment(date_time_string):
+def _python2moment(date_time_string):
     """
     Transforms a python datetime string into a valid moment.js datetime string
     by replacing the corresponding placeholders.
     """
     if isinstance(date_time_string, str):
-        return date_time_string.replace('%Y', 'YYYY').replace('%m', 'MM') \
-            .replace('%d', 'DD').replace('%H', 'HH').replace('%M', 'mm') \
-            .replace('%a', 'ddd').replace('%A', 'dddd').replace('%w', 'e') \
-            .replace('%b', 'MMM').replace('%B', 'MMMM').replace('%y', 'YY') \
-            .replace('%I', 'hh').replace('%p', 'a').replace('%f', 'ssssss') \
-            .replace('%S', 'ss').replace('%z', 'ZZ').replace('%j', 'DDDD') \
+        return date_time_string.replace('%Y', 'YYYY').replace('%m', 'MM')\
+            .replace('%d', 'DD').replace('%H', 'HH').replace('%M', 'mm')\
+            .replace('%a', 'ddd').replace('%A', 'dddd').replace('%w', 'e')\
+            .replace('%b', 'MMM').replace('%B', 'MMMM').replace('%y', 'YY')\
+            .replace('%I', 'hh').replace('%p', 'a').replace('%f', 'ssssss')\
+            .replace('%S', 'ss').replace('%z', 'ZZ').replace('%j', 'DDDD')\
             .replace('%U', 'WW').replace('%W', 'ww').replace('%%', '%')
     elif isinstance(date_time_string, Iterable):
-        return [python2moment(item) for item in date_time_string]
+        return [_python2moment(item) for item in date_time_string]
     else:
         raise ValueError('Expecting string or iterable of strings.')
         return None
 
 
-def moment2python(date_time_string):
+def _moment2python(date_time_string):
     """
     Transforms a momentum.js datetime string into a valid python datetime
     string by replacing the corresponding placeholders.
     """
     if isinstance(date_time_string, str):
-        return date_time_string.replace('YYYY', '%Y').replace('MM', '%m') \
-            .replace('DD', '%d').replace('HH', '%H').replace('mm', '%M') \
-            .replace('ddd', '%a').replace('dddd', '%A').replace('e', '%w') \
-            .replace('MMM', '%b').replace('MMMM', '%B').replace('YY', '%y') \
+        return date_time_string.replace('YYYY', '%Y').replace('MM', '%m')\
+            .replace('DD', '%d').replace('HH', '%H').replace('mm', '%M')\
+            .replace('ddd', '%a').replace('dddd', '%A').replace('e', '%w')\
+            .replace('MMM', '%b').replace('MMMM', '%B').replace('YY', '%y')\
             .replace('hh', '%I').replace('a', '%p').replace('ssssss', '%f')\
-            .replace('ss', '%S').replace('ZZ', '%z').replace('DDDD', '%j') \
+            .replace('ss', '%S').replace('ZZ', '%z').replace('DDDD', '%j')\
             .replace('WW', '%U').replace('ww', '%W').replace('%', '%%')
     elif isinstance(date_time_string, Iterable):
-        return [moment2python(item) for item in date_time_string]
+        return [_moment2python(item) for item in date_time_string]
     else:
         raise ValueError('Expecting string or iterable of strings.')
         return None
@@ -62,9 +62,13 @@ class AddTrainingForm(forms.ModelForm):
         widget=widgets.DateTimePicker(
             options={
                 'stepping': 15,
-                'format': python2moment(settings.DATETIME_INPUT_FORMATS[2]),
+                'format': _python2moment(
+                    settings.DATETIME_INPUT_FORMATS[2]
+                ),
                 'sideBySide': True,
-                'extraFormats': python2moment(settings.DATETIME_INPUT_FORMATS),
+                'extraFormats': _python2moment(
+                    settings.DATETIME_INPUT_FORMATS
+                ),
             },
             attrs={
                 'append': 'fa fa-calendar',
@@ -167,9 +171,11 @@ class TrainingForm(forms.ModelForm):
         widget=widgets.DateTimePicker(
             options={
                 'stepping': 15,
-                'format': python2moment(settings.DATETIME_INPUT_FORMATS[2]),
+                'format': _python2moment(settings.DATETIME_INPUT_FORMATS[2]),
                 'sideBySide': True,
-                'extraFormats': python2moment(settings.DATETIME_INPUT_FORMATS),
+                'extraFormats': _python2moment(
+                    settings.DATETIME_INPUT_FORMATS
+                ),
 
             },
             attrs={
@@ -183,9 +189,11 @@ class TrainingForm(forms.ModelForm):
         widget=widgets.DateTimePicker(
             options={
                 'stepping': 15,
-                'format': python2moment(settings.DATETIME_INPUT_FORMATS[2]),
+                'format': _python2moment(settings.DATETIME_INPUT_FORMATS[2]),
                 'sideBySide': True,
-                'extraFormats': python2moment(settings.DATETIME_INPUT_FORMATS),
+                'extraFormats': _python2moment(
+                    settings.DATETIME_INPUT_FORMATS
+                ),
 
             },
             attrs={
@@ -199,9 +207,11 @@ class TrainingForm(forms.ModelForm):
         widget=widgets.DateTimePicker(
             options={
                 'stepping': 15,
-                'format': python2moment(settings.DATETIME_INPUT_FORMATS[2]),
+                'format': _python2moment(settings.DATETIME_INPUT_FORMATS[2]),
                 'sideBySide': True,
-                'extraFormats': python2moment(settings.DATETIME_INPUT_FORMATS),
+                'extraFormats': _python2moment(
+                    settings.DATETIME_INPUT_FORMATS
+                ),
 
             },
             attrs={
@@ -322,9 +332,11 @@ class AdminTrainingForm(forms.ModelForm):
         widget=widgets.DateTimePicker(
             options={
                 'stepping': 15,
-                'format': python2moment(settings.DATETIME_INPUT_FORMATS[2]),
+                'format': _python2moment(settings.DATETIME_INPUT_FORMATS[2]),
                 'sideBySide': True,
-                'extraFormats': python2moment(settings.DATETIME_INPUT_FORMATS),
+                'extraFormats': _python2moment(
+                    settings.DATETIME_INPUT_FORMATS
+                ),
             },
             attrs={
                 'append': 'fa fa-calendar',
@@ -337,9 +349,11 @@ class AdminTrainingForm(forms.ModelForm):
         widget=widgets.DateTimePicker(
             options={
                 'stepping': 15,
-                'format': python2moment(settings.DATETIME_INPUT_FORMATS[2]),
+                'format': _python2moment(settings.DATETIME_INPUT_FORMATS[2]),
                 'sideBySide': True,
-                'extraFormats': python2moment(settings.DATETIME_INPUT_FORMATS),
+                'extraFormats': _python2moment(
+                    settings.DATETIME_INPUT_FORMATS
+                ),
             },
             attrs={
                 'append': 'fa fa-calendar',
@@ -352,9 +366,11 @@ class AdminTrainingForm(forms.ModelForm):
         widget=widgets.DateTimePicker(
             options={
                 'stepping': 15,
-                'format': python2moment(settings.DATETIME_INPUT_FORMATS[2]),
+                'format': _python2moment(settings.DATETIME_INPUT_FORMATS[2]),
                 'sideBySide': True,
-                'extraFormats': python2moment(settings.DATETIME_INPUT_FORMATS),
+                'extraFormats': _python2moment(
+                    settings.DATETIME_INPUT_FORMATS
+                ),
             },
             attrs={
                 'append': 'fa fa-calendar',
@@ -504,10 +520,10 @@ class TrainingSeriesForm(forms.ModelForm):
     dates = forms.DateField(
         widget=widgets.DatePicker(
             options={
-                'format': python2moment(settings.DATE_INPUT_FORMATS[3]),
+                'format': _python2moment(settings.DATE_INPUT_FORMATS[3]),
                 'useCurrent': False,
                 'allowMultidate': True,
-                'extraFormats': python2moment(settings.DATE_INPUT_FORMATS),
+                'extraFormats': _python2moment(settings.DATE_INPUT_FORMATS),
             },
             attrs={
                 'append': 'fa fa-calendar',
