@@ -167,8 +167,8 @@ def create(request):
     else:
         form = AddTrainingForm(initial={
             'main_instructor': request.user,
-            'capacity': 10,
-            'duration': 45,
+            'capacity': 50,
+            'duration': 75,
         })
     context = {'form': form, 'title': _('New Training')}
     return render(request, 'trainings/training_form.html', context)
