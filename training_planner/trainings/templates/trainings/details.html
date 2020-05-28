@@ -52,7 +52,7 @@
                             <br>
                         {% endif %}
                     {% endwith %}
-                    {% trans "Coordinator" %}: {% if training.coordinator %}{{training.coordinator}}{% if training.coordinator == user %}<br><small class="text-muted">{% trans 'You will get further information just before the training. If you cannot make it, please contact the respective trainer. In case of any questions, contact Aline Steinbrecher at (<a href="tel:0041792959637">079 296 96 37</a>)' %}</small>{% endif %}{% else %}<a href="{% url 'trainings-register-coordinator' training.id %}" class="btn btn-sm btn-secondary">{% trans "Register" %}</a>{% endif %}<br>
+                    {% trans "Coordinator" %}: {% if training.coordinator %}{{training.coordinator}}{% if training.coordinator == user %}<br><small class="text-muted">{% trans 'You will get further information just before the training. If you cannot make it, please contact the respective trainer. In case of any questions, contact Aline Steinbrecher at (<a href="tel:0041792969637">079 296 96 37</a>)' %}</small>{% endif %}{% else %}<a href="{% url 'trainings-register-coordinator' training.id %}" class="btn btn-sm btn-secondary">{% trans "Register" %}</a>{% endif %}<br>
                 </p>
             </div>
         </div>

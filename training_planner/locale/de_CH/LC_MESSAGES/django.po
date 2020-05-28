@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TrainingPlanner\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-28 12:10+0200\n"
-"PO-Revision-Date: 2020-05-28 12:15+0200\n"
+"POT-Creation-Date: 2020-05-28 15:17+0200\n"
+"PO-Revision-Date: 2020-05-28 15:20+0200\n"
 "Last-Translator: Florian Koch <flkoch@dev.fkoch.ch>\n"
 "Language-Team: \n"
 "Language: de-CH\n"
@@ -95,10 +95,10 @@ msgstr "Initialen"
 
 #: training_planner/members/forms.py:90 training_planner/members/forms.py:165
 #: training_planner/members/templates/members/details.html:9
-#: training_planner/trainings/forms.py:147
-#: training_planner/trainings/forms.py:308
-#: training_planner/trainings/forms.py:491
-#: training_planner/trainings/forms.py:549
+#: training_planner/trainings/forms.py:155
+#: training_planner/trainings/forms.py:328
+#: training_planner/trainings/forms.py:521
+#: training_planner/trainings/forms.py:579
 #: training_planner/trainings/templates/trainings/details.html:10
 #: training_planner/trainings/templates/trainings/details_admin.html:11
 #: training_planner/trainings/templates/trainings/details_controlling.html:10
@@ -109,17 +109,17 @@ msgstr "Zurück"
 
 #: training_planner/members/forms.py:95 training_planner/members/views.py:87
 #: training_planner/trainings/templates/trainings/details.html:14
-#: training_planner/trainings/templates/trainings/details.html:42
+#: training_planner/trainings/templates/trainings/details.html:55
 #: training_planner/trainings/templates/trainings/details_admin.html:15
-#: training_planner/trainings/templates/trainings/details_admin.html:56
+#: training_planner/trainings/templates/trainings/details_admin.html:69
 #: training_planner/trainings/templates/trainings/overview.html:65
 msgid "Register"
 msgstr "Anmelden"
 
 #: training_planner/members/forms.py:170
-#: training_planner/trainings/forms.py:313
-#: training_planner/trainings/forms.py:496
-#: training_planner/trainings/forms.py:554
+#: training_planner/trainings/forms.py:333
+#: training_planner/trainings/forms.py:526
+#: training_planner/trainings/forms.py:584
 #: training_planner/trainings/templates/trainings/details_controlling.html:30
 msgid "Save"
 msgstr "Speichern"
@@ -182,8 +182,10 @@ msgid "Groups"
 msgstr "Gruppen"
 
 #: training_planner/members/templates/members/details.html:28
-#: training_planner/trainings/templates/trainings/details.html:36
-#: training_planner/trainings/templates/trainings/details_admin.html:50
+#: training_planner/trainings/templates/trainings/details.html:35
+#: training_planner/trainings/templates/trainings/details.html:49
+#: training_planner/trainings/templates/trainings/details_admin.html:49
+#: training_planner/trainings/templates/trainings/details_admin.html:63
 msgid "and"
 msgstr "und"
 
@@ -437,25 +439,25 @@ msgid "Date"
 msgstr "Datum"
 
 #: training_planner/trainings/forms.py:57
-#: training_planner/trainings/forms.py:162
+#: training_planner/trainings/forms.py:170
 msgid "Choose main instructor"
 msgstr "Haupttrainer auswählen"
 
 #: training_planner/trainings/forms.py:57
-#: training_planner/trainings/forms.py:162
+#: training_planner/trainings/forms.py:170
 msgid "Main instructor"
 msgstr "Haupttrainer"
 
 #: training_planner/trainings/forms.py:60
-#: training_planner/trainings/forms.py:165
+#: training_planner/trainings/forms.py:173
 #: training_planner/trainings/models.py:82
 #: training_planner/trainings/templates/trainings/overview_held_trainings.html:38
 msgid "Instructor"
 msgstr "Assistenztrainer"
 
-#: training_planner/trainings/forms.py:74
-#: training_planner/trainings/forms.py:212
-#: training_planner/trainings/forms.py:364
+#: training_planner/trainings/forms.py:78
+#: training_planner/trainings/forms.py:226
+#: training_planner/trainings/forms.py:390
 #: training_planner/trainings/models.py:69
 #: training_planner/trainings/templates/trainings/overview.html:32
 #: training_planner/trainings/templates/trainings/overview_held_trainings.html:14
@@ -463,23 +465,23 @@ msgstr "Assistenztrainer"
 msgid "Start"
 msgstr "Beginn"
 
-#: training_planner/trainings/forms.py:126
-#: training_planner/trainings/forms.py:132
-#: training_planner/trainings/forms.py:269
-#: training_planner/trainings/forms.py:276
-#: training_planner/trainings/forms.py:291
-#: training_planner/trainings/forms.py:425
-#: training_planner/trainings/forms.py:432
-#: training_planner/trainings/forms.py:448
+#: training_planner/trainings/forms.py:134
+#: training_planner/trainings/forms.py:140
+#: training_planner/trainings/forms.py:289
+#: training_planner/trainings/forms.py:296
+#: training_planner/trainings/forms.py:311
 #: training_planner/trainings/forms.py:455
+#: training_planner/trainings/forms.py:462
+#: training_planner/trainings/forms.py:478
+#: training_planner/trainings/forms.py:485
 msgid "Please hold down <Ctrl> to change the selection."
 msgstr "Bitte <Ctrl> gedrückt halten, um die Auswahl zu ändern."
 
-#: training_planner/trainings/forms.py:136
-#: training_planner/trainings/forms.py:281
-#: training_planner/trainings/forms.py:296
-#: training_planner/trainings/forms.py:437
-#: training_planner/trainings/forms.py:460
+#: training_planner/trainings/forms.py:144
+#: training_planner/trainings/forms.py:301
+#: training_planner/trainings/forms.py:316
+#: training_planner/trainings/forms.py:467
+#: training_planner/trainings/forms.py:490
 msgid ""
 "<p class=\"col-auto my-4 text-muted\">Please hold down &langle;<strong>Ctrl</"
 "strong>&rangle; to change the selection.</p>"
@@ -487,27 +489,27 @@ msgstr ""
 "<p class=\"col-auto my-4 text-muted\">Bitte &langle;<strong>Ctrl</"
 "strong>&rangle; gedrückt halten, um die Auswahl zu ändern.</p>"
 
-#: training_planner/trainings/forms.py:152
+#: training_planner/trainings/forms.py:160
 msgid "Create Training"
 msgstr "Training erstellen"
 
-#: training_planner/trainings/forms.py:180
-#: training_planner/trainings/forms.py:334
+#: training_planner/trainings/forms.py:190
+#: training_planner/trainings/forms.py:356
 #: training_planner/trainings/models.py:102
 msgid "Registration opening"
 msgstr "Anmeldebeginn"
 
-#: training_planner/trainings/forms.py:196
-#: training_planner/trainings/forms.py:349
+#: training_planner/trainings/forms.py:208
+#: training_planner/trainings/forms.py:373
 #: training_planner/trainings/models.py:104
 msgid "Registration closing"
 msgstr "Anmeldeschluss"
 
-#: training_planner/trainings/forms.py:517
+#: training_planner/trainings/forms.py:547
 msgid "Dates"
 msgstr "Daten"
 
-#: training_planner/trainings/forms.py:536
+#: training_planner/trainings/forms.py:566
 msgid ""
 "<p class=\"my-3\">Create further trainings like {{training}} starting at "
 "{{training.start}}.<br>Please select the dates below. To not select todays "
@@ -549,8 +551,8 @@ msgstr "Adressen"
 #: training_planner/trainings/models.py:35
 #: training_planner/trainings/models.py:56
 #: training_planner/trainings/models.py:68
-#: training_planner/trainings/templates/trainings/details.html:50
-#: training_planner/trainings/templates/trainings/details_admin.html:64
+#: training_planner/trainings/templates/trainings/details.html:63
+#: training_planner/trainings/templates/trainings/details_admin.html:77
 msgid "Description"
 msgstr "Beschreibung"
 
@@ -572,6 +574,8 @@ msgid "Locations"
 msgstr "Orte"
 
 #: training_planner/trainings/models.py:60
+#: training_planner/trainings/templates/trainings/details.html:43
+#: training_planner/trainings/templates/trainings/details_admin.html:57
 msgid "Target Groups"
 msgstr "Zielgruppen"
 
@@ -580,8 +584,8 @@ msgid "Duration (min.)"
 msgstr "Dauer (min.)"
 
 #: training_planner/trainings/models.py:86
-#: training_planner/trainings/templates/trainings/details.html:42
-#: training_planner/trainings/templates/trainings/details_admin.html:56
+#: training_planner/trainings/templates/trainings/details.html:55
+#: training_planner/trainings/templates/trainings/details_admin.html:69
 #: training_planner/trainings/templates/trainings/overview.html:37
 #: training_planner/trainings/templates/trainings/overview_held_trainings.html:17
 #: training_planner/trainings/templates/trainings/overview_held_trainings.html:47
@@ -593,8 +597,8 @@ msgid "Registered Participants"
 msgstr "Angemeldete Teilnehmer"
 
 #: training_planner/trainings/models.py:98
-#: training_planner/trainings/templates/trainings/details.html:62
-#: training_planner/trainings/templates/trainings/details_admin.html:76
+#: training_planner/trainings/templates/trainings/details.html:75
+#: training_planner/trainings/templates/trainings/details_admin.html:89
 #: training_planner/trainings/templates/trainings/details_controlling.html:38
 #: training_planner/trainings/templates/trainings/message.html:38
 #: training_planner/trainings/templates/trainings/participation_view.html:15
@@ -647,21 +651,21 @@ msgstr "Minuten"
 msgid "Further Instructors"
 msgstr "Weitere Trainer"
 
-#: training_planner/trainings/templates/trainings/details.html:42
-#: training_planner/trainings/templates/trainings/details_admin.html:56
+#: training_planner/trainings/templates/trainings/details.html:55
+#: training_planner/trainings/templates/trainings/details_admin.html:69
 msgid ""
 "You will get further information just before the training. If you cannot "
 "make it, please contact the respective trainer. In case of any questions, "
-"contact Aline Steinbrecher at (<a href=\"tel:0041792959637\">079 296 96 37</"
+"contact Aline Steinbrecher at (<a href=\"tel:0041792969637\">079 296 96 37</"
 "a>)"
 msgstr ""
 "Du erhälst weitere Informationen kurz vor dem Training. Wenn Du nicht kommen "
 "kannt, kontaktiere bitte den zuständigen Trainer. Falls Du Fragen hast, "
 "melde Dich bitte bei Aline Steinbrecher unter (<a href="
-"\"tel:0041792959637\">079 296 96 37</a>)"
+"\"tel:0041792969637\">079 296 96 37</a>)"
 
-#: training_planner/trainings/templates/trainings/details.html:68
-#: training_planner/trainings/templates/trainings/details_admin.html:82
+#: training_planner/trainings/templates/trainings/details.html:81
+#: training_planner/trainings/templates/trainings/details_admin.html:95
 #: training_planner/trainings/templates/trainings/details_controlling.html:27
 msgid "No registrations yet"
 msgstr "Bisher keine Anmeldungen"
@@ -802,7 +806,7 @@ msgstr "Trainings in Kalenderwoche"
 msgid "Total"
 msgstr "Total"
 
-#: training_planner/trainings/templates/trainings/trainingForm.html:4
+#: training_planner/trainings/templates/trainings/training_form.html:4
 msgid "Training Form"
 msgstr "Trainings Formular"
 
