@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n crispy_forms_tags %}
+{% load i18n crispy_forms_tags static %}
 {% block title %}
 {% trans "Training Overview" %}
 {% endblock title %}
@@ -50,11 +50,11 @@
             {% if target_groups|length > 1 %}
             <ul>
             {% for group in target_groups %}
-                <li>{{group}}</li>
+                <li>{{group}}{% if group.description %}<span class="ml-1 badge badge-pill badge-primary" data-toggle="tooltip" data-placement="right" title="{{group.description}}"><span class="oi oi-info small"></span></span>{% endif %}</li>
             {% endfor %}
             </ul>
             {% else %}
-            {% for group in target_groups %}{{group}}{% endfor %}
+            {% for group in target_groups %}{{group}}{% if group.description %}<span class="ml-1 badge badge-pill badge-primary" data-toggle="tooltip" data-placement="right" title="{{group.description}}"><span class="oi oi-info small"></span></span>{% endif %}{% endfor %}
             {% endif %}
             {% endwith %}
         </td>
@@ -69,3 +69,10 @@
 </table>
 </div>
 {% endblock content %}
+{% block afterScripts %}
+<script>
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+});
+</script>
+{% endblock afterScripts %}

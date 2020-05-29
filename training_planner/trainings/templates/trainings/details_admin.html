@@ -56,7 +56,7 @@
                         {% if targets|length > 0 %}
                             {% trans "Target Groups" %}:
                             {% for target in targets %}
-                                {{target}}
+                                {{target}}{% if target.description %}<span class="ml-1 badge badge-pill badge-primary" data-toggle="tooltip" data-placement="right" title="{{target.description}}"><span class="oi oi-info small"></span></span>{% endif %}
                                 {% if forloop.revcounter > 2 %}
                                     ,
                                 {% elif forloop.revcounter == 2%}
@@ -100,4 +100,9 @@
         </div>
     </div>
 </div>
+<script>
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+});
+</script>
 {% endblock content %}
