@@ -534,7 +534,7 @@ class TrainingSeriesForm(forms.ModelForm):
     dates = forms.DateField(
         widget=widgets.DatePicker(
             options={
-                'format': _python2moment(settings.DATE_INPUT_FORMATS[3]),
+                'format': _python2moment(settings.DATE_INPUT_FORMAT[0]),
                 'useCurrent': False,
                 'allowMultidate': True,
                 'extraFormats': _python2moment(settings.DATE_INPUT_FORMATS),

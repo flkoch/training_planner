@@ -1,6 +1,5 @@
 from operator import itemgetter
 from django.shortcuts import render, redirect, get_object_or_404
-from django.conf import settings
 from django.contrib import messages, auth
 from django.contrib.auth import decorators as auth_decorators
 from django.core.mail import send_mass_mail
@@ -9,6 +8,7 @@ from django.db.models.functions import ExtractWeek
 from django.utils.text import format_lazy
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+import dateparser
 import datetime
 from members.filter import UserStatisticsFilter
 from .models import Training
@@ -213,10 +213,7 @@ def make_training_series(request, id):
             training.pk = None
             training.start = timezone.make_aware(
                 datetime.datetime.combine(
-                    datetime.datetime.strptime(
-                        date,
-                        settings.DATE_INPUT_FORMATS[3],
-                    ),
+                    dateparser.parse(date, locales=['de', 'en']),
                     timezone.make_naive(training.start).time()
                 ),
                 timezone.get_current_timezone()

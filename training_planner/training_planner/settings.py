@@ -124,6 +124,14 @@ LANGUAGES = [
     ('en', _('English')),
 ]
 
+DATE_INPUT_FORMAT = [
+    '%d %B %Y',
+]
+
+DATETIME_INPUT_FORMAT = [
+    '%Y/%m/%d %H:%M'
+]
+
 TIME_ZONE = 'CET'
 
 USE_I18N = True
