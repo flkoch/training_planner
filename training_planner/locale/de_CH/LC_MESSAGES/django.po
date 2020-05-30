@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TrainingPlanner\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-30 20:54+0200\n"
-"PO-Revision-Date: 2020-05-30 20:58+0200\n"
+"POT-Creation-Date: 2020-05-30 21:05+0200\n"
+"PO-Revision-Date: 2020-05-30 21:06+0200\n"
 "Last-Translator: Florian Koch <flkoch@dev.fkoch.ch>\n"
 "Language-Team: \n"
 "Language: de-CH\n"
@@ -663,6 +663,11 @@ msgstr ""
 "kannt, kontaktiere bitte den zuständigen Trainer. Falls Du Fragen hast, "
 "melde Dich bitte bei Aline Steinbrecher unter (<a href="
 "\"tel:0041792969637\">079 296 96 37</a>)"
+
+#: training_planner/trainings/templates/trainings/details.html:79
+#: training_planner/trainings/templates/trainings/details_admin.html:93
+msgid "participated"
+msgstr "teilgenommen"
 
 #: training_planner/trainings/templates/trainings/details.html:81
 #: training_planner/trainings/templates/trainings/details_admin.html:95
