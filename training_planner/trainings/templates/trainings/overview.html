@@ -40,7 +40,7 @@
     </thead>
     <tbody>
     {% for training in trainings %}
-    <tr>
+    <tr {% if training.deleted %}{% if training.archived %}class="alert alert-dark"{% else %}class="alert alert-danger"{% endif %}{% elif training.archived %}class="alert alert-light"{% elif training.participants.all.count > 0 and training.passed %}class="alert alert-success"{% endif %}>
         <td class="align-middle d-none d-xl-table-cell"><a href="{% url 'trainings-details' training.id %}">{{training.start.date}}</a></td>
         <td class="align-middle"><a href="{% url 'trainings-details' training.id %}">{{training.weekday_as_text}}</a></td>
         <td class="align-middle"><a href="{% url 'trainings-details' training.id %}">{{training.starttime_as_text}}</a></td>
@@ -61,8 +61,8 @@
         <td class="align-middle d-none d-sm-table-cell">{% if training.location %}{{training.location}}{% else %}&mdash;{% endif %}</td>
         <td class="align-middle">{{training.main_instructor}}</td>
         <td class="align-middle d-none d-lg-table-cell">{% if training.coordinator %}{{training.coordinator.get_public_name}}{% else %}{% trans "open" %}{% endif %}</td>
-        <td class="align-middle">{{training.registered_participants.all.count}}/{{training.capacity}}</td>
-        <td class="align-middle d-none d-sm-table-cell">{% if training.can_edit %}<a href="{% url 'trainings-edit' training.id %}" class="btn btn-warning btn-sm ml-3">{% trans "Edit" %}</a>{% elif training.is_registered %}<span class="oi oi-check ml-3 text-success" title="{% trans 'registered' %}%" aria-hidden="true"></span>{% elif training.can_register %}<a href="{% url 'trainings-register' training.id %}" class="btn btn-primary btn-sm ml-3">{% trans "Register" %}</a>{% endif %}</td>
+        <td class="align-middle">{% if training.passed %}{{training.participants.all.count}}/{{training.registered_participants.all.count}}{% if training.participants.all.count == training.registered_participants.all.count %}<span class="oi oi-check ml-1 text-success" title="{% trans 'participants checked' %}" aria-hidden="true"></span>{% endif %}{% else %}{{training.registered_participants.all.count}}/{{training.capacity}}{% endif %}</td>
+        <td class="align-middle d-none d-sm-table-cell">{% if training.can_edit %}{% if training.passed %}<a href="{% url 'trainings-controlling' training.id %}" class="btn btn-secondary btn-sm ml-3">{% trans "Control" %}</a>{% else %}<a href="{% url 'trainings-edit' training.id %}" class="btn btn-warning btn-sm ml-3">{% trans "Edit" %}</a>{% endif %}{% elif training.is_registered %}<span class="oi oi-check ml-3 text-success" title="{% trans 'registered' %}%" aria-hidden="true"></span>{% elif training.can_register %}<a href="{% url 'trainings-register' training.id %}" class="btn btn-primary btn-sm ml-3">{% trans "Register" %}</a>{% endif %}</td>
     </tr>
     {% endfor %}
     </tbody>

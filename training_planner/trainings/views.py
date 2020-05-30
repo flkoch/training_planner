@@ -62,6 +62,7 @@ def all_trainings(request):
     trainings = myFilter.qs
     for training in trainings:
         training.can_edit = True
+        training.passed = training.start < timezone.now()
     context = {'trainings': trainings, 'myFilter': myFilter}
     return render(request, 'trainings/overview.html', context)
 
