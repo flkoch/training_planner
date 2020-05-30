@@ -1,10 +1,6 @@
-from django import forms
-from django.forms.widgets import CheckboxSelectMultiple, MultiWidget
+from django.forms.widgets import CheckboxSelectMultiple
 from django.utils.translation import gettext_lazy as _
-from crispy_forms import layout as cfl
-from crispy_forms.helper import FormHelper
 import django_filters
-from tempus_dominus import widgets as tdw
 from members.models import trainer
 from .models import TargetGroup, Training
 
@@ -17,7 +13,6 @@ class TrainingFilter(django_filters.FilterSet):
     main_instructor = django_filters.ModelMultipleChoiceFilter(
         label=_('Main Instructor'),
         queryset=trainer(),
-        lookup_expr='icontains',
     )
     target_group = django_filters.ModelMultipleChoiceFilter(
         queryset=TargetGroup.objects.all(), label=_('Target Group'),
