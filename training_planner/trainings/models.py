@@ -9,6 +9,10 @@ from django.utils.translation import gettext_lazy as _
 # Create your models here.
 
 
+def list_items_as_string(*args):
+    return [str(item) for item in args if item is not None]
+
+
 class Address(models.Model):
     street = models.CharField(max_length=150, verbose_name=_('Street'))
     house_number = models.CharField(
@@ -24,8 +28,11 @@ class Address(models.Model):
         verbose_name_plural = _('Addresses')
 
     def __str__(self):
-        line = f'{self.street} {self.house_number}, {self.area_code} ' \
-            f'{self.city}, {self.country}'
+        line = ', '.join([
+            ' '.join(list_items_as_string(self.street, self.house_number)),
+            ' '.join(list_items_as_string(self.area_code, self.city)),
+            self.country
+        ])
         return line
 
 
@@ -47,7 +54,7 @@ class Location(models.Model):
 
     @property
     def with_address(self):
-        return ', '.join([str(self), str(self.address)])
+        return ', '.join(list_items_as_string(self, self.address))
 
 
 class TargetGroup(models.Model):
