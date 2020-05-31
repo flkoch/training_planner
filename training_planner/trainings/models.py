@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 # Create your models here.
 
 
-def list_items_as_string(*args):
+def _list_items_as_string(*args):
     return [str(item) for item in args if item is not None]
 
 
@@ -29,8 +29,8 @@ class Address(models.Model):
 
     def __str__(self):
         line = ', '.join([
-            ' '.join(list_items_as_string(self.street, self.house_number)),
-            ' '.join(list_items_as_string(self.area_code, self.city)),
+            ' '.join(_list_items_as_string(self.street, self.house_number)),
+            ' '.join(_list_items_as_string(self.area_code, self.city)),
             self.country
         ])
         return line
@@ -54,7 +54,7 @@ class Location(models.Model):
 
     @property
     def with_address(self):
-        return ', '.join(list_items_as_string(self, self.address))
+        return ', '.join(_list_items_as_string(self, self.address))
 
 
 class TargetGroup(models.Model):
