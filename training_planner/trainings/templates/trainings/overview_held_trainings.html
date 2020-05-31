@@ -10,6 +10,7 @@
 <table class="table">
     <thead>
     <tr>
+        <th class="d-none d-xl-table-cell">{% trans "Date" %}</th>
         <th>{% trans "Weekday" %}</th>
         <th>{% trans "Start" %}</th>
         <th class="d-none d-sm-table-cell">{% trans "Location" %}</th>
@@ -20,14 +21,15 @@
     </thead>
     <tbody>
     {% for training in trainings_main %}
-    <tr class="position-relative">
+    <tr>
+        <td class="align-middle d-none d-xl-table-cell"><a href="{% url 'trainings-controlling' training.id %}">{{training.start.date}}</a></td>
         <td class="align-middle"><a href="{% url 'trainings-controlling' training.id %}">{{training.weekday_as_text}}</a></td>
         <td class="align-middle">{{training.starttime_as_text}}</td>
         <td class="align-middle d-none d-sm-table-cell">{% if training.location %}{{training.location}}{% else %}&mdash;{% endif %}</td>
         <td class="align-middle">{{training.main_instructor}}</td>
         <td class="align-middle d-none d-lg-table-cell">{% if training.coordinator %}{{training.coordinator.get_public_name}}{% else %}{% trans "open" %}{% endif %}</td>
         <td class="align-middle">{{training.participants.all.count}}/{{training.registered_participants.all.count}}{% if training.participants.all.count == training.registered_participants.all.count %}<span class="oi oi-check text-success ml-4"></span>{% endif %}</td>
-        <td class="align-middle d-none d-sm-table-cell"></td>
+        <td class="align-middle d-none d-sm-table-cell"><form action="" method="POST">{% csrf_token %}<button class="btn btn-secondary" name="archive" value="{{ training.id }}" type="submit">{% trans "Archive" %}</button></form></td>
     </tr>
     {% empty %}
         <td class="aling-middle" colspan="6">{% trans "No trainings found" %}</td>
@@ -40,6 +42,7 @@
 <table class="table">
     <thead>
     <tr>
+        <th class="d-none d-xl-table-cell">{% trans "Date" %}</th>
         <th>{% trans "Weekday" %}</th>
         <th>{% trans "Start" %}</th>
         <th class="d-none d-sm-table-cell">{% trans "Location" %}</th>
@@ -50,7 +53,8 @@
     </thead>
     <tbody>
     {% for training in trainings_assistant %}
-    <tr class="position-relative">
+    <tr>
+        <td class="align-middle d-none d-xl-table-cell"><a href="{% url 'trainings-controlling' training.id %}">{{training.start.date}}</a></td>
         <td class="align-middle"><a href="{% url 'trainings-controlling' training.id %}" class="stretched-link">{{training.weekday_as_text}}</a></td>
         <td class="align-middle">{{training.starttime_as_text}}</td>
         <td class="align-middle d-none d-sm-table-cell">{% if training.location %}{{training.location}}{% else %}&mdash;{% endif %}</td>

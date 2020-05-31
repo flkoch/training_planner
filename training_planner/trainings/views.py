@@ -260,6 +260,33 @@ def delete(request, id):
 
 @trainer_or_admin_only
 def held(request, id=None):
+    if request.method == 'POST':
+        training_id = request.POST.get('archive', None)
+        if training_id is None:
+            messages.warning(
+                request,
+                _('The request contained invalid data. Aborting'),
+            )
+        training = get_object_or_404(Training, id=training_id)
+        if training.can_edit(request.user):
+            if training.participants.all().count() > 0 or \
+                    training.registered_participants.all().count() == 0:
+                training.archived = True
+                training.save()
+            else:
+                messages.info(
+                    request,
+                    _(
+                        'No participants have been recorded for this training.'
+                        ' Please record the participants or delete the '
+                        'training instead, if it did not take place.'
+                    )
+                )
+        else:
+            messages.info(
+                request,
+                'You may only access your own trainings.'
+            )
     if id is None:
         user = request.user
     elif not request.user.groups.filter(name='Administrator').exists():
@@ -271,13 +298,14 @@ def held(request, id=None):
             return redirect('trainings-held')
     trainings_main = user.instructor.filter(start__lte=timezone.now() +
                                             datetime.timedelta(minutes=30)) \
-        .exclude(start__lte=timezone.now() - datetime.timedelta(days=7)) \
-        .exclude(deleted=True)\
-        .order_by('start', 'title')
+        .exclude(archived=True) \
+        .exclude(deleted=True) \
+        .order_by('-start', 'title')
     trainings_assistant = user.assistant.filter(
         start__lte=timezone.now() + datetime.timedelta(minutes=30)) \
-        .exclude(start__lte=timezone.now() - datetime.timedelta(days=7)) \
-        .exclude(deleted=True)
+        .exclude(archived=True) \
+        .exclude(deleted=True) \
+        .order_by('-start', 'title')
     context = {
         'title': str(user),
         'trainings_main': trainings_main,
