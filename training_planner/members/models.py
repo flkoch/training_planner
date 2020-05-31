@@ -33,6 +33,8 @@ class User(AbstractUser):
 
     class Meta:
         ordering = ['last_name', 'first_name']
+        verbose_name = _('User')
+        verbose_name_plural = _('Users')
 
     def __str__(self):
         full_name = self.get_full_name()

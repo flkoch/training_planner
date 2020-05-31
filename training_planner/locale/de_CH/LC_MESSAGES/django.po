@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TrainingPlanner\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-31 17:46+0200\n"
-"PO-Revision-Date: 2020-05-31 17:52+0200\n"
+"POT-Creation-Date: 2020-05-31 17:58+0200\n"
+"PO-Revision-Date: 2020-05-31 18:00+0200\n"
 "Last-Translator: Florian Koch <flkoch@dev.fkoch.ch>\n"
 "Language-Team: \n"
 "Language: de-CH\n"
@@ -146,6 +146,14 @@ msgstr "Aktiver Trainer"
 #: training_planner/members/models.py:25
 msgid "Administrator"
 msgstr "Administrator"
+
+#: training_planner/members/models.py:36
+msgid "User"
+msgstr "Benutzer"
+
+#: training_planner/members/models.py:37
+msgid "Users"
+msgstr "Benutzer"
 
 #: training_planner/members/templates/members/details.html:4
 #: training_planner/members/templates/members/overview.html:55
