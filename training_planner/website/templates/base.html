@@ -1,5 +1,4 @@
-{% load static %}
-{% load i18n %}
+{% load static i18n active_link_tags %}
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -41,10 +40,10 @@
             <div class="ml-auto navbar-nav">
                 {% block userMenu %}
                     {% if user.is_authenticated %}
-                    <span class="nav-item"><a class="nav-link" href="{% url 'account' %}">{{request.user}}</span>
+                    <span class="nav-item"><a class="nav-link {% active_link 'account' strict=True %}" href="{% url 'account' %}">{{request.user}}</span>
                     <span class="nav-item"><a class="nav-link" href="{% url 'logout' %}">{% trans "Log out" %}</a></span>
                     {% else %}
-                    <span class="nav-item"><a class="nav-link" href="{% url 'login' %}">{% trans "Log in" %}</a></span>
+                    <span class="nav-item"><a class="nav-link {% active_link 'login' strict=True %}" href="{% url 'login' %}">{% trans "Log in" %}</a></span>
                     {% endif %}
                 {% endblock userMenu %}
             </div>

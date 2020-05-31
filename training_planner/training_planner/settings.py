@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'active_link',
     'tempus_dominus',
     'crispy_forms',
     'django_filters',

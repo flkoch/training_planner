@@ -1,35 +1,35 @@
-{% load i18n %}
+{% load i18n active_link_tags %}
 {% comment %} <li class="nav-item"><a href="{% url 'home' %}" class="nav-link">{% trans "Home" %}</a></li>{% endcomment %}
 {% if user.is_trainer or user.is_administrator %}
 <li class="nav-item dropdown">
-    <a href="#" class="nav-link dropdown-toggle" id="trainingsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% trans "Trainings" %}</a>
+    <a href="#" class="nav-link dropdown-toggle {% active_link 'trainings-overview || trainings-all || trainings-held || trainings-create || trainings-management' strict=True %}" id="trainingsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% trans "Trainings" %}</a>
     <div class="dropdown-menu bg-light" aria-labelledby="trainingsDropdown">
-        <a href="{% url 'trainings-overview' %}" class="dropdown-item">{% trans "Future" %}</a>
-        <a href="{% url 'trainings-all' %}" class="dropdown-item">{% trans "All" %}</a>
+        <a href="{% url 'trainings-overview' %}" class="dropdown-item {% active_link 'trainings-overview' strict=True %}">{% trans "Future" %}</a>
+        <a href="{% url 'trainings-all' %}" class="dropdown-item {% active_link 'trainings-all' %}">{% trans "All" %}</a>
         <div class="dropdown-divider"></div>
-        <a href="{% url 'trainings-held' %}" class="dropdown-item">{% trans "Trainings Control" %}</a>
+        <a href="{% url 'trainings-held' %}" class="dropdown-item {% active_link 'trainings-held' %}">{% trans "Trainings Control" %}</a>
         <div class="dropdown-divider"></div>
-        <a href="{% url 'trainings-create' %}" class="dropdown-item">{% trans "New Training" %}</a>
+        <a href="{% url 'trainings-create' %}" class="dropdown-item {% active_link 'trainings-create' %}">{% trans "New Training" %}</a>
         {% if user.is_administrator %}
         <div class="dropdown-divider"></div>
-        <a href="{% url 'trainings-management' %}" class ="dropdown-item">{% trans "Management" %}</a>
+        <a href="{% url 'trainings-management' %}" class ="dropdown-item {% active_link 'trainings-management'%}">{% trans "Management" %}</a>
         {% endif %}
     </div>
 </li>
 {% if user.is_administrator %}
 <li class="nav-item dropdown">
-    <a href="#" class="nav-link dropdown-toggle" id="memberDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% trans "Members" %}</a>
+    <a href="#" class="nav-link dropdown-toggle {% active_link 'members-all || trainings-participation || user-management'%}" id="memberDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% trans "Members" %}</a>
     <div class="dropdown-menu bg-light" aria-labelledby="memberDropdown">
-        <a href="{% url 'members-all' %}" class="dropdown-item">{% trans "All" %}</a>
-        <a href="{% url 'trainings-participation' %}" class="dropdown-item">{% trans "Statistics" %}</a>
+        <a href="{% url 'members-all' %}" class="dropdown-item {% active_link 'members-all' strict=True %}">{% trans "All" %}</a>
+        <a href="{% url 'trainings-participation' %}" class="dropdown-item {% active_link 'trainings-participation' %}">{% trans "Statistics" %}</a>
         <div class="dropdown-divider"></div>
-        <a href="{% url 'user-management' %}" class="dropdown-item">{% trans "Management" %}</a>
+        <a href="{% url 'user-management' %}" class="dropdown-item {% active_link 'user-management' %}">{% trans "Management" %}</a>
     </div>
 {% else %}
-<li class="nav-item"><a href="{% url 'members-all' %}" class="nav-link">{% trans "Members" %}</a></li>
+<li class="nav-item"><a href="{% url 'members-all' %}" class="nav-link {% active_link 'members-all' %}">{% trans "Members" %}</a></li>
 {% endif %}
 {% else %}
-<li class="nav-item"><a href="{% url 'trainings-overview' %}" class="nav-link">{% trans "Trainings" %}</a></li>
+<li class="nav-item"><a href="{% url 'trainings-overview' %}" class="nav-link {% active_link 'trainings-overview' %}">{% trans "Trainings" %}</a></li>
 {% endif %}
 {% if user.is_staff %}
 <li class="nav-item"><a href="/admin" class="nav-link">{% trans "Administration" %}</a></li>

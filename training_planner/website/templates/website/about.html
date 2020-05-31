@@ -22,3 +22,8 @@
 <h2>{% trans "Training Planner" %}</h2>
 <p class="text-justify">{% trans "The training planner is an open-source <a href='https://www.djangoproject.com/' target='_blank'>Django</a> web app, which was developped by <a href='mailto:flkoch@dev.fkoch.ch'>Florian Koch (flkoch@dev.fkoch.ch)</a> to allow for training registration and attandence records. It is accessible from <a href='https://github.com/flkoch/training_planner' target='_blank'>GitHub</a>." %}
 {% endblock content %}
+{% block footer %}
+<nav class="nav flex-column flex-sm-row">
+    <a class="nav-link text-light active" href="{% url 'about' %}">{% trans "About" %}</a>
+</nav>
+{% endblock footer %}
