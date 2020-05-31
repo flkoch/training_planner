@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.utils.formats import date_format
 from django.utils.translation import gettext_lazy as _
+import dateparser
 
 # Create your models here.
 
@@ -252,3 +253,34 @@ class Training(models.Model):
         self.registration_open = self.start - timezone.timedelta(days=start)
         self.registration_close = self.start - timezone.timedelta(days=end)
         return self
+
+
+def archive_trainings(days=0, weeks=0, date=None, checked=True):
+    """
+    Set all trainings to archived, if they started more than the added time
+    before now. The checked parameter determines to whether to only archive
+    items where all the registered participants have been confirmed.
+    """
+    if date is not None:
+        trainings = Training.objects.filter(
+            start__lte=timezone.make_aware(
+                dateparser.parse(date, locales=['de', 'en']))
+        ).filter(
+            archived=False
+        )
+    else:
+        trainings = Training.objects.filter(
+            start__lte=timezone.now() - timezone.timedelta(
+                days=days, weeks=weeks)
+        ).filter(
+            archived=False
+        )
+    if checked:
+        for training in trainings:
+            if (set(training.participants.all()) ==
+                    set(training.registered_participants.all())):
+                training.archived = True
+    else:
+        for training in trainings:
+            training.archived = True
+    Training.objects.bulk_update(trainings, ['archived'])

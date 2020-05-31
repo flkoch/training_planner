@@ -10,6 +10,10 @@
         <a href="{% url 'trainings-held' %}", class="dropdown-item">{% trans "Trainings Control" %}</a>
         <div class="dropdown-divider"></div>
         <a href="{% url 'trainings-create' %}", class="dropdown-item">{% trans "New Training" %}</a>
+        {% if user.is_administrator %}
+        <div class="dropdown-divider"></div>
+        <a href="{% url 'trainings-management' %}" class ="dropdown-item">{% trans "Management" %}</a>
+        {% endif %}
     </div>
 </li>
 {% if user.is_administrator %}

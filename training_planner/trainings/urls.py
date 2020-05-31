@@ -31,4 +31,5 @@ urlpatterns = [
     path(_('participation/'), trainings.participation_view,
          name='trainings-participation'),
     path(_('all/'), trainings.all_trainings, name='trainings-all'),
+    path(_('management/'), trainings.management, name='trainings-management')
 ]

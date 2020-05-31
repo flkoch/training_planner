@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load i18n crispy_forms_tags %}
+{% block title %}
+{% trans "Training Administration" %}
+{% endblock title %}
+{% block content %}
+<div class="row mt-4">
+    <p>{% trans "The following form will archive all trainings meeting the specified criteria." %}</p>
+    <p class="text-justify">{% trans "You can either archive all trainings that occured before a specific date or that have taken place at least the given time ago. For both variants you can opt to only archive trainings, where all the registered participants have been confirmed. This can be used to get an overview of trainings, where the controll has not been done." %}
+</div>
+<div class="row my-3">
+    <div class="col col-lg-6">
+        <div class="card">
+            <h5 class="card-header">{% trans "Before date" %}</h5>
+            <div class="card-body">
+                {% crispy form1 %}
+            </div>
+        </div>
+    </div>
+    <div class="col col-lg-6">
+        <div class="card">
+            <h5 class="card-header">{% trans "Time ago" %}</h5>
+            <div class="card-body">
+                {% crispy form2 %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

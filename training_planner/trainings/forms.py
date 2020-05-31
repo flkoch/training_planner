@@ -586,3 +586,108 @@ class TrainingSeriesForm(forms.ModelForm):
                 ),
             ),
         )
+
+
+class TrainingArchiveDays(forms.Form):
+    days = forms.IntegerField(
+        label=_('Days:'),
+        initial=0,
+    )
+    weeks = forms.IntegerField(
+        label=_('Weeks:'),
+        initial=12,
+    )
+    checked = forms.BooleanField(
+        label=_('only checked'),
+        initial=True,
+        required=False,
+        widget=forms.CheckboxInput(
+            attrs={
+                'id': 'days_checked',
+            },
+        ),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(forms.Form, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.action = ''
+        self.helper.html5_required = True
+        self.helper.form_id = 'TrainingArchiveDays'
+        self.helper.layout = cfl.Layout(
+            cfl.Row(
+                'days',
+                'weeks',
+                'checked',
+            ),
+            cfl.Row(
+                cfl.HTML(
+                    format_lazy(
+                        '<a href="javascript:history.back()" '
+                        'class="btn btn-secondary mr-3">{back}</a>',
+                        back=_('Back')
+                    )
+                ),
+                cfl.Submit(
+                    'submit',
+                    _('Archive'),
+                    css_class='btn btn-primary',
+                ),
+            ),
+        )
+
+
+class TrainingArchiveDate(forms.Form):
+    date = forms.DateField(
+        widget=widgets.DatePicker(
+            options={
+                'format': _python2moment(settings.DATE_INPUT_FORMAT[0]),
+                'useCurrent': False,
+                'extraFormats': _python2moment(settings.DATE_INPUT_FORMATS),
+            },
+            attrs={
+                'append': 'fa fa-calendar',
+                'icon_toggle': 'true',
+            },
+        ),
+        label=_('Archive trainings starting before:')
+    )
+    checked = forms.BooleanField(
+        label=_('only checked'),
+        initial=True,
+        required=False,
+        widget=forms.CheckboxInput(
+            attrs={
+                'id': 'date_checked',
+            },
+        ),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(forms.Form, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.action = ''
+        self.helper.form_id = 'TrainingArchiveDate'
+        self.helper.html5_required = True
+        self.helper.layout = cfl.Layout(
+            cfl.Row(
+                'date',
+                'checked',
+            ),
+            cfl.Row(
+                cfl.HTML(
+                    format_lazy(
+                        '<a href="javascript:history.back()" '
+                        'class="btn btn-secondary mr-3">{back}</a>',
+                        back=_('Back')
+                    )
+                ),
+                cfl.Submit(
+                    'submit',
+                    _('Archive'),
+                    css_class='btn btn-primary',
+                ),
+            ),
+        )

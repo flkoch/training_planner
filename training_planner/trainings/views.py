@@ -11,9 +11,9 @@ from django.utils.translation import gettext_lazy as _
 import dateparser
 import datetime
 from members.filter import UserStatisticsFilter
-from .models import Training
+from .models import Training, archive_trainings
 from .forms import AddTrainingForm, AdminTrainingForm, TrainingForm, \
-    TrainingSeriesForm
+    TrainingSeriesForm, TrainingArchiveDate, TrainingArchiveDays
 from .filter import TrainingFilter, TrainingAdminFilter
 from .decorators import trainer_only, protect_training, admin_only, \
     trainer_or_admin_only
@@ -433,3 +433,27 @@ def participation_view(request, year=None):
         'year': year,
     }
     return render(request, 'trainings/participation_view.html', context)
+
+
+@admin_only
+def management(request):
+    if request.method == 'POST':
+        date = request.POST.get('date', None)
+        checked = bool(request.POST.get('checked', False))
+        if date is not None:
+            archive_trainings(date=date, checked=checked)
+        else:
+            days = request.POST.get('days', 0)
+            weeks = request.POST.get('weeks', 0)
+            archive_trainings(
+                days=int(days),
+                weeks=int(weeks),
+                checked=checked
+            )
+    form1 = TrainingArchiveDate()
+    form2 = TrainingArchiveDays()
+    context = {
+        'form1': form1,
+        'form2': form2,
+    }
+    return render(request, 'trainings/training_management.html', context)
