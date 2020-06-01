@@ -309,6 +309,8 @@ def held(request, id=None):
             )
     if id is None:
         user = request.user
+    elif request.user.id == id:
+        return redirect('trainings-held')
     elif not request.user.groups.filter(name='Administrator').exists():
         messages.info(request, _('You may only access your own trainings.'))
         return redirect('trainings-held')
