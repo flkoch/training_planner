@@ -11,10 +11,18 @@ import dateparser
 
 
 def _list_items_as_string(*args):
+    """
+    Helper function returning a list of strings from *args.
+    """
     return [str(item) for item in args if item is not None]
 
 
 class Address(models.Model):
+    """
+    Class to store a regular address
+    composed of fields for street, house number, area code, city and country
+    string representation gives comma separated concatenation
+    """
     street = models.CharField(max_length=150, verbose_name=_('Street'))
     house_number = models.CharField(
         max_length=10, verbose_name=_('House number'), blank=True, null=True)
@@ -29,6 +37,9 @@ class Address(models.Model):
         verbose_name_plural = _('Addresses')
 
     def __str__(self):
+        """
+        return string of comma separated concatenation of fields
+        """
         line = ', '.join([
             ' '.join(_list_items_as_string(self.street, self.house_number)),
             ' '.join(_list_items_as_string(self.area_code, self.city)),
@@ -38,6 +49,10 @@ class Address(models.Model):
 
 
 class Location(models.Model):
+    """
+    Class to store a location as combination of a name, description, an
+    instance of the previous address class and a capacity for that location.
+    """
     name = models.CharField(max_length=50, verbose_name=_('Name'))
     description = models.TextField(
         verbose_name=_('Description'), blank=True, null=True)
@@ -51,14 +66,23 @@ class Location(models.Model):
         verbose_name_plural = _('Locations')
 
     def __str__(self):
+        """
+        return string representation as name
+        """
         return self.name
 
     @property
     def with_address(self):
+        """
+        return string representation including the address, separedt by comma
+        """
         return ', '.join(_list_items_as_string(self, self.address))
 
 
 class TargetGroup(models.Model):
+    """
+    Class for storing target goups as combination of name and description.
+    """
     name = models.CharField(max_length=50, verbose_name=_('Name'))
     description = models.TextField(
         verbose_name=_('Description'), max_length=500, blank=True, null=True)
@@ -68,10 +92,32 @@ class TargetGroup(models.Model):
         verbose_name_plural = _('Target Groups')
 
     def __str__(self):
+        """
+        return string representation as name
+        """
         return self.name
 
 
 class Training(models.Model):
+    """
+    Class for storing trainings. The following fields exist:
+    title           str             title of training
+    description     str             description of training (content)
+    start           datetime        start of training
+    duration        int             duration in minutes
+    location        Location        location of training
+    main_instructor User            main instructor for training
+    instructor      Users           further instructors
+    coordinator     User            coordinator for training
+    target_group    target_groups   target groups for training
+    capacity        int             capacity of training
+    registered_participants Users   people registered to take part
+    participants    Users           people actually taking part
+    deleted         bool            flag to mark as deleted
+    archived        bool            flag to mark as archived
+    registration_open   datetime    earliest possible registration time
+    registration_close  datetime    latest possible registration time
+    """
     title = models.CharField(max_length=100, verbose_name=_('Title'))
     description = models.TextField(verbose_name=_('Description'), blank=True)
     start = models.DateTimeField(verbose_name=_('Start'))
@@ -116,10 +162,17 @@ class Training(models.Model):
         verbose_name_plural = _('Trainings')
 
     def __str__(self):
+        """
+        return string as name and date of session
+        """
         return f'{self.name} ({self.startdate_as_text})'
 
     @property
     def name(self):
+        """
+        return string as name consisting of shorthand identifier consisting of
+        weekday, time and main instructor
+        """
         identifier = ''.join([self.weekday_as_text.upper()[:2],
                               timezone.localtime(self.start).strftime('%H%M'),
                               self.main_instructor
@@ -128,10 +181,16 @@ class Training(models.Model):
 
     @property
     def weekday_as_text(self):
+        """
+        return locale aware weekday of start as string
+        """
         return date_format(self.start, 'l')
 
     @property
     def starttime_as_text(self):
+        """
+        return locale aware start time as string
+        """
         return date_format(
             timezone.localtime(self.start),
             format='TIME_FORMAT',
@@ -140,6 +199,9 @@ class Training(models.Model):
 
     @property
     def opentime_as_text(self):
+        """
+        return locale aware registration opeining time as string
+        """
         return date_format(
             timezone.localtime(self.registration_open),
             format='TIME_FORMAT',
@@ -148,6 +210,9 @@ class Training(models.Model):
 
     @property
     def closetime_as_text(self):
+        """
+        return locale aware registration close time as string
+        """
         return date_format(
             timezone.localtime(self.registration_close),
             format='TIME_FORMAT',
@@ -156,6 +221,9 @@ class Training(models.Model):
 
     @property
     def startdate_as_text(self):
+        """
+        return locale aware start date as string
+        """
         return date_format(
             timezone.localtime(self.start),
             format='DATE_FORMAT',
@@ -164,6 +232,9 @@ class Training(models.Model):
 
     @property
     def opendate_as_text(self):
+        """
+        return locale aware registration open date as string
+        """
         return date_format(
             timezone.localtime(self.registration_open),
             format='DATE_FORMAT',
@@ -172,6 +243,9 @@ class Training(models.Model):
 
     @property
     def closedate_as_text(self):
+        """
+        return locale aware registration close date as string
+        """
         return date_format(
             timezone.localtime(self.registration_close),
             format='DATE_FORMAT',
@@ -180,26 +254,51 @@ class Training(models.Model):
 
     @property
     def target_groups_as_text(self):
-        return [_(group.name) for group in self.target_group.all()]
+        """
+        return list of target groups
+        """
+        return [group.name for group in self.target_group.all()]
 
     @property
     def free_capacity(self):
+        """
+        return free capacity as difference between capacity and current
+        registrations
+        """
         return self.capacity - self.registered_participants.all().count()
 
     @property
     def before_registration(self):
+        """
+        return True if we are currently before the registration period,
+        false otherwise
+        """
         return timezone.now() < self.registration_open
 
     @property
     def during_registration(self):
+        """
+        return True if we are currently within the registration period,
+        false otherwise
+        """
         return self.registration_open <= timezone.now() \
             <= self.registration_close
 
     @property
     def after_registration(self):
+        """
+        returns True if the registration period is over, false otherwise
+        """
         return self.registration_close < timezone.now() <= self.start
 
     def can_register(self, user=None):
+        """
+        Returns True if the user can currently register or if a user can
+        currently register if no user id is supplied, false otherwise.
+        A user can register if the training is neither archived nor deleted,
+        the registration period is open and the user is neither instructor nor
+        the main instructor for that training.
+        """
         if self.deleted or self.archived:
             return False
         if isinstance(user, get_user_model()):
@@ -211,18 +310,36 @@ class Training(models.Model):
             self.registered_participants.all().count() < self.capacity
 
     def can_unregister(self, user):
+        """
+        Returns True if the user can currently unregister, false otherwise.
+        A user can unregister if the user currently is registered and the
+        registration period is open.
+        """
         if self.deleted or self.archived:
             return False
         return self.registration_open <= timezone.now() \
             <= self.registration_close and self.is_registered(user)
 
     def is_registered(self, user):
+        """
+        returns True if the user is currently registered, false otherwise
+        """
         return user in self.registered_participants.all()
 
     def is_instructor(self, user):
+        """
+        returns True if the user is either main instructor or instructor,
+        false otherwise
+        """
         return user == self.main_instructor or user in self.instructor.all()
 
     def can_edit(self, user):
+        """
+        Returns True if the user can edit the training, false otherwise.
+        A user can edit a training if the user is a member of the
+        administrator group or is either main instructor or instructor for the
+        training. Only administrators can edit deleted and archived trainings.
+        """
         if user.groups.filter(name='Administrator').exists():
             return True
         if self.deleted or self.archived:
@@ -230,6 +347,12 @@ class Training(models.Model):
         return self.is_instructor(user)
 
     def register(self, user):
+        """
+        Register the user for the training session and return a boolean
+        indicating whether the registration was successful. Note that the
+        registration is also successfull, if the user is already registered.
+        However, the user will only be listed once as registered user.
+        """
         if self.can_register(user):
             self.registered_participants.add(user)
             return True
@@ -237,11 +360,22 @@ class Training(models.Model):
             return False
 
     def unregister(self, user):
+        """
+        Remove the user from the registered users for the training session.
+        Always returns true as the user will not be registered after the method
+        completes.
+        """
         if self.is_registered(user):
             self.registered_participants.remove(user)
         return True
 
     def register_as_coordinator(self, user):
+        """
+        Register user as coordinator, if that is possible. There can only be a
+        single coordinator (return value 1 if someone is already coordinator).
+        The main instructor may not be coordinator (return value 2). If the
+        user is successfully registered as coordinator the return value is 3.
+        """
         if self.coordinator is not None:
             return 1
         elif user == self.main_instructor:
@@ -252,6 +386,10 @@ class Training(models.Model):
             return 0
 
     def unregister_coordinator(self):
+        """
+        Reset the coordinator field to None, deleting whoever was coordinator
+        before.
+        """
         self.coordinator = None
         self.save()
         return True
