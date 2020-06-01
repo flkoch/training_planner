@@ -74,7 +74,24 @@ def details(request, id):
     training.can_edit = training.can_edit(request.user)
     training.can_register = training.can_register(request.user)
     training.can_unregister = training.can_unregister(request.user)
-    if training.before_registration:
+    if training.deleted:
+        messages.error(
+            request,
+            _(
+                'The training was deleted. To restore the training and enable '
+                'editing contact an administrator.'
+            ),
+        )
+    elif training.archived:
+        messages.info(
+            request,
+            _(
+                'The training was archived. To reenable editing contact an '
+                'administrator.'
+            ),
+        )
+
+    elif training.before_registration:
         messages.info(
             request,
             format_lazy(

@@ -196,6 +196,8 @@ class Training(models.Model):
         return self.registration_close < timezone.now() <= self.start
 
     def can_register(self, user=None):
+        if self.deleted or self.archived:
+            return False
         if isinstance(user, get_user_model()):
             if self.is_instructor(user) or \
                 not user.groups.filter(name='Participant') \
@@ -205,6 +207,8 @@ class Training(models.Model):
             self.registered_participants.all().count() < self.capacity
 
     def can_unregister(self, user):
+        if self.deleted or self.archived:
+            return False
         return self.registration_open <= timezone.now() \
             <= self.registration_close and self.is_registered(user)
 
@@ -215,8 +219,11 @@ class Training(models.Model):
         return user == self.main_instructor or user in self.instructor.all()
 
     def can_edit(self, user):
-        return self.is_instructor(user) or \
-            user.groups.filter(name='Administrator').exists()
+        if user.groups.filter(name='Administrator').exists():
+            return True
+        if self.deleted or self.archived:
+            return False
+        return self.is_instructor(user)
 
     def register(self, user):
         if self.can_register(user):
