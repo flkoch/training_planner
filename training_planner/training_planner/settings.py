@@ -122,6 +122,7 @@ LANGUAGE_CODE = 'de-ch'
 
 LANGUAGES = [
     ('de-ch', _('German (Swiss)')),
+    ('de', _('German')),
     ('en', _('English')),
 ]
 
