@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-01 21:05+0200\n"
-"PO-Revision-Date: 2020-06-01 21:15+0200\n"
+"POT-Creation-Date: 2020-06-01 22:19+0200\n"
+"PO-Revision-Date: 2020-06-01 22:20+0200\n"
 "Last-Translator: Florian Koch <flkoch@dev.fkoch.ch>\n"
 "Language-Team: \n"
 "Language: en \n"
@@ -110,7 +110,7 @@ msgstr "Initials"
 msgid "Back"
 msgstr "Back"
 
-#: training_planner/members/forms.py:95 training_planner/members/views.py:87
+#: training_planner/members/forms.py:95 training_planner/members/views.py:92
 #: training_planner/trainings/templates/trainings/details.html:14
 #: training_planner/trainings/templates/trainings/details.html:55
 #: training_planner/trainings/templates/trainings/details_admin.html:15
@@ -310,32 +310,22 @@ msgstr "management/"
 msgid "<int:id>/edit/"
 msgstr "<int:id>/edit/"
 
-#: training_planner/members/views.py:35
+#: training_planner/members/views.py:36
 msgid "Username and password do not match a valid user."
 msgstr "Username and password do not match a valid user."
 
-#: training_planner/members/views.py:59
-msgid "Registration on training.judo-club-uster.ch"
-msgstr "Registration on training.judo-club-uster.ch"
-
-#: training_planner/members/views.py:62
+#: training_planner/members/views.py:67
 #, python-brace-format
 msgid ""
 "Hi {name},\n"
 "We are happy to have you on our platform, which allows you to register for "
 "and participate in offered training sessions.\n"
-"In order to participate in the training sesseions, the follwoign criteria "
-"have to be fulfilled:\n"
-"1) You must be registered for the respective training.\n"
-"2) You must have the access form filled and signed with you for all "
-"sessions.\n"
-"\n"
-"Pretty simple, is it? In case you still have questions, please contact the "
-"instructor or write an e-mail to info@jcu.ch.\n"
-"In addition we need a coordinator for each training session. If you can do "
-"this from time to time everyone does benefit.\n"
-"\n"
-"The JCU Trainer-Team wishes you good training sessions"
+"If you have questions on the requirements for participation contact the "
+"instructor or the administration.\n"
+"For each Training we need a coordinator. If you could do this from time to "
+"time everyone will enjoy the experience.\n"
+"Enjoy your trainings\n"
+"Your Instructor team"
 msgstr ""
 "Hi {name},\n"
 "We are happy to have you on our platform, which allows you to register for "
@@ -353,23 +343,23 @@ msgstr ""
 "\n"
 "The JCU Trainer-Team wishes you good training sessions"
 
-#: training_planner/members/views.py:82
+#: training_planner/members/views.py:87
 msgid "The account has been created. Please check your inbox."
 msgstr "The account has been created. Please check your inbox."
 
-#: training_planner/members/views.py:147
+#: training_planner/members/views.py:152
 msgid "Edit User"
 msgstr "Edit User"
 
-#: training_planner/members/views.py:159
+#: training_planner/members/views.py:164
 msgid "Update Active Participants"
 msgstr "Update Active Participants"
 
-#: training_planner/members/views.py:162
+#: training_planner/members/views.py:167
 msgid "Update Active Trainer"
 msgstr "Update Active Trainer"
 
-#: training_planner/members/views.py:165
+#: training_planner/members/views.py:170
 msgid "Update Trainer"
 msgstr "Update Trainer"
 
@@ -378,6 +368,10 @@ msgid "German (Swiss)"
 msgstr "German (Swiss)"
 
 #: training_planner/training_planner/settings.py:125
+msgid "German"
+msgstr "German"
+
+#: training_planner/training_planner/settings.py:126
 msgid "English"
 msgstr "English"
 
@@ -683,9 +677,7 @@ msgstr "Further Instructors"
 #: training_planner/trainings/templates/trainings/details_admin.html:69
 msgid ""
 "You will get further information just before the training. If you cannot "
-"make it, please contact the respective trainer. In case of any questions, "
-"contact Aline Steinbrecher at (<a href=\"tel:0041792969637\">079 296 96 37</"
-"a>)"
+"make it, please contact the respective trainer."
 msgstr ""
 "You will get further information just before the training. If you cannot "
 "make it, please contact the respective trainer. In case of any questions, "
@@ -771,7 +763,7 @@ msgid "Salutation"
 msgstr "Salutation"
 
 #: training_planner/trainings/templates/trainings/message.html:68
-#: training_planner/trainings/views.py:374
+#: training_planner/trainings/views.py:376
 msgid "Dear"
 msgstr "Dear"
 
@@ -1010,7 +1002,7 @@ msgid "New Training"
 msgstr "New Training"
 
 #: training_planner/trainings/views.py:207
-#: training_planner/trainings/views.py:349
+#: training_planner/trainings/views.py:351
 msgid "Changes saved successfully."
 msgstr "Changes saved successfully."
 
@@ -1049,20 +1041,20 @@ msgstr ""
 "No participants have been recorded for this training. Please record the "
 "participants or delete the training instead, if it did not take place."
 
-#: training_planner/trainings/views.py:313
+#: training_planner/trainings/views.py:315
 msgid "You may only access your own trainings."
 msgstr "You may only access your own trainings."
 
-#: training_planner/trainings/views.py:369
+#: training_planner/trainings/views.py:371
 msgid "You cannot send an empty message."
 msgstr "You cannot send an empty message."
 
-#: training_planner/trainings/views.py:390
+#: training_planner/trainings/views.py:392
 #, python-brace-format
 msgid "{user:d} messages have been sent."
 msgstr "{user:d} messages have been sent."
 
-#: training_planner/trainings/views.py:411
+#: training_planner/trainings/views.py:413
 msgid "No valid year, showing results for this year."
 msgstr "No valid year, showing results for this year."
 
@@ -1122,8 +1114,8 @@ msgid "This website is operated and maintained by:"
 msgstr "This website is operated and maintained by:"
 
 #: training_planner/website/templates/website/about.html:9
-msgid "Judo Club Uster<br>Gerbestrasse 5<br>8610 Uster<br>Switzerland"
-msgstr "Judo Club Uster<br>Gerbestrasse 5<br>8610 Uster<br>Switzerland"
+msgid "Address of responsable operator."
+msgstr ""
 
 #: training_planner/website/templates/website/about.html:10
 msgid "Privacy Policy"
@@ -1152,9 +1144,9 @@ msgid ""
 "By creating an account and the continued use, the respective user agrees to "
 "the processing of his or her data in agreement with this privacy policy. An "
 "account can be deleted at any time by sending a request clearly stating the "
-"intend to have the account deleted to <a href='mailto:info@jcu.ch'>info@jcu."
-"ch</a>. Afterwards the account will be suspended and the data be deleted "
-"after eight weeks."
+"intend to have the account deleted to <a href='mailto:YOUR@MAIL."
+"ADDRESS'>YOUR@MAIL.ADDRESS</a>. Afterwards the account will be suspended and "
+"the data be deleted after eight weeks."
 msgstr ""
 "By creating an account and the continued use, the respective user agrees to "
 "the processing of his or her data in agreement with this privacy policy. An "
@@ -1190,7 +1182,7 @@ msgid ""
 "link once they failed to log in. In case there are several accounts using "
 "the same e-mail address, like in the case of a mother creating accounts for "
 "her children, the automatic password reset fails. In such a case please "
-"contact us at <a href='mailto:info@jcu.ch'>info@jcu.ch</a>."
+"contact us at <a href='mailto:YOUR@MAIL.ADDRESS'>YOUR@MAIL.ADDRESS</a>."
 msgstr ""
 "The date of birth can be looked up by trainers to check if the registered "
 "attendees actually fit the training session. The e-mail adresses can be used "
@@ -1336,9 +1328,9 @@ msgid "Should the following object be deleted?"
 msgstr "Should the following object be deleted?"
 
 #: training_planner/website/templates/website/welcome.html:4
-msgid "Training planner - Judo Club Uster"
+msgid "Training planner - You Club Name"
 msgstr "Training planner - Judo Club Uster"
 
 #: training_planner/website/templates/website/welcome.html:7
-msgid "Welcome to the trainings plannner of Judo Club Uster!"
-msgstr "Welcome to the trainings plannner of Judo Club Uster!"
+msgid "Welcome to the training plannner platform!"
+msgstr "Welcome to the training plannner of Judo Club Uster!"

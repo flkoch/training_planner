@@ -1,7 +1,8 @@
+from django.conf import settings
 from django.contrib import messages
 from django.contrib import auth
 from django.contrib.auth import decorators as auth_decorators
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
@@ -56,27 +57,31 @@ def register(request):
             user.groups.add(get_object_or_404(
                 auth.models.Group, name='Participant'))
             form.save_m2m()
-            subject = _('Registration on training.judo-club-uster.ch')
+            subject = format_lazy(
+                'Registration on {website}',
+                website=settings.ALLOWED_HOSTS[0] if len(
+                    settings.ALLOWED_HOSTS) > 0 else 'TrainingPlanner'
+            )
             message = format_lazy(
                 _(
                     'Hi {name},\nWe are happy to have you on our '
                     'platform, which allows you to register for and '
-                    'participate in offered training sessions.\nIn order to '
-                    'participate in the training sesseions, the follwoign '
-                    'criteria have to be fulfilled:\n1) You must be '
-                    'registered for the respective training.\n2) You must '
-                    'have the access form filled and signed with you for all '
-                    'sessions.\n\nPretty simple, is it? In case you still '
-                    'have questions, please contact the instructor or write '
-                    'an e-mail to info@jcu.ch.\nIn addition we need a '
-                    'coordinator for each training session. If you can do '
-                    'this from time to time everyone does benefit.\n\nThe '
-                    'JCU Trainer-Team wishes you good training sessions'
+                    'participate in offered training sessions.\nIf you have '
+                    'questions on the requirements for participation contact '
+                    'the instructor or the administration.\nFor each Training '
+                    'we need a coordinator. If you could do this from time to '
+                    'time everyone will enjoy the experience.\nEnjoy your '
+                    'trainings\nYour Instructor team'
                 ),
                 name=user.first_name
             )
-            send_mail(subject, message, 'no-reply@judo-club-uster.ch',
-                      [user.email])
+            email = EmailMessage(
+                subject,
+                message,
+                settings.DEFAULT_FROM_EMAIL,
+                [user.email],
+            )
+            email.send()
             messages.success(
                 request,
                 _('The account has been created. '
