@@ -184,7 +184,7 @@ class Training(models.Model):
         """
         return locale aware weekday of start as string
         """
-        return date_format(self.start, 'l')
+        return date_format(timezone.localtime(self.start), 'l')
 
     @property
     def starttime_as_text(self):
