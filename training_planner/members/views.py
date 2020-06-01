@@ -58,7 +58,7 @@ def register(request):
                 auth.models.Group, name='Participant'))
             form.save_m2m()
             subject = format_lazy(
-                'Registration on {website}',
+                _('Registration on {website}'),
                 website=settings.ALLOWED_HOSTS[0] if len(
                     settings.ALLOWED_HOSTS) > 0 else 'TrainingPlanner'
             )

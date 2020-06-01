@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-01 22:19+0200\n"
-"PO-Revision-Date: 2020-06-01 22:20+0200\n"
+"POT-Creation-Date: 2020-06-01 22:30+0200\n"
+"PO-Revision-Date: 2020-06-01 22:30+0200\n"
 "Last-Translator: Florian Koch <flkoch@dev.fkoch.ch>\n"
 "Language-Team: \n"
 "Language: en \n"
@@ -313,6 +313,11 @@ msgstr "<int:id>/edit/"
 #: training_planner/members/views.py:36
 msgid "Username and password do not match a valid user."
 msgstr "Username and password do not match a valid user."
+
+#: training_planner/members/views.py:61
+#, python-brace-format
+msgid "Registration on {website}"
+msgstr "Registration on {website}"
 
 #: training_planner/members/views.py:67
 #, python-brace-format
