@@ -4,7 +4,7 @@
 {{training}}
 {% endblock title %}
 {% block content %}
-<h1>{{training}}</h1>
+<h1>{{training.name}}</h1>
 <p>{{training.location.with_address}}</p>
 <nav class="nav justify-content-end flex-column flex-sm-row my-2">
     <a class="nav-link bg-light text-dark" href="javascript:history.back()">{% trans "Back" %}</a>
@@ -20,7 +20,7 @@
             <div class="card-header">{% trans "Information" %}</div>
             <div class="card-body">
                 <p class="card-text">
-                    {% trans "Date" %}: {{training.start.date}}<br>
+                    {% trans "Date" %}: {{training.startdate_as_text}}<br>
                     {% trans "Time" %}: {{training.starttime_as_text}}<br>
                     {% trans "Duration" %}: {{training.duration}} {% trans "minutes" %}<br>
                     {% trans "Main Instructor" %}: {{training.main_instructor}}<br>

@@ -41,7 +41,7 @@
     <tbody>
     {% for training in trainings %}
     <tr {% if training.deleted %}{% if training.archived %}class="alert alert-dark"{% else %}class="alert alert-danger"{% endif %}{% elif training.archived %}class="alert alert-light"{% elif training.participants.all.count > 0 and training.passed %}class="alert alert-success"{% endif %}>
-        <td class="align-middle d-none d-xl-table-cell"><a href="{% url 'trainings-details' training.id %}">{{training.start.date}}</a></td>
+        <td class="align-middle d-none d-xl-table-cell"><a href="{% url 'trainings-details' training.id %}">{{training.startdate_as_text}}</a></td>
         <td class="align-middle"><a href="{% url 'trainings-details' training.id %}">{{training.weekday_as_text}}</a></td>
         <td class="align-middle"><a href="{% url 'trainings-details' training.id %}">{{training.starttime_as_text}}</a></td>
         <td class="align-middle d-none d-lg-table-cell">{{training.duration}} {% trans "min." context "abbreviation for minutes"%}</td>

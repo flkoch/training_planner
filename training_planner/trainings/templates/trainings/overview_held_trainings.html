@@ -22,7 +22,7 @@
     <tbody>
     {% for training in trainings_main %}
     <tr>
-        <td class="align-middle d-none d-xl-table-cell"><a href="{% url 'trainings-controlling' training.id %}">{{training.start.date}}</a></td>
+        <td class="align-middle d-none d-xl-table-cell"><a href="{% url 'trainings-controlling' training.id %}">{{training.startdate_as_text}}</a></td>
         <td class="align-middle"><a href="{% url 'trainings-controlling' training.id %}">{{training.weekday_as_text}}</a></td>
         <td class="align-middle">{{training.starttime_as_text}}</td>
         <td class="align-middle d-none d-sm-table-cell">{% if training.location %}{{training.location}}{% else %}&mdash;{% endif %}</td>
@@ -54,7 +54,7 @@
     <tbody>
     {% for training in trainings_assistant %}
     <tr>
-        <td class="align-middle d-none d-xl-table-cell"><a href="{% url 'trainings-controlling' training.id %}">{{training.start.date}}</a></td>
+        <td class="align-middle d-none d-xl-table-cell"><a href="{% url 'trainings-controlling' training.id %}">{{training.startdate_as_text}}</a></td>
         <td class="align-middle"><a href="{% url 'trainings-controlling' training.id %}">{{training.weekday_as_text}}</a></td>
         <td class="align-middle">{{training.starttime_as_text}}</td>
         <td class="align-middle d-none d-sm-table-cell">{% if training.location %}{{training.location}}{% else %}&mdash;{% endif %}</td>

@@ -116,11 +116,15 @@ class Training(models.Model):
         verbose_name_plural = _('Trainings')
 
     def __str__(self):
-        starttime = ''.join([self.weekday_as_text.upper()[:2],
-                             timezone.localtime(self.start).strftime('%H%M'),
-                             self.main_instructor
-                             .get_initials_paranthesised()])
-        return f'{starttime}: {self.title}'
+        return f'{self.name} ({self.startdate_as_text})'
+
+    @property
+    def name(self):
+        identifier = ''.join([self.weekday_as_text.upper()[:2],
+                              timezone.localtime(self.start).strftime('%H%M'),
+                              self.main_instructor
+                              .get_initials_paranthesised()])
+        return f'{identifier}: {self.title}'
 
     @property
     def weekday_as_text(self):

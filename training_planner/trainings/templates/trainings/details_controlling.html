@@ -4,8 +4,8 @@
 {{training}}
 {% endblock title %}
 {% block content %}
-<h1>{{training}}</h1>
-<p>{{training.start.date}}</p>
+<h1>{{training.name}}</h1>
+<p>{{training.startdate_as_text}}</p>
 <nav class="nav justify-content-end flex-column flex-sm-row my-2">
     <a class="nav-link bg-light text-dark" href="javascript:history.back()">{% trans "Back" %}</a>
     <a class="nav-link bg-warning text-dark ml-sm-3" href="{% url 'trainings-edit' training.id %}">{% trans "Edit" %}</a>
