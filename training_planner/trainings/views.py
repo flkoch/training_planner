@@ -58,10 +58,11 @@ def overview(request):
 def all_trainings(request):
     trainings = Training.objects.all().order_by(
         'start', 'title')
+    user = request.user
     myFilter = TrainingAdminFilter(request.GET, queryset=trainings)
     trainings = myFilter.qs
     for training in trainings:
-        training.can_edit = True
+        training.can_edit = training.can_edit(user)
         training.passed = training.start < timezone.now()
     context = {'trainings': trainings, 'myFilter': myFilter}
     return render(request, 'trainings/overview.html', context)
