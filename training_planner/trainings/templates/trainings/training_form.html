@@ -6,4 +6,6 @@
 {% block content %}
 <h1>{{ title }}</h1>
 {% crispy form %}
+{{ form.errors }}
+{{ form.non_field_errors }}
 {% endblock content %}

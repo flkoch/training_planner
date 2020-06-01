@@ -171,42 +171,6 @@ class TrainingForm(forms.ModelForm):
     instructor = forms.ModelMultipleChoiceField(
         queryset=get_user_model().objects.filter(groups__name='Trainer'),
         required=False, label=_('Instructor'))
-    registration_open = forms.DateTimeField(
-        widget=widgets.DateTimePicker(
-            options={
-                'stepping': 15,
-                'format': _python2moment(settings.DATETIME_INPUT_FORMATS[2]),
-                'sideBySide': True,
-                'extraFormats': _python2moment(
-                    settings.DATETIME_INPUT_FORMATS
-                ),
-
-            },
-            attrs={
-                'append': 'fa fa-calendar',
-                'icon_toggle': True,
-            }
-        ),
-        label=_('Registration opening'),
-    )
-    registration_close = forms.DateTimeField(
-        widget=widgets.DateTimePicker(
-            options={
-                'stepping': 15,
-                'format': _python2moment(settings.DATETIME_INPUT_FORMATS[2]),
-                'sideBySide': True,
-                'extraFormats': _python2moment(
-                    settings.DATETIME_INPUT_FORMATS
-                ),
-
-            },
-            attrs={
-                'append': 'fa fa-calendar',
-                'icon_toggle': True,
-            }
-        ),
-        label=_('Registration closing'),
-    )
     start = forms.DateTimeField(
         widget=widgets.DateTimePicker(
             options={
@@ -228,8 +192,13 @@ class TrainingForm(forms.ModelForm):
 
     class Meta:
         model = Training
-        fields = '__all__'
-        exclude = ['deleted', 'archived']
+        exclude = [
+            'participants',
+            'deleted',
+            'archived',
+            'registration_open',
+            'registration_close',
+        ]
 
     def __init__(self, *args, **kwargs):
         super(forms.ModelForm, self).__init__(*args, **kwargs)
@@ -250,7 +219,7 @@ class TrainingForm(forms.ModelForm):
         self.helper.action = ''
         self.helper.html5_required = True
         for field in ['description', 'location', 'instructor', 'coordinator',
-                      'registered_participants', 'participants']:
+                      'registered_participants', ]:
             self.fields[field].required = False
         self.helper.layout = cfl.Layout(
             'title',
@@ -303,21 +272,21 @@ class TrainingForm(forms.ModelForm):
                         '&rangle; to change the selection.</p>'
                     )
                 ),
-                cfl.Row(
-                    cfl.Field(
-                        'registered_participants',
-                        wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
-                        help_text=_(
-                            'Please hold down <Ctrl> to change the selection.'
-                        ),
+            ),
+            cfl.Row(
+                cfl.Field(
+                    'registered_participants',
+                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                    help_text=_(
+                        'Please hold down <Ctrl> to change the selection.'
                     ),
-                    cfl.HTML(
-                        _(
-                            '<p class="col-auto my-4 text-muted">'
-                            'Please hold down &langle;<strong>Ctrl</strong>'
-                            '&rangle; to change the selection.</p>'
-                        )
-                    ),
+                ),
+                cfl.HTML(
+                    _(
+                        '<p class="col-auto my-4 text-muted">'
+                        'Please hold down &langle;<strong>Ctrl</strong>'
+                        '&rangle; to change the selection.</p>'
+                    )
                 ),
             ),
             cfl.Row(

@@ -54,7 +54,7 @@ def overview(request):
     return render(request, 'trainings/overview.html', context)
 
 
-@admin_only
+@trainer_or_admin_only
 def all_trainings(request):
     trainings = Training.objects.all().order_by(
         'start', 'title')
@@ -168,7 +168,7 @@ def create(request):
     else:
         form = AddTrainingForm(initial={
             'main_instructor': request.user,
-            'capacity': 50,
+            'capacity': 20,
             'duration': 75,
         })
     context = {'form': form, 'title': _('New Training')}
@@ -193,6 +193,8 @@ def edit(request, id):
                 request,
                 _('Please take care of the highlighted errors.')
             )
+            print(form)
+            print(request.POST)
     else:
         form = formClass(instance=training)
     context = {
