@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.urls import path, include
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 from website.views import welcome, about
 
