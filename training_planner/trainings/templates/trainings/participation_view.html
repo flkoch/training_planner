@@ -13,21 +13,23 @@
 {% endblock additionalScripts %}
 {% block content %}
 <h1>{% trans "Participants" %}</h1>
-<div class="card">
-    <div class="card-body">
-        <form method="get" class="form-inline">
-            <div class="form-row col-12">
+<div class="nav justify-content-end">
+    <button class="btn btn-secondary my-2" type="button" data-toggle="collapse" data-target="#filter" aria-expanded="false" aria-controls="filter">{% trans "Toggle Filter" %}</button>
+</div>
+<div class="collapse my-2" id="filter">
+    <div class="card">
+        <div class="card-body">
+            <form method="get">
                 {{myFilter.form|crispy}}
-                <div class="col-auto">
+                <div class="form-group">
+                    <label for="year">{% trans "Year" %}</label>
                     <input type="number" class="form-control" placeholder="{% trans 'Year' %}" aria-label="{% trans 'Year' %}" min="1" max="9999" name="year" value="{{year}}">
                 </div>
-                <div class="col-auto">
-                    <button class="btn btn-primary" type="submit">
-                        {% trans "Filter" %}
-                    </button>
-                </div>
-            </div>
-        </form>
+                <button class="btn btn-primary" type="submit">
+                {% trans "Filter" %}
+                </button>
+            </form>
+        </div>
     </div>
 </div>
 <div class="table-responsive my-3">
