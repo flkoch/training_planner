@@ -316,8 +316,15 @@ def held(request, id=None):
         return redirect('trainings-held')
     else:
         user = get_object_or_404(auth.get_user_model(), id=id)
-        if user == request.user:
-            return redirect('trainings-held')
+    if not user.is_trainer:
+        messages.info(
+            request,
+            _(
+                'You can only view held trainings of members belonging to '
+                'the group "Trainer".'
+            ),
+        )
+        return redirect('members-all')
     trainings_main = user.instructor.filter(start__lte=timezone.now() +
                                             datetime.timedelta(minutes=30)) \
         .exclude(archived=True) \
