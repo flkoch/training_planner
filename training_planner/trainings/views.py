@@ -305,7 +305,7 @@ def held(request, id=None):
         else:
             messages.info(
                 request,
-                'You may only access your own trainings.'
+                _('You may only access your own trainings.')
             )
     if id is None:
         user = request.user
