@@ -114,7 +114,7 @@ def details(request, id):
             )
         )
     context = {'training': training}
-    if request.user.groups.filter(name="Trainer").exists():
+    if request.user.is_trainer or request.user.is_administrator:
         return render(request, 'trainings/details_admin.html', context)
     return render(request, 'trainings/details.html', context)
 
