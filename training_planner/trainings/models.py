@@ -372,7 +372,7 @@ class Training(models.Model):
         else:
             return False
 
-    def register_as_coordinator(self, user):
+    def register_coordinator(self, user):
         """
         Register user as coordinator, if that is possible. There can only be a
         single coordinator (return value 1 if someone is already coordinator).
