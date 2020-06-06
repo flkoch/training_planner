@@ -117,7 +117,6 @@ def details(request, id):
                 time=training.closetime_as_text
             )
         )
-    training.can_edit = training.can_edit(request.user)
     context = {'training': training}
     if request.user.is_trainer or request.user.is_administrator:
         return render(request, 'trainings/details_admin.html', context)
