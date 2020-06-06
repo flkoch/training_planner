@@ -362,12 +362,15 @@ class Training(models.Model):
     def unregister(self, user):
         """
         Remove the user from the registered users for the training session.
-        Always returns true as the user will not be registered after the method
-        completes.
+        Return a bolean indicating whether the sign off was successful, as for
+        example the registration period could be over or the user was not
+        registered in the first place.
         """
-        if self.is_registered(user):
+        if self.can_unregister(user):
             self.registered_participants.remove(user)
-        return True
+            return True
+        else:
+            return False
 
     def register_as_coordinator(self, user):
         """
