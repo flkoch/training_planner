@@ -59,7 +59,7 @@ def overview(request):
 
 
 @trainer_or_admin_only
-def all_trainings(request):
+def all(request):
     trainings = Training.objects.all().order_by(
         'start', 'title')
     user = request.user
@@ -151,7 +151,7 @@ def unregister(request, id):
 
 
 @auth_decorators.login_required
-def register_as_coordinator(request, id):
+def register_coordinator(request, id):
     training = get_object_or_404(Training, id=id)
     index = training.register_as_coordinator(request.user)
     msg = {
@@ -227,7 +227,7 @@ def edit(request, id):
 
 
 @protect_training
-def make_training_series(request, id):
+def make_series(request, id):
     if request.method == 'POST':
         training = get_object_or_404(Training, id=id)
         training.coordinator = None
@@ -409,7 +409,7 @@ def message(request, id):
 
 
 @admin_only
-def participation_view(request, year=None):
+def participation(request, year=None):
     if year is None:
         if 'year' in request.GET and request.GET['year'] != '':
             try:
