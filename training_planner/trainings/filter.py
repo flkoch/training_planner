@@ -1,7 +1,9 @@
+import django_filters
 from django.forms.widgets import CheckboxSelectMultiple
 from django.utils.translation import gettext_lazy as _
-import django_filters
+
 from members.models import trainer
+
 from .models import TargetGroup, Training
 
 

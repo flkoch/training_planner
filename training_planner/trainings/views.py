@@ -1,22 +1,26 @@
+import datetime
 from operator import itemgetter
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages, auth
+
+import dateparser
+from django.contrib import auth, messages
 from django.contrib.auth import decorators as auth_decorators
 from django.core.mail import send_mass_mail
 from django.db.models import Count
 from django.db.models.functions import ExtractWeek
-from django.utils.text import format_lazy
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
+from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
-import dateparser
-import datetime
+
 from members.filter import UserStatisticsFilter
+
+from .decorators import (admin_only, protect_training, trainer_only,
+                         trainer_or_admin_only)
+from .filter import TrainingAdminFilter, TrainingFilter
+from .forms import (AddTrainingForm, AdminTrainingForm, TrainingArchiveDate,
+                    TrainingArchiveDays, TrainingForm, TrainingSeriesForm)
 from .models import Training, archive_trainings
-from .forms import AddTrainingForm, AdminTrainingForm, TrainingForm, \
-    TrainingSeriesForm, TrainingArchiveDate, TrainingArchiveDays
-from .filter import TrainingFilter, TrainingAdminFilter
-from .decorators import trainer_only, protect_training, admin_only, \
-    trainer_or_admin_only
+
 # Create your views here.
 
 

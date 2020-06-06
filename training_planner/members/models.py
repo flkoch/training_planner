@@ -1,8 +1,9 @@
-from django.db import models
+import datetime
+
 from django.contrib.auth.models import AbstractUser, Group
+from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-import datetime
 
 
 def _participant():

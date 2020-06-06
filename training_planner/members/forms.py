@@ -1,10 +1,11 @@
+from crispy_forms import layout as cfl
+from crispy_forms.helper import FormHelper
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
-from crispy_forms import layout as cfl
-from crispy_forms.helper import FormHelper
 from tempus_dominus import widgets
+
 from .models import User
 
 

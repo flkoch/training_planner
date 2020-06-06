@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Training, Location, Address, TargetGroup
+from .models import Address, Location, TargetGroup, Training
 
 admin.site.register(Training)
 admin.site.register(TargetGroup)

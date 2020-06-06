@@ -1,14 +1,17 @@
 from collections.abc import Iterable
+
+from crispy_forms import layout as cfl
+from crispy_forms.helper import FormHelper
 from django import forms as forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
-from crispy_forms import layout as cfl
-from crispy_forms.helper import FormHelper
 from tempus_dominus import widgets
+
 import members.models as members
-from .models import Training, Location, TargetGroup
+
+from .models import Location, TargetGroup, Training
 
 
 def _python2moment(date_time_string):

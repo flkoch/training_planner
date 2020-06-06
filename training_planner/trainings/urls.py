@@ -1,5 +1,6 @@
 from django.urls import path
 from django.utils.translation import gettext_lazy as _
+
 from . import views as trainings
 
 urlpatterns = [
@@ -10,7 +11,7 @@ urlpatterns = [
     path(_('<int:id>/unregister/'), trainings.unregister,
          name='trainings-unregister'),
     path(_('<int:id>/coordinator/register/'),
-         trainings.register_as_coordinator,
+         trainings.register_coordinator,
          name='trainings-register-coordinator'),
     path(_('<int:id>/coordinator/unregister/'),
          trainings.unregister_coordinator,
@@ -21,15 +22,15 @@ urlpatterns = [
          trainings.delete, name='trainings-delete'),
     path(_('<int:id>/message/'),
          trainings.message, name='trainings-message'),
-    path(_('<int:id>/series/'), trainings.make_training_series,
+    path(_('<int:id>/series/'), trainings.make_series,
          name='trainings-series'),
     path(_('control/'), trainings.held, name='trainings-held'),
     path(_('<int:id>/control/'), trainings.controlling,
          name='trainings-controlling'),
     path(_('control/<int:id>/'), trainings.held,
          name='trainings-held-trainer'),
-    path(_('participation/'), trainings.participation_view,
+    path(_('participation/'), trainings.participation,
          name='trainings-participation'),
-    path(_('all/'), trainings.all_trainings, name='trainings-all'),
+    path(_('all/'), trainings.all, name='trainings-all'),
     path(_('management/'), trainings.management, name='trainings-management')
 ]
