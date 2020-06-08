@@ -2,9 +2,10 @@ import datetime
 from operator import itemgetter
 
 import dateparser
+from django.conf import settings
 from django.contrib import auth, messages
 from django.contrib.auth import decorators as auth_decorators
-from django.core.mail import send_mass_mail
+from django.core.mail import send_mail, send_mass_mail
 from django.db.models import Count
 from django.db.models.functions import ExtractWeek
 from django.shortcuts import get_object_or_404, redirect, render
@@ -153,12 +154,39 @@ def unregister(request, id):
 @auth_decorators.login_required
 def register_coordinator(request, id):
     training = get_object_or_404(Training, id=id)
-    index = training.register_as_coordinator(request.user)
+    index = training.register_coordinator(request.user)
     msg = {
-        0: ('success', _('Thank you for coordinating the entrance.')),
+        0: (
+            'success',
+            _(
+                'Thank you for coordinating the entrance. '
+                'Please check your inbox.'
+            )
+        ),
         1: ('info', _('There is already another coordinator registered.')),
         2: ('warning', _('The coordinator cannot be the main instructor.'))
     }
+    if not index:
+        subject = format_lazy(
+            _('Coordinator for {training}'),
+            training=training
+        )
+        message = format_lazy(
+            _(
+                'Dear {name},\n'
+                'Thank you for taking the role as coordinator for {training}.'
+                '\nPlease make yourself comfortable with the checks you have '
+                'to perform and try to contact the trainer in case of doubt '
+                'as soon as possible.\nAs the coordinator you play a crucial '
+                'role in making sure all the requirements are fullfilled and '
+                'we can sustain our program.\nWe thank you for your support.\n'
+                'Best regards,\nThe training planner team'
+            ),
+            name=request.user.first_name,
+            training=training,
+        )
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL,
+                  [request.user.email])
     _simple_message(request, msg, index)
     return redirect('trainings-details', id)
 
