@@ -33,32 +33,32 @@ class TestViewsNoData(TestCase):
     def test_trainings_create_GET(self):
         response = self.client.get(self.create_url)
         self.assertEquals(response.status_code, 302)
-        # self.assertIn(self.login_url, response.url)
+        self.assertIn(self.login_url, response.url)
 
     def test_trainings_create_POST(self):
         response = self.client.post(self.create_url)
         self.assertEquals(response.status_code, 302)
-        # self.assertIn(self.login_url, response.url)
+        self.assertIn(self.login_url, response.url)
 
     def test_trainings_control_GET(self):
         response = self.client.get(self.control_url)
         self.assertEquals(response.status_code, 302)
-        # self.assertIn(self.login_url, response.url)
+        self.assertIn(self.login_url, response.url)
 
     def test_trainings_participation_GET(self):
         response = self.client.get(self.participation_url)
         self.assertEquals(response.status_code, 302)
-        # self.assertIn(self.login_url, response.url)
+        self.assertIn(self.login_url, response.url)
 
     def test_trainings_all_GET(self):
         response = self.client.get(self.all_url)
         self.assertEquals(response.status_code, 302)
-        # self.assertIn(self.login_url, response.url)
+        self.assertIn(self.login_url, response.url)
 
     def test_training_management_GET(self):
         response = self.client.get(self.management_url)
         self.assertEquals(response.status_code, 302)
-        # self.assertIn(self.login_url, response.url)
+        self.assertIn(self.login_url, response.url)
 
 
 class TestViewsAnonymous(TestCase):

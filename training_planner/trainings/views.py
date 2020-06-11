@@ -59,6 +59,7 @@ def overview(request):
     return render(request, 'trainings/overview.html', context)
 
 
+@auth_decorators.login_required
 @trainer_or_admin_only
 def all(request):
     trainings = Training.objects.all().order_by(
@@ -191,6 +192,7 @@ def register_coordinator(request, id):
     return redirect('trainings-details', id)
 
 
+@auth_decorators.login_required
 @protect_training
 def unregister_coordinator(request, id):
     training = get_object_or_404(Training, id=id)
@@ -199,6 +201,7 @@ def unregister_coordinator(request, id):
     return redirect('trainings-details', id)
 
 
+@auth_decorators.login_required
 @trainer_only
 def create(request):
     if request.method == 'POST':
@@ -225,6 +228,7 @@ def create(request):
     return render(request, 'trainings/training_form.html', context)
 
 
+@auth_decorators.login_required
 @protect_training
 def edit(request, id):
     if request.user.is_administrator:
@@ -254,6 +258,7 @@ def edit(request, id):
     return render(request, 'trainings/training_form.html', context)
 
 
+@auth_decorators.login_required
 @protect_training
 def make_series(request, id):
     if request.method == 'POST':
@@ -295,6 +300,7 @@ def make_series(request, id):
     return render(request, 'trainings/training_form.html', context)
 
 
+@auth_decorators.login_required
 @protect_training
 def delete(request, id):
     training = get_object_or_404(Training, id=id)
@@ -310,6 +316,7 @@ def delete(request, id):
     return render(request, 'website/deleteConfirmation.html', context)
 
 
+@auth_decorators.login_required
 @trainer_or_admin_only
 def held(request, id=None):
     if request.method == 'POST':
@@ -375,6 +382,7 @@ def held(request, id=None):
     return render(request, 'trainings/overview_held_trainings.html', context)
 
 
+@auth_decorators.login_required
 @protect_training
 def controlling(request, id):
     training = get_object_or_404(Training, id=id)
@@ -392,6 +400,7 @@ def controlling(request, id):
     return render(request, 'trainings/details_controlling.html', context)
 
 
+@auth_decorators.login_required
 @protect_training
 def message(request, id):
     training = get_object_or_404(Training, id=id)
@@ -436,6 +445,7 @@ def message(request, id):
     return render(request, 'trainings/message.html', context)
 
 
+@auth_decorators.login_required
 @admin_only
 def participation(request, year=None):
     if year is None:
@@ -496,6 +506,7 @@ def participation(request, year=None):
     return render(request, 'trainings/participation_view.html', context)
 
 
+@auth_decorators.login_required
 @admin_only
 def management(request):
     if request.method == 'POST':
