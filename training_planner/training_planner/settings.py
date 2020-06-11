@@ -156,7 +156,7 @@ STATIC_URL = '/static/'
 
 # E-mail configuration
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = os.environ['PYTHON_DJANGO_EMAIL_BACKEND']
 EMAIL_HOST = os.environ['PYTHON_DJANGO_EMAIL_HOST']
 EMAIL_PORT = os.environ['PYTHON_DJANGO_EMAIL_PORT']
 EMAIL_USE_SSL = os.environ['PYTHON_DJANGO_EMAIL_USE_SSL']
