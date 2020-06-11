@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'training_planner.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.environ['PYTHON_DJANGO_DB_ENGINE'],
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.environ['PYTHON_DJANGO_DB_NAME'],
     }
 }
 
