@@ -106,13 +106,21 @@ def all(request):
     return render(request, 'members/overview.html', context)
 
 
-@auth_decorators.permission_required('members.view_user')
+@auth_decorators.login_required
 def details(request, id=None):
     if id is None:
         user = request.user
         edit_link = reverse('account-edit')
     else:
         user = get_object_or_404(auth.get_user_model(), id=id)
+        if user == request.user:
+            return redirect('account')
+        elif not request.user.has_perm('members.view_user'):
+            messages.info(
+                request,
+                _('Only trainers and administrators may access this area.')
+            )
+            return redirect('trainings-overview')
         edit_link = reverse('member-edit', args=[id])
     reg_trainings = user.trainings_registered.filter(
         start__gte=timezone.now()).order_by('start')
@@ -130,12 +138,20 @@ def details(request, id=None):
     return render(request, 'members/details.html', context)
 
 
-@auth_decorators.permission_required('members.edit_user')
+@auth_decorators.login_required
 def edit(request, id=None):
     if id is None:
         user = request.user
     else:
         user = get_object_or_404(auth.get_user_model(), id=id)
+        if user == request.user:
+            return redirect('account-edit')
+        elif not request.user.has_perm('members.edit'):
+            messages.info(
+                request,
+                _('Only trainers and administrators may access this area.')
+            )
+            return redirect('trainings-overview')
     if request.method == 'POST':
         form = ChangeUserForm(request.POST)
         if form.is_valid():
@@ -147,7 +163,10 @@ def edit(request, id=None):
             ).upper()
             user.birth_date = form.cleaned_data['birth_date']
             user.save()
-            return redirect('member-details', id=id)
+            if id is None:
+                return redirect('account')
+            else:
+                return redirect('member-details', id=id)
     form = ChangeUserForm(instance=user)
     context = {
         'title': _('Edit User'),
@@ -156,6 +175,7 @@ def edit(request, id=None):
     return render(request, 'members/user_form.html', context)
 
 
+@auth_decorators.login_required
 @decorators.admin_only
 def user_management(request):
     if request.method == 'POST':
