@@ -11,6 +11,9 @@
     <a class="nav-link bg-success text-light ml-sm-3" href="{% url 'trainings-held-trainer' page_user.id %}">{% trans "Trainings Controlling" %}</a>
     {% endif %}
     <a class="nav-link bg-warning text-dark ml-sm-3" href="{{edit_link}}">{% trans "Edit" %}</a>
+    {% if user == page_user %}
+    <a class="nav-link bg-danger text-light ml-sm-3" href="{% url 'password_change' %}">{% trans "Change Password" %}</a>
+    {% endif %}
 </nav>
 <div class="row my-2">
     <div class="col-sm-6 col-md my-1 order-1">
@@ -21,7 +24,9 @@
                     {% trans "Name" %}: {{page_user.name}}<br>
                     {% trans "Username" %}: {{page_user.username}}<br>
                     {% trans "E-mail" %}: {{page_user.email}}<br>
-                    {% trans "Date of Birth" %}: {{page_user.birth_date}}<br>
+                    {% if page_user.birth_date %}
+                        {% trans "Date of Birth" %}: {{page_user.birth_date}}<br>
+                    {% endif %}
                     {% with groups=page_user.get_groups_locale %}
                         {% if groups|length > 0 %}
                             {% trans "Groups" %}:

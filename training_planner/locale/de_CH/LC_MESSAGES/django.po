@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TrainingPlanner\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-08 10:39+0200\n"
-"PO-Revision-Date: 2020-06-11 09:45+0200\n"
+"POT-Creation-Date: 2020-06-13 17:47+0200\n"
+"PO-Revision-Date: 2020-06-13 17:49+0200\n"
 "Last-Translator: Florian Koch <flkoch@dev.fkoch.ch>\n"
 "Language-Team: \n"
 "Language: de-CH\n"
@@ -70,7 +70,7 @@ msgid "Last name"
 msgstr "Nachname"
 
 #: training_planner/members/filter.py:15
-#: training_planner/members/templates/members/details.html:22
+#: training_planner/members/templates/members/details.html:25
 #: training_planner/members/templates/members/login.html:12
 #: training_planner/members/templates/members/overview.html:29
 #: training_planner/trainings/templates/trainings/participation_view.html:41
@@ -78,13 +78,14 @@ msgid "Username"
 msgstr "Benutzername"
 
 #: training_planner/members/filter.py:19
-#: training_planner/members/templates/members/details.html:23
+#: training_planner/members/templates/members/details.html:26
 #: training_planner/members/templates/members/overview.html:30
 msgid "E-mail"
 msgstr "E-Mail"
 
 #: training_planner/members/forms.py:24 training_planner/members/forms.py:115
 #: training_planner/members/models.py:31
+#: training_planner/members/templates/members/details.html:28
 msgid "Date of Birth"
 msgstr "Geburtsdatum"
 
@@ -174,24 +175,28 @@ msgstr "Trainings Kontrolle"
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: training_planner/members/templates/members/details.html:18
+#: training_planner/members/templates/members/details.html:15
+msgid "Change Password"
+msgstr "Passwort Ändern"
+
+#: training_planner/members/templates/members/details.html:21
 #: training_planner/trainings/templates/trainings/details.html:20
 #: training_planner/trainings/templates/trainings/details_admin.html:34
 msgid "Information"
 msgstr "Informationen"
 
-#: training_planner/members/templates/members/details.html:21
+#: training_planner/members/templates/members/details.html:24
 #: training_planner/trainings/models.py:56
 #: training_planner/trainings/models.py:86
 msgid "Name"
 msgstr "Name"
 
-#: training_planner/members/templates/members/details.html:26
+#: training_planner/members/templates/members/details.html:32
 #: training_planner/members/templates/members/overview.html:31
 msgid "Groups"
 msgstr "Gruppen"
 
-#: training_planner/members/templates/members/details.html:28
+#: training_planner/members/templates/members/details.html:34
 #: training_planner/trainings/templates/trainings/details.html:35
 #: training_planner/trainings/templates/trainings/details.html:49
 #: training_planner/trainings/templates/trainings/details_admin.html:49
@@ -199,27 +204,27 @@ msgstr "Gruppen"
 msgid "and"
 msgstr "und"
 
-#: training_planner/members/templates/members/details.html:39
+#: training_planner/members/templates/members/details.html:45
 msgid "registered trainings"
 msgstr "Angemeldete Trainings"
 
-#: training_planner/members/templates/members/details.html:45
+#: training_planner/members/templates/members/details.html:51
 msgid "no future registrations"
 msgstr "Keine zukünftigen Anmeldungen"
 
-#: training_planner/members/templates/members/details.html:55
+#: training_planner/members/templates/members/details.html:61
 msgid "completed trainings"
 msgstr "Absolvierte Trainings"
 
-#: training_planner/members/templates/members/details.html:61
+#: training_planner/members/templates/members/details.html:67
 msgid "no completed trainings yet"
 msgstr "Bisher keine absolvierten Trainings"
 
-#: training_planner/members/templates/members/details.html:65
+#: training_planner/members/templates/members/details.html:71
 msgid "pagination for completed trainings"
 msgstr "Seitennavigation für absolvierte Trainings"
 
-#: training_planner/members/templates/members/details.html:69
+#: training_planner/members/templates/members/details.html:75
 msgid "current"
 msgstr "aktuell"
 
@@ -355,19 +360,24 @@ msgstr ""
 msgid "The account has been created. Please check your inbox."
 msgstr "Das Benutzerkonto wurde erstellt. Bitte überprüfe Deinen Posteingang."
 
-#: training_planner/members/views.py:153
+#: training_planner/members/views.py:121 training_planner/members/views.py:152
+#: training_planner/trainings/decorators.py:64
+msgid "Only trainers and administrators may access this area."
+msgstr "Nur Trainer und Administratoren dürfen auf diesen Bereich zugreifen."
+
+#: training_planner/members/views.py:172
 msgid "Edit User"
 msgstr "Benutzer Bearbeiten"
 
-#: training_planner/members/views.py:165
+#: training_planner/members/views.py:185
 msgid "Update Active Participants"
 msgstr "Aktive Teilnehmer aktualisieren"
 
-#: training_planner/members/views.py:168
+#: training_planner/members/views.py:188
 msgid "Update Active Trainer"
 msgstr "Aktive Trainer aktualisieren"
 
-#: training_planner/members/views.py:171
+#: training_planner/members/views.py:191
 msgid "Update Trainer"
 msgstr "Trainer aktualisieren"
 
@@ -406,10 +416,6 @@ msgstr "Nur Trainer dürfen auf diesen Bereich zugreifen."
 #: training_planner/trainings/decorators.py:48
 msgid "Only administrators may access this area."
 msgstr "Nur Administratoren dürfen auf diesen Bereich zugreifen."
-
-#: training_planner/trainings/decorators.py:64
-msgid "Only trainers and administrators may access this area."
-msgstr "Nur Trainer und Administratoren dürfen auf diesen Bereich zugreifen."
 
 #: training_planner/trainings/decorators.py:78
 msgid "Only administrators and the respective trainers may access this area."
@@ -774,7 +780,7 @@ msgid "Salutation"
 msgstr "Anrede"
 
 #: training_planner/trainings/templates/trainings/message.html:68
-#: training_planner/trainings/views.py:415
+#: training_planner/trainings/views.py:424
 msgid "Dear"
 msgstr "Hallo"
 
@@ -889,6 +895,16 @@ msgstr "Vor einem Datum"
 msgid "Time ago"
 msgstr "Vor gegebener Zeit"
 
+#: training_planner/trainings/tests/test_views.py:381
+#: training_planner/trainings/views.py:135
+msgid "Registration failed."
+msgstr "Anmeldung fehlgeschlagen."
+
+#: training_planner/trainings/tests/test_views.py:390
+#: training_planner/trainings/views.py:151
+msgid "Sign-off failed."
+msgstr "Abmeldung fehlgeschlagen."
+
 #: training_planner/trainings/urls.py:9
 msgid "<int:id>/register/"
 msgstr "<int:id>/anmelden/"
@@ -941,7 +957,7 @@ msgstr "teilnahme/"
 msgid "all/"
 msgstr "alle/"
 
-#: training_planner/trainings/views.py:86
+#: training_planner/trainings/views.py:87
 msgid ""
 "The training was deleted. To restore the training and enable editing contact "
 "an administrator."
@@ -949,19 +965,19 @@ msgstr ""
 "Das Training wurde gelöscht. Um das Training wieder herzustellen und die "
 "Bearbeitung zu reaktivieren kontaktiere einen Administrator."
 
-#: training_planner/trainings/views.py:94
+#: training_planner/trainings/views.py:95
 msgid ""
 "The training was archived. To reenable editing contact an administrator."
 msgstr ""
 "Das Training wurde archiviert. Um die Bearbeitung zu reaktivieren "
 "kontaktiere einen Administrator."
 
-#: training_planner/trainings/views.py:103
+#: training_planner/trainings/views.py:104
 #, python-brace-format
 msgid "The registration will open on {date} at {time}."
 msgstr "Die Anmeldung wird am {date} um {time} geöffnet."
 
-#: training_planner/trainings/views.py:113
+#: training_planner/trainings/views.py:114
 #, python-brace-format
 msgid ""
 "The registration is closed since {date} at {time}. For short-term "
@@ -970,42 +986,34 @@ msgstr ""
 "Die Anmeldung ist seit dem {date} um {time} geschlossen. Für An- oder "
 "Abmeldungen kontaktiere bitte den Trainer."
 
-#: training_planner/trainings/views.py:132
+#: training_planner/trainings/views.py:133
 msgid "You were successfully registered."
 msgstr "Du wurdest erfolgreich angemeldet."
 
-#: training_planner/trainings/views.py:134
-msgid "Registration failed."
-msgstr "Anmeldung fehlgeschlagen."
-
-#: training_planner/trainings/views.py:145
+#: training_planner/trainings/views.py:146
 msgid "You have been successfully signed off for {training!s}."
 msgstr "Du wurdest erfolgreich von {training!s} abgemeldet."
 
-#: training_planner/trainings/views.py:150
-msgid "Sign-off failed."
-msgstr "Abmeldung fehlgeschlagen."
-
-#: training_planner/trainings/views.py:162
+#: training_planner/trainings/views.py:163
 msgid "Thank you for coordinating the entrance. Please check your inbox."
 msgstr ""
 "Danke für das Koordinieren des Einlasses. Bitte überprüfe Deinen Posteingang "
 "für nähere Informationen."
 
-#: training_planner/trainings/views.py:166
+#: training_planner/trainings/views.py:167
 msgid "There is already another coordinator registered."
 msgstr "Es ist bereits jemand anderes als Koordinator angemeldet."
 
-#: training_planner/trainings/views.py:167
+#: training_planner/trainings/views.py:168
 msgid "The coordinator cannot be the main instructor."
 msgstr "Der Koordinator kann nicht der Haupttrainer sein."
 
-#: training_planner/trainings/views.py:171
+#: training_planner/trainings/views.py:172
 #, python-brace-format
 msgid "Coordinator for {training}"
 msgstr "Koordinator für {training}"
 
-#: training_planner/trainings/views.py:176
+#: training_planner/trainings/views.py:177
 #, python-brace-format
 msgid ""
 "Dear {name},\n"
@@ -1019,68 +1027,70 @@ msgid ""
 "The training planner team"
 msgstr ""
 "Hallo {name},\n"
-"Vielen Dank, dass Du die Rolle als Türkoordinator/in für {training} übernimmst. "
-"Ohne Dich kann das Training nicht durchgeführt werden.\n"
-"Du findest das Infosheet auf der "
-"Corona Seite unserer Homepage https://judo-club-uster.ch/corona2/\nBei "
-"Fragen darfst Du Dich gerne an Aline Steinbrecher (079 296 96 37) wenden.\n"
-"Als Türkoordinator/in übernimmst Du eine wichtige Aufgabe, indem Du "
-"sicher stellst, dass sich alle an die Regeln halten, damit wir unseren "
-"Betrieb aufrecht erhalten können.\n"
+"Vielen Dank, dass Du die Rolle als Türkoordinator/in für {training} "
+"übernimmst. Ohne Dich kann das Training nicht durchgeführt werden.\n"
+"Du findest das Infosheet auf der Corona Seite unserer Homepage https://judo-"
+"club-uster.ch/corona2/\n"
+"Bei Fragen darfst Du Dich gerne an Aline Steinbrecher (079 296 96 37) "
+"wenden.\n"
+"Als Türkoordinator/in übernimmst Du eine wichtige Aufgabe, indem Du sicher "
+"stellst, dass sich alle an die Regeln halten, damit wir unseren Betrieb "
+"aufrecht erhalten können.\n"
 "Wir danken Dir für Deine Unterstützung.\n"
-"Sportliche Grüsse,\nJCU Trainer Team"
+"Sportliche Grüsse,\n"
+"JCU Trainer Team"
 
-#: training_planner/trainings/views.py:198
+#: training_planner/trainings/views.py:200
 msgid "Coordinator removed successfully."
 msgstr "Koordinator erfolgreich entfernt."
 
-#: training_planner/trainings/views.py:211
+#: training_planner/trainings/views.py:214
 msgid "Training added successfully."
 msgstr "Training erfolgreich erstellt."
 
-#: training_planner/trainings/views.py:216
-#: training_planner/trainings/views.py:244
+#: training_planner/trainings/views.py:219
+#: training_planner/trainings/views.py:248
 msgid "Please take care of the highlighted errors."
 msgstr "Bitte kümmere Dich um die hervorgehobenen Fehler."
 
-#: training_planner/trainings/views.py:224
+#: training_planner/trainings/views.py:227
 #: training_planner/website/templates/navbar.html:13
 msgid "New Training"
 msgstr "Neues Training"
 
-#: training_planner/trainings/views.py:239
-#: training_planner/trainings/views.py:390
+#: training_planner/trainings/views.py:243
+#: training_planner/trainings/views.py:398
 msgid "Changes saved successfully."
 msgstr "Änderungen erfolgreich gespeichert."
 
-#: training_planner/trainings/views.py:252
+#: training_planner/trainings/views.py:256
 #, python-brace-format
 msgid "Edit {training}"
 msgstr "{training} Bearbeiten"
 
-#: training_planner/trainings/views.py:283
+#: training_planner/trainings/views.py:288
 #, python-brace-format
 msgid "Trainings created on {days:d} days."
 msgstr "Trainings an {days:d} Tagen erstellt."
 
-#: training_planner/trainings/views.py:293
+#: training_planner/trainings/views.py:298
 msgid "Create Training Series"
 msgstr "Trainings Serie erstellen"
 
-#: training_planner/trainings/views.py:306
+#: training_planner/trainings/views.py:312
 #, python-brace-format
 msgid "{training} has been deleted"
 msgstr "{training} wurde gelöscht"
 
-#: training_planner/trainings/views.py:309
+#: training_planner/trainings/views.py:315
 msgid "Delete Training"
 msgstr "Training löschen"
 
-#: training_planner/trainings/views.py:320
+#: training_planner/trainings/views.py:327
 msgid "The request contained invalid data. Aborting"
 msgstr "Die Anfrage enthält ungültige Daten und wird nicht bearbeitet."
 
-#: training_planner/trainings/views.py:332
+#: training_planner/trainings/views.py:339
 msgid ""
 "No participants have been recorded for this training. Please record the "
 "participants or delete the training instead, if it did not take place."
@@ -1089,12 +1099,12 @@ msgstr ""
 "erst die Teilnehmer oder lösche das Training, falls es nicht stattgefunden "
 "hat."
 
-#: training_planner/trainings/views.py:340
 #: training_planner/trainings/views.py:347
+#: training_planner/trainings/views.py:354
 msgid "You may only access your own trainings."
 msgstr "Du kannst nur auf eigene Trainings zugreifen."
 
-#: training_planner/trainings/views.py:355
+#: training_planner/trainings/views.py:362
 msgid ""
 "You can only view held trainings of members belonging to the group \"Trainer"
 "\"."
@@ -1102,16 +1112,16 @@ msgstr ""
 "Du kannst die Übersicht der gehaltenen Trainings nur für Mitglider anzeigen, "
 "die der Gruppe \"Trainer\" angehören."
 
-#: training_planner/trainings/views.py:410
+#: training_planner/trainings/views.py:419
 msgid "You cannot send an empty message."
 msgstr "Du kannst keine leere Nachricht verschicken."
 
-#: training_planner/trainings/views.py:431
+#: training_planner/trainings/views.py:440
 #, python-brace-format
 msgid "{user:d} messages have been sent."
 msgstr "{user:d} Nachrichten wurden verschickt."
 
-#: training_planner/trainings/views.py:452
+#: training_planner/trainings/views.py:462
 msgid "No valid year, showing results for this year."
 msgstr "Kein gültiges Jahr, zeige Ergebnisse für dieses Jahr."
 
