@@ -397,13 +397,25 @@ class Training(models.Model):
         self.save()
         return True
 
-    def set_registration_times(self, start=14, end=2):
+    def set_registration_times(
+        self,
+        start_day=14,
+        start_hour=0,
+        end_day=0,
+        end_hour=5,
+    ):
         """
-        Set self.registration_open to self.start - start days and
-        self.registration_close to self.start - end days.
+        Set self.registration_open to self.start - start_days - start_hours and
+        self.registration_close to self.start - end_days - end_hours.
         """
-        self.registration_open = self.start - timezone.timedelta(days=start)
-        self.registration_close = self.start - timezone.timedelta(days=end)
+        self.registration_open = self.start - timezone.timedelta(
+            days=start_day,
+            hours=start_hour,
+        )
+        self.registration_close = self.start - timezone.timedelta(
+            days=end_day,
+            hours=end_hour,
+        )
         return self
 
 
