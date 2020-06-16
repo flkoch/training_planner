@@ -39,6 +39,42 @@ def _simple_message(request, msg, index=0):
         messages.info(request, message)
 
 
+def _footer(training, user=None):
+    if training.is_registered(user):
+        return format_lazy(
+            _(
+                'You get this message as you are registered as participant '
+                'for {training}.'
+            ),
+            training=training,
+        )
+    if training.is_instructor(user):
+        return format_lazy(
+            _(
+                'You get this message as you are an instrucotr for '
+                '{training}.'
+            ),
+            training=training,
+        )
+    return format_lazy(
+        _(
+            'You get this message with regards to you affiliation to '
+            '{training}.'
+        ),
+        training=training,
+    )
+
+
+def _full_message(salutation, message, user, training):
+    return format_lazy(
+        '{salutation} {first_name},\n{message}\n\n{footer}',
+        salutation=salutation,
+        first_name=user.first_name,
+        message=message,
+        footer=_footer(training, user),
+    )
+
+
 def overview(request):
     if request.user.is_authenticated and request.user.is_trainer:
         trainings = Training.objects.filter(start__gte=timezone.now() -
@@ -409,7 +445,8 @@ def message(request, id):
     }
     if request.method == 'POST':
         user_id = []
-        from_email = request.user.email
+        from_email = (f'{request.user.first_name} {request.user.last_name} '
+                      f'<{request.user.email}>')
         for key, value in request.POST.items():
             if key == 'message':
                 message = value
@@ -429,10 +466,11 @@ def message(request, id):
             elif 'send_message' in value:
                 user_id.append(key)
         mails = [
-            [subject, salutation + ' ' + user.first_name + ',\r\n' + message,
+            [subject, _full_message(salutation, message, user, training),
              from_email, [user.email]] for user in
             [auth.get_user_model().objects.get(id=id) for id in user_id]]
         mails = tuple([tuple(mail) for mail in mails])
+        print(mails)
         send_mass_mail(mails)
         messages.success(
             request,

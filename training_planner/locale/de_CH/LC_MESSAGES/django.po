@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TrainingPlanner\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-13 17:47+0200\n"
-"PO-Revision-Date: 2020-06-13 17:49+0200\n"
+"POT-Creation-Date: 2020-06-16 15:07+0200\n"
+"PO-Revision-Date: 2020-06-16 15:09+0200\n"
 "Last-Translator: Florian Koch <flkoch@dev.fkoch.ch>\n"
 "Language-Team: \n"
 "Language: de-CH\n"
@@ -780,7 +780,7 @@ msgid "Salutation"
 msgstr "Anrede"
 
 #: training_planner/trainings/templates/trainings/message.html:68
-#: training_planner/trainings/views.py:424
+#: training_planner/trainings/views.py:460
 msgid "Dear"
 msgstr "Hallo"
 
@@ -791,6 +791,10 @@ msgstr "Text der Nachricht"
 #: training_planner/trainings/templates/trainings/message.html:72
 msgid "Message..."
 msgstr "Nachricht..."
+
+#: training_planner/trainings/templates/trainings/message.html:73
+msgid "Send"
+msgstr "Senden"
 
 #: training_planner/trainings/templates/trainings/overview.html:4
 #: training_planner/trainings/templates/trainings/overview_held_trainings.html:4
@@ -895,13 +899,13 @@ msgstr "Vor einem Datum"
 msgid "Time ago"
 msgstr "Vor gegebener Zeit"
 
-#: training_planner/trainings/tests/test_views.py:381
-#: training_planner/trainings/views.py:135
+#: training_planner/trainings/tests/test_views.py:299
+#: training_planner/trainings/views.py:171
 msgid "Registration failed."
 msgstr "Anmeldung fehlgeschlagen."
 
-#: training_planner/trainings/tests/test_views.py:390
-#: training_planner/trainings/views.py:151
+#: training_planner/trainings/tests/test_views.py:308
+#: training_planner/trainings/views.py:187
 msgid "Sign-off failed."
 msgstr "Abmeldung fehlgeschlagen."
 
@@ -957,7 +961,24 @@ msgstr "teilnahme/"
 msgid "all/"
 msgstr "alle/"
 
-#: training_planner/trainings/views.py:87
+#: training_planner/trainings/views.py:46
+#, python-brace-format
+msgid ""
+"You get this message as you are registered as participant for {training}."
+msgstr ""
+"Du erhälst diese Nachricht als registrierter Teilnehmer von {training}."
+
+#: training_planner/trainings/views.py:54
+#, python-brace-format
+msgid "You get this message as you are an instrucotr for {training}."
+msgstr "Du erhälst diese Nachricht als Trainer von {training}."
+
+#: training_planner/trainings/views.py:61
+#, python-brace-format
+msgid "You get this message with regards to you affiliation to {training}."
+msgstr "Du erhälst diese Nachricht in Bezug auf {training}."
+
+#: training_planner/trainings/views.py:123
 msgid ""
 "The training was deleted. To restore the training and enable editing contact "
 "an administrator."
@@ -965,19 +986,19 @@ msgstr ""
 "Das Training wurde gelöscht. Um das Training wieder herzustellen und die "
 "Bearbeitung zu reaktivieren kontaktiere einen Administrator."
 
-#: training_planner/trainings/views.py:95
+#: training_planner/trainings/views.py:131
 msgid ""
 "The training was archived. To reenable editing contact an administrator."
 msgstr ""
 "Das Training wurde archiviert. Um die Bearbeitung zu reaktivieren "
 "kontaktiere einen Administrator."
 
-#: training_planner/trainings/views.py:104
+#: training_planner/trainings/views.py:140
 #, python-brace-format
 msgid "The registration will open on {date} at {time}."
 msgstr "Die Anmeldung wird am {date} um {time} geöffnet."
 
-#: training_planner/trainings/views.py:114
+#: training_planner/trainings/views.py:150
 #, python-brace-format
 msgid ""
 "The registration is closed since {date} at {time}. For short-term "
@@ -986,34 +1007,34 @@ msgstr ""
 "Die Anmeldung ist seit dem {date} um {time} geschlossen. Für An- oder "
 "Abmeldungen kontaktiere bitte den Trainer."
 
-#: training_planner/trainings/views.py:133
+#: training_planner/trainings/views.py:169
 msgid "You were successfully registered."
 msgstr "Du wurdest erfolgreich angemeldet."
 
-#: training_planner/trainings/views.py:146
+#: training_planner/trainings/views.py:182
 msgid "You have been successfully signed off for {training!s}."
 msgstr "Du wurdest erfolgreich von {training!s} abgemeldet."
 
-#: training_planner/trainings/views.py:163
+#: training_planner/trainings/views.py:199
 msgid "Thank you for coordinating the entrance. Please check your inbox."
 msgstr ""
 "Danke für das Koordinieren des Einlasses. Bitte überprüfe Deinen Posteingang "
 "für nähere Informationen."
 
-#: training_planner/trainings/views.py:167
+#: training_planner/trainings/views.py:203
 msgid "There is already another coordinator registered."
 msgstr "Es ist bereits jemand anderes als Koordinator angemeldet."
 
-#: training_planner/trainings/views.py:168
+#: training_planner/trainings/views.py:204
 msgid "The coordinator cannot be the main instructor."
 msgstr "Der Koordinator kann nicht der Haupttrainer sein."
 
-#: training_planner/trainings/views.py:172
+#: training_planner/trainings/views.py:208
 #, python-brace-format
 msgid "Coordinator for {training}"
 msgstr "Koordinator für {training}"
 
-#: training_planner/trainings/views.py:177
+#: training_planner/trainings/views.py:213
 #, python-brace-format
 msgid ""
 "Dear {name},\n"
@@ -1040,57 +1061,57 @@ msgstr ""
 "Sportliche Grüsse,\n"
 "JCU Trainer Team"
 
-#: training_planner/trainings/views.py:200
+#: training_planner/trainings/views.py:236
 msgid "Coordinator removed successfully."
 msgstr "Koordinator erfolgreich entfernt."
 
-#: training_planner/trainings/views.py:214
+#: training_planner/trainings/views.py:250
 msgid "Training added successfully."
 msgstr "Training erfolgreich erstellt."
 
-#: training_planner/trainings/views.py:219
-#: training_planner/trainings/views.py:248
+#: training_planner/trainings/views.py:255
+#: training_planner/trainings/views.py:284
 msgid "Please take care of the highlighted errors."
 msgstr "Bitte kümmere Dich um die hervorgehobenen Fehler."
 
-#: training_planner/trainings/views.py:227
+#: training_planner/trainings/views.py:263
 #: training_planner/website/templates/navbar.html:13
 msgid "New Training"
 msgstr "Neues Training"
 
-#: training_planner/trainings/views.py:243
-#: training_planner/trainings/views.py:398
+#: training_planner/trainings/views.py:279
+#: training_planner/trainings/views.py:434
 msgid "Changes saved successfully."
 msgstr "Änderungen erfolgreich gespeichert."
 
-#: training_planner/trainings/views.py:256
+#: training_planner/trainings/views.py:292
 #, python-brace-format
 msgid "Edit {training}"
 msgstr "{training} Bearbeiten"
 
-#: training_planner/trainings/views.py:288
+#: training_planner/trainings/views.py:324
 #, python-brace-format
 msgid "Trainings created on {days:d} days."
 msgstr "Trainings an {days:d} Tagen erstellt."
 
-#: training_planner/trainings/views.py:298
+#: training_planner/trainings/views.py:334
 msgid "Create Training Series"
 msgstr "Trainings Serie erstellen"
 
-#: training_planner/trainings/views.py:312
+#: training_planner/trainings/views.py:348
 #, python-brace-format
 msgid "{training} has been deleted"
 msgstr "{training} wurde gelöscht"
 
-#: training_planner/trainings/views.py:315
+#: training_planner/trainings/views.py:351
 msgid "Delete Training"
 msgstr "Training löschen"
 
-#: training_planner/trainings/views.py:327
+#: training_planner/trainings/views.py:363
 msgid "The request contained invalid data. Aborting"
 msgstr "Die Anfrage enthält ungültige Daten und wird nicht bearbeitet."
 
-#: training_planner/trainings/views.py:339
+#: training_planner/trainings/views.py:375
 msgid ""
 "No participants have been recorded for this training. Please record the "
 "participants or delete the training instead, if it did not take place."
@@ -1099,12 +1120,12 @@ msgstr ""
 "erst die Teilnehmer oder lösche das Training, falls es nicht stattgefunden "
 "hat."
 
-#: training_planner/trainings/views.py:347
-#: training_planner/trainings/views.py:354
+#: training_planner/trainings/views.py:383
+#: training_planner/trainings/views.py:390
 msgid "You may only access your own trainings."
 msgstr "Du kannst nur auf eigene Trainings zugreifen."
 
-#: training_planner/trainings/views.py:362
+#: training_planner/trainings/views.py:398
 msgid ""
 "You can only view held trainings of members belonging to the group \"Trainer"
 "\"."
@@ -1112,16 +1133,16 @@ msgstr ""
 "Du kannst die Übersicht der gehaltenen Trainings nur für Mitglider anzeigen, "
 "die der Gruppe \"Trainer\" angehören."
 
-#: training_planner/trainings/views.py:419
+#: training_planner/trainings/views.py:455
 msgid "You cannot send an empty message."
 msgstr "Du kannst keine leere Nachricht verschicken."
 
-#: training_planner/trainings/views.py:440
+#: training_planner/trainings/views.py:477
 #, python-brace-format
 msgid "{user:d} messages have been sent."
 msgstr "{user:d} Nachrichten wurden verschickt."
 
-#: training_planner/trainings/views.py:462
+#: training_planner/trainings/views.py:499
 msgid "No valid year, showing results for this year."
 msgstr "Kein gültiges Jahr, zeige Ergebnisse für dieses Jahr."
 
