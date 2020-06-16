@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-13 17:47+0200\n"
-"PO-Revision-Date: 2020-06-13 17:49+0200\n"
+"POT-Creation-Date: 2020-06-16 15:07+0200\n"
+"PO-Revision-Date: 2020-06-16 15:09+0200\n"
 "Last-Translator: Florian Koch <flkoch@dev.fkoch.ch>\n"
 "Language-Team: \n"
 "Language: en \n"
@@ -775,7 +775,7 @@ msgid "Salutation"
 msgstr "Salutation"
 
 #: training_planner/trainings/templates/trainings/message.html:68
-#: training_planner/trainings/views.py:424
+#: training_planner/trainings/views.py:460
 msgid "Dear"
 msgstr "Dear"
 
@@ -786,6 +786,10 @@ msgstr "Text of the message"
 #: training_planner/trainings/templates/trainings/message.html:72
 msgid "Message..."
 msgstr "Message..."
+
+#: training_planner/trainings/templates/trainings/message.html:73
+msgid "Send"
+msgstr "Send"
 
 #: training_planner/trainings/templates/trainings/overview.html:4
 #: training_planner/trainings/templates/trainings/overview_held_trainings.html:4
@@ -888,13 +892,13 @@ msgstr "Before date"
 msgid "Time ago"
 msgstr "Time ago"
 
-#: training_planner/trainings/tests/test_views.py:381
-#: training_planner/trainings/views.py:135
+#: training_planner/trainings/tests/test_views.py:299
+#: training_planner/trainings/views.py:171
 msgid "Registration failed."
 msgstr "Registration failed."
 
-#: training_planner/trainings/tests/test_views.py:390
-#: training_planner/trainings/views.py:151
+#: training_planner/trainings/tests/test_views.py:308
+#: training_planner/trainings/views.py:187
 msgid "Sign-off failed."
 msgstr "Sign-off failed."
 
@@ -950,7 +954,24 @@ msgstr "participation/"
 msgid "all/"
 msgstr "all/"
 
-#: training_planner/trainings/views.py:87
+#: training_planner/trainings/views.py:46
+#, python-brace-format
+msgid ""
+"You get this message as you are registered as participant for {training}."
+msgstr ""
+"You get this message as you are registered as participant for {training}."
+
+#: training_planner/trainings/views.py:54
+#, python-brace-format
+msgid "You get this message as you are an instrucotr for {training}."
+msgstr "You get this message as you are an instrucotr for {training}."
+
+#: training_planner/trainings/views.py:61
+#, python-brace-format
+msgid "You get this message with regards to you affiliation to {training}."
+msgstr "You get this message with regards to you affiliation to {training}."
+
+#: training_planner/trainings/views.py:123
 msgid ""
 "The training was deleted. To restore the training and enable editing contact "
 "an administrator."
@@ -958,18 +979,18 @@ msgstr ""
 "The training was deleted. To restore the training and enable editing contact "
 "an administrator."
 
-#: training_planner/trainings/views.py:95
+#: training_planner/trainings/views.py:131
 msgid ""
 "The training was archived. To reenable editing contact an administrator."
 msgstr ""
 "The training was archived. To reenable editing contact an administrator."
 
-#: training_planner/trainings/views.py:104
+#: training_planner/trainings/views.py:140
 #, python-brace-format
 msgid "The registration will open on {date} at {time}."
 msgstr "The registration will open on {date} at {time}."
 
-#: training_planner/trainings/views.py:114
+#: training_planner/trainings/views.py:150
 #, python-brace-format
 msgid ""
 "The registration is closed since {date} at {time}. For short-term "
@@ -978,34 +999,34 @@ msgstr ""
 "The registration is closed since {date} at {time}. For short-term "
 "registrations or unregistrations please contact the trainer."
 
-#: training_planner/trainings/views.py:133
+#: training_planner/trainings/views.py:169
 msgid "You were successfully registered."
 msgstr "You were successfully registered."
 
-#: training_planner/trainings/views.py:146
+#: training_planner/trainings/views.py:182
 msgid "You have been successfully signed off for {training!s}."
 msgstr "You have been successfully signed off for {training!s}."
 
-#: training_planner/trainings/views.py:163
+#: training_planner/trainings/views.py:199
 msgid "Thank you for coordinating the entrance. Please check your inbox."
 msgstr ""
 "Thank you for coordinating the entrance. Please check your inbox for further "
 "details."
 
-#: training_planner/trainings/views.py:167
+#: training_planner/trainings/views.py:203
 msgid "There is already another coordinator registered."
 msgstr "There is already another coordinator registered."
 
-#: training_planner/trainings/views.py:168
+#: training_planner/trainings/views.py:204
 msgid "The coordinator cannot be the main instructor."
 msgstr "The coordinator cannot be the main instructor."
 
-#: training_planner/trainings/views.py:172
+#: training_planner/trainings/views.py:208
 #, python-brace-format
 msgid "Coordinator for {training}"
 msgstr "Coordinator for {training}"
 
-#: training_planner/trainings/views.py:177
+#: training_planner/trainings/views.py:213
 #, python-brace-format
 msgid ""
 "Dear {name},\n"
@@ -1031,57 +1052,57 @@ msgstr ""
 "Best regards,\n"
 "The JCU Trainer Team"
 
-#: training_planner/trainings/views.py:200
+#: training_planner/trainings/views.py:236
 msgid "Coordinator removed successfully."
 msgstr "Coordinator removed successfully."
 
-#: training_planner/trainings/views.py:214
+#: training_planner/trainings/views.py:250
 msgid "Training added successfully."
 msgstr "Training added successfully."
 
-#: training_planner/trainings/views.py:219
-#: training_planner/trainings/views.py:248
+#: training_planner/trainings/views.py:255
+#: training_planner/trainings/views.py:284
 msgid "Please take care of the highlighted errors."
 msgstr "Please take care of the highlighted errors."
 
-#: training_planner/trainings/views.py:227
+#: training_planner/trainings/views.py:263
 #: training_planner/website/templates/navbar.html:13
 msgid "New Training"
 msgstr "New Training"
 
-#: training_planner/trainings/views.py:243
-#: training_planner/trainings/views.py:398
+#: training_planner/trainings/views.py:279
+#: training_planner/trainings/views.py:434
 msgid "Changes saved successfully."
 msgstr "Changes saved successfully."
 
-#: training_planner/trainings/views.py:256
+#: training_planner/trainings/views.py:292
 #, python-brace-format
 msgid "Edit {training}"
 msgstr "Edit {training}"
 
-#: training_planner/trainings/views.py:288
+#: training_planner/trainings/views.py:324
 #, python-brace-format
 msgid "Trainings created on {days:d} days."
 msgstr "Trainings created on {days:d} days."
 
-#: training_planner/trainings/views.py:298
+#: training_planner/trainings/views.py:334
 msgid "Create Training Series"
 msgstr "Create Training Series"
 
-#: training_planner/trainings/views.py:312
+#: training_planner/trainings/views.py:348
 #, python-brace-format
 msgid "{training} has been deleted"
 msgstr "{training} has been deleted"
 
-#: training_planner/trainings/views.py:315
+#: training_planner/trainings/views.py:351
 msgid "Delete Training"
 msgstr "Delete Training"
 
-#: training_planner/trainings/views.py:327
+#: training_planner/trainings/views.py:363
 msgid "The request contained invalid data. Aborting"
 msgstr "The request contained invalid data. Aborting"
 
-#: training_planner/trainings/views.py:339
+#: training_planner/trainings/views.py:375
 msgid ""
 "No participants have been recorded for this training. Please record the "
 "participants or delete the training instead, if it did not take place."
@@ -1089,12 +1110,12 @@ msgstr ""
 "No participants have been recorded for this training. Please record the "
 "participants or delete the training instead, if it did not take place."
 
-#: training_planner/trainings/views.py:347
-#: training_planner/trainings/views.py:354
+#: training_planner/trainings/views.py:383
+#: training_planner/trainings/views.py:390
 msgid "You may only access your own trainings."
 msgstr "You may only access your own trainings."
 
-#: training_planner/trainings/views.py:362
+#: training_planner/trainings/views.py:398
 msgid ""
 "You can only view held trainings of members belonging to the group \"Trainer"
 "\"."
@@ -1102,16 +1123,16 @@ msgstr ""
 "You can only view held trainings of members belonging to the group \"Trainer"
 "\"."
 
-#: training_planner/trainings/views.py:419
+#: training_planner/trainings/views.py:455
 msgid "You cannot send an empty message."
 msgstr "You cannot send an empty message."
 
-#: training_planner/trainings/views.py:440
+#: training_planner/trainings/views.py:477
 #, python-brace-format
 msgid "{user:d} messages have been sent."
 msgstr "{user:d} messages have been sent."
 
-#: training_planner/trainings/views.py:462
+#: training_planner/trainings/views.py:499
 msgid "No valid year, showing results for this year."
 msgstr "No valid year, showing results for this year."
 
