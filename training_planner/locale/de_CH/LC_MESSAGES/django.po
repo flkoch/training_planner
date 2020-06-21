@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TrainingPlanner\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-21 17:55+0200\n"
-"PO-Revision-Date: 2020-06-21 17:59+0200\n"
+"POT-Creation-Date: 2020-06-21 18:58+0200\n"
+"PO-Revision-Date: 2020-06-21 18:52+0200\n"
 "Last-Translator: Florian Koch <flkoch@dev.fkoch.ch>\n"
 "Language-Team: \n"
 "Language: de-CH\n"
@@ -115,7 +115,7 @@ msgstr "Zurück"
 #: training_planner/trainings/templates/trainings/details.html:60
 #: training_planner/trainings/templates/trainings/details_admin.html:20
 #: training_planner/trainings/templates/trainings/details_admin.html:74
-#: training_planner/trainings/templates/trainings/overview.html:65
+#: training_planner/trainings/templates/trainings/overview.html:66
 msgid "Register"
 msgstr "Anmelden"
 
@@ -171,7 +171,7 @@ msgstr "Trainings Kontrolle"
 #: training_planner/members/templates/members/details.html:13
 #: training_planner/trainings/templates/trainings/details_admin.html:28
 #: training_planner/trainings/templates/trainings/details_controlling.html:11
-#: training_planner/trainings/templates/trainings/overview.html:66
+#: training_planner/trainings/templates/trainings/overview.html:67
 msgid "Edit"
 msgstr "Bearbeiten"
 
@@ -350,22 +350,33 @@ msgid ""
 "Your Instructor team"
 msgstr ""
 "Hallo {name},\n"
-"Wir freuen uns, dass Du Dich auf unserer Plattform angemeldet hast, um auch "
-"künftig an den angebotenen Trainings teilnehmen zu können.\n"
-"Um an den Trainings teilnehmen zu dürfen, musst Du folgende Punkte "
-"erfüllen:\n"
-"1) Du musst für das entsprechende Training angemeldet sein.\n"
-"2) Du musst das Zutrittsformular ausfüllen und in jedes Training "
-"mitbringen.\n"
-"\n"
-"Also eigentlich ganz einfach. Wenn Du trotzdem Fragen hast, darfst Du Dich "
-"gerne bei den Trainern oder unter info@jcu.ch melden.\n"
-"Ausserdem brauchen wir für jedes Training einen Koordinator oder eine "
-"Koordinatorin. Wenn Du dies also hin und wieder übernehmen könntest, "
-"profitieren alle, die gerne trainieren wollen.\n"
-"\n"
+"Wir freuen uns, dass Du Dich auf unserer Plattform angemeldet hast. Hier "
+"kannst Du Dich unter anderem als Besucher für Trainings anmelden, damit wir "
+"auch nachvollziehen können, wer neben den Teilnehmern im Dojo war.\n"
+"Die Anmeldung ist nur erforderlich, wenn Du auch ins Haus gehst. Wenn Du nur "
+"vor dem Haus wartest, um jemanden abzuholen, musst Du Dich nicht anmelden.\n"
+"Wenn Du spontan doch mit ins Haus gehst, kannst Du Dich bis zwei Stunden "
+"nach Trainingsbeginn noch selbst registrieren. Wenn das nicht mehr möglich "
+"sein sollte, schick uns doch einfach kurz eine Nachricht an info@jcu.ch mit "
+"der Mitteilung wann Du im Dojo warst, damit wir dies nachführen können.\n"
 "Viel Spass im Training wünscht Dir das JCU Trainer-Team"
 
+#  "Hallo {name},\n"
+#  "Wir freuen uns, dass Du Dich auf unserer Plattform angemeldet hast, um auch "
+#  "künftig an den angebotenen Trainings teilnehmen zu können.\n"
+#  "Um an den Trainings teilnehmen zu dürfen, musst Du folgende Punkte "
+#  "erfüllen:\n"
+#  "1) Du musst für das entsprechende Training angemeldet sein.\n"
+#  "2) Du musst das Zutrittsformular ausfüllen und in jedes Training "
+#  "mitbringen.\n"
+#  "\n"
+#  "Also eigentlich ganz einfach. Wenn Du trotzdem Fragen hast, darfst Du Dich "
+#  "gerne bei den Trainern oder unter info@jcu.ch melden.\n"
+#  "Ausserdem brauchen wir für jedes Training einen Koordinator oder eine "
+#  "Koordinatorin. Wenn Du dies also hin und wieder übernehmen könntest, "
+#  "profitieren alle, die gerne trainieren wollen.\n"
+#  "\n"
+#  "Viel Spass im Training wünscht Dir das JCU Trainer-Team"
 #: training_planner/members/views.py:88
 msgid "The account has been created. Please check your inbox."
 msgstr "Das Benutzerkonto wurde erstellt. Bitte überprüfe Deinen Posteingang."
@@ -689,7 +700,7 @@ msgstr "Besuch abmelden"
 
 #: training_planner/trainings/templates/trainings/details.html:14
 #: training_planner/trainings/templates/trainings/details_admin.html:15
-#: training_planner/trainings/templates/trainings/overview.html:66
+#: training_planner/trainings/templates/trainings/overview.html:67
 msgid "Visit"
 msgstr "Besuchen"
 
@@ -845,30 +856,30 @@ msgstr "Wochentag"
 msgid "Registrations"
 msgstr "Anmeldungen"
 
-#: training_planner/trainings/templates/trainings/overview.html:47
+#: training_planner/trainings/templates/trainings/overview.html:48
 msgctxt "abbreviation for minutes"
 msgid "min."
 msgstr "Min."
 
-#: training_planner/trainings/templates/trainings/overview.html:63
+#: training_planner/trainings/templates/trainings/overview.html:64
 #: training_planner/trainings/templates/trainings/overview_held_trainings.html:30
 #: training_planner/trainings/templates/trainings/overview_held_trainings.html:62
 msgid "open"
 msgstr "offen"
 
-#: training_planner/trainings/templates/trainings/overview.html:64
+#: training_planner/trainings/templates/trainings/overview.html:65
 msgid "participants checked"
 msgstr "Teilnehmer erfasst"
 
-#: training_planner/trainings/templates/trainings/overview.html:65
+#: training_planner/trainings/templates/trainings/overview.html:66
 msgid "registered participant"
 msgstr "angemeldeter Teilnehmer"
 
-#: training_planner/trainings/templates/trainings/overview.html:66
+#: training_planner/trainings/templates/trainings/overview.html:67
 msgid "Control"
 msgstr "Kontrolle"
 
-#: training_planner/trainings/templates/trainings/overview.html:66
+#: training_planner/trainings/templates/trainings/overview.html:67
 msgid "registered visitor"
 msgstr "angemeldeter Besucher"
 
@@ -937,13 +948,15 @@ msgstr "Vor einem Datum"
 msgid "Time ago"
 msgstr "Vor gegebener Zeit"
 
-#: training_planner/trainings/tests/test_views.py:299
+#: training_planner/trainings/tests/test_views.py:311
+#: training_planner/trainings/tests/test_views.py:329
 #: training_planner/trainings/views.py:190
 #: training_planner/trainings/views.py:218
 msgid "Registration failed."
 msgstr "Anmeldung fehlgeschlagen."
 
-#: training_planner/trainings/tests/test_views.py:308
+#: training_planner/trainings/tests/test_views.py:320
+#: training_planner/trainings/tests/test_views.py:338
 #: training_planner/trainings/views.py:206
 #: training_planner/trainings/views.py:237
 msgid "Sign-off failed."
@@ -1105,18 +1118,25 @@ msgid ""
 msgstr ""
 "Hallo {name},\n"
 "Vielen Dank, dass Du die Rolle als Türkoordinator/in für {training} "
-"übernimmst. Ohne Dich kann das Training nicht durchgeführt werden.\n"
-"Du findest das Infosheet auf der Corona Seite unserer Homepage https://judo-"
-"club-uster.ch/corona2/\n"
-"Bei Fragen darfst Du Dich gerne an Aline Steinbrecher (079 296 96 37) "
-"wenden.\n"
-"Als Türkoordinator/in übernimmst Du eine wichtige Aufgabe, indem Du sicher "
-"stellst, dass sich alle an die Regeln halten, damit wir unseren Betrieb "
-"aufrecht erhalten können.\n"
+"übernehmen möchtest. Auf Grund der aktuellen Lage brauchen wir zur Zeit "
+"keinen Türkoordinator. Du musst die Rolle daher nicht wahrnehmen.\n"
 "Wir danken Dir für Deine Unterstützung.\n"
 "Sportliche Grüsse,\n"
 "JCU Trainer Team"
 
+#  "Hallo {name},\n"
+#  "Vielen Dank, dass Du die Rolle als Türkoordinator/in für {training} "
+#  "übernimmst. Ohne Dich kann das Training nicht durchgeführt werden.\n"
+#  "Du findest das Infosheet auf der Corona Seite unserer Homepage https://judo-"
+#  "club-uster.ch/corona2/\n"
+#  "Bei Fragen darfst Du Dich gerne an Aline Steinbrecher (079 296 96 37) "
+#  "wenden.\n"
+#  "Als Türkoordinator/in übernimmst Du eine wichtige Aufgabe, indem Du sicher "
+#  "stellst, dass sich alle an die Regeln halten, damit wir unseren Betrieb "
+#  "aufrecht erhalten können.\n"
+#  "Wir danken Dir für Deine Unterstützung.\n"
+#  "Sportliche Grüsse,\n"
+#  "JCU Trainer Team"
 #: training_planner/trainings/views.py:286
 msgid "Coordinator removed successfully."
 msgstr "Koordinator erfolgreich entfernt."
