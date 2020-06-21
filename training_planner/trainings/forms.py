@@ -214,7 +214,7 @@ class TrainingForm(forms.ModelForm):
         self.fields['visitors'].queryset = \
             members.all().order_by('first_name', 'last_name')
         self.fields['coordinator'].queryset = \
-            members.participant().order_by('first_name', 'last_name')
+            members.all().order_by('first_name', 'last_name')
         self.fields['location'].queryset = \
             Location.objects.all().order_by('name')
         self.fields['target_group'].queryset = \
@@ -388,7 +388,7 @@ class AdminTrainingForm(forms.ModelForm):
         self.fields['visitors'].queryset = \
             members.all().order_by('first_name', 'last_name')
         self.fields['coordinator'].queryset = \
-            members.participant().order_by('first_name', 'last_name')
+            members.all().order_by('first_name', 'last_name')
         self.fields['location'].queryset = \
             Location.objects.all().order_by('name')
         self.fields['target_group'].queryset = \
