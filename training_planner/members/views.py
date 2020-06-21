@@ -126,14 +126,19 @@ def details(request, id=None):
         start__gte=timezone.now()).order_by('start')
     part_trainings = user.trainings.filter(
         start__lte=timezone.now()).order_by('-start')
-    paginator = Paginator(part_trainings, 10)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page((page_number))
+    visited_trainings = user.visited_trainings.all()
+    paginator = Paginator(part_trainings, 1)
+    page_number = request.GET.get('page1')
+    page_obj1 = paginator.get_page((page_number))
+    paginator = Paginator(visited_trainings, 1)
+    page_number = request.GET.get('page2')
+    page_obj2 = paginator.get_page((page_number))
     context = {
         'page_user': user,
         'edit_link': edit_link,
         'reg_trainings': reg_trainings,
-        'part_trainings': page_obj,
+        'part_trainings': page_obj1,
+        'visited_trainings': page_obj2,
     }
     return render(request, 'members/details.html', context)
 
