@@ -13,13 +13,21 @@ class TestUrls(SimpleTestCase):
         url = reverse('trainings-details', args=['3'])
         self.assertEquals(resolve(url).func, views.details)
 
-    def test_trainings_register_url_resolves(self):
-        url = reverse('trainings-register', args=[3])
-        self.assertEquals(resolve(url).func, views.register)
+    def test_trainings_register_participant_url_resolves(self):
+        url = reverse('trainings-register-participant', args=[3])
+        self.assertEquals(resolve(url).func, views.register_participant)
 
-    def test_trainings_unregister_url_resolves(self):
-        url = reverse('trainings-unregister', args=[3])
-        self.assertEquals(resolve(url).func, views.unregister)
+    def test_trainings_unregister_participant_url_resolves(self):
+        url = reverse('trainings-unregister-participant', args=[3])
+        self.assertEquals(resolve(url).func, views.unregister_participant)
+
+    def test_trainings_register_visitor_url_resolves(self):
+        url = reverse('trainings-register-visitor', args=[3])
+        self.assertEquals(resolve(url).func, views.register_visitor)
+
+    def test_trainings_unregister_visitor_url_resolves(self):
+        url = reverse('trainings-unregister-visitor', args=[3])
+        self.assertEquals(resolve(url).func, views.unregister_visitor)
 
     def test_trainings_register_coordinator_url_resolves(self):
         url = reverse('trainings-register-coordinator', args=[3])

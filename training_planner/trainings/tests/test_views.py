@@ -246,10 +246,22 @@ class TestViewsAdministrator(TestCase):
         self.overview_url = reverse('trainings-overview')
         self.detail_url = [reverse('trainings-details', args=[i + 1])
                            for i in range(10)]
-        self.register_url = [reverse('trainings-register', args=[i + 1])
-                             for i in range(10)]
-        self.unregister_url = [reverse('trainings-unregister', args=[i + 1])
-                               for i in range(10)]
+        self.register_participant_url = [
+            reverse('trainings-register-participant', args=[i + 1])
+            for i in range(10)
+        ]
+        self.unregister_participant_url = [
+            reverse('trainings-unregister-participant', args=[i + 1])
+            for i in range(10)
+        ]
+        self.register_visitor_url = [
+            reverse('trainings-register-visitor', args=[i + 1])
+            for i in range(10)
+        ]
+        self.unregister_visitor_url = [
+            reverse('trainings-unregister-visitor', args=[i + 1])
+            for i in range(10)
+        ]
         self.register_coordinator_url = [
             reverse('trainings-register-coordinator', args=[i + 1])
             for i in range(10)
@@ -275,7 +287,6 @@ class TestViewsAdministrator(TestCase):
             args=[self.trainer.id]
         )
         self.participation_url = reverse('trainings-participation')
-        self.all_url = reverse('trainings-all')
         self.management_url = reverse('trainings-management')
         self.all_url = reverse('trainings-all')
 
@@ -290,16 +301,35 @@ class TestViewsAdministrator(TestCase):
             self.assertEquals(response.status_code, 200)
             self.assertTemplateUsed(response, 'trainings/details_admin.html')
 
-    def test_training_register_GET_administrator(self):
-        responses = [self.client.get(self.register_url[i]) for i in range(10)]
+    def test_training_register_participant_GET_administrator(self):
+        responses = [self.client.get(self.register_participant_url[i])
+                     for i in range(10)]
         for i, response in enumerate(responses):
             self.assertEquals(response.status_code, 302)
             self.assertRedirects(response, self.detail_url[i])
             messages = list(get_messages(response.wsgi_request))
             self.assertEquals(str(messages[0]), _('Registration failed.'))
 
-    def test_training_unregister_GET_administrator(self):
-        responses = [self.client.get(self.unregister_url[i])
+    def test_training_unregister_participant_GET_administrator(self):
+        responses = [self.client.get(self.unregister_participant_url[i])
+                     for i in range(10)]
+        for i, response in enumerate(responses):
+            self.assertEquals(response.status_code, 302)
+            self.assertRedirects(response, self.overview_url)
+            messages = list(get_messages(response.wsgi_request))
+            self.assertEquals(str(messages[0]), _('Sign-off failed.'))
+
+    def test_training_register_visitor_GET_administrator(self):
+        responses = [self.client.get(self.register_visitor_url[i])
+                     for i in range(10)]
+        for i, response in enumerate(responses):
+            self.assertEquals(response.status_code, 302)
+            self.assertRedirects(response, self.detail_url[i])
+            messages = list(get_messages(response.wsgi_request))
+            self.assertEquals(str(messages[0]), _('Registration failed.'))
+
+    def test_training_unregister_visitor_GET_administrator(self):
+        responses = [self.client.get(self.unregister_visitor_url[i])
                      for i in range(10)]
         for i, response in enumerate(responses):
             self.assertEquals(response.status_code, 302)
