@@ -112,6 +112,10 @@ class User(AbstractUser):
         return self.groups.filter(name='Administrator').exists()
 
 
+def all():
+    return User.objects.exclude(groups__name='System')
+
+
 def active_participant():
     return User.objects.filter(
         groups__name='Active Participant'
@@ -131,6 +135,11 @@ def active_trainer():
 def trainer():
     return User.objects.filter(groups__name='Trainer') \
         .exclude(groups__name='System')
+
+
+def administrator():
+    return User.objects.filter(groups__name='Administrator') \
+        .exlcude(groups__name='System')
 
 
 def check_active_participants(**kwargs):

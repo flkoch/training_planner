@@ -8,10 +8,15 @@
 <p>{{training.location.with_address}}</p>
 <nav class="nav justify-content-end flex-column flex-sm-row my-2">
     <a class="nav-link bg-light text-dark" href="javascript:history.back()">{% trans "Back" %}</a>
+    {% if training.can_unregistor_visitor %}
+        <a class="nav-line bg-danger text-white ml-sm-3" href="{% url 'trainings-unregister-visitor' training.id %}">{% trans "Cancel Visit" %}</a>
+    {% elif training.can_unregister_visitor %}
+        <a class="nav-link bg-info text-white ml-sm-3" href="{% url 'trainings-register-visitor' training.id %}">{% trans "Visit" %}</a>
+    {% endif %}
     {% if training.can_unregister %}
-        <a class="nav-link bg-danger text-white ml-sm-3" href="{% url 'trainings-unregister' training.id %}">{% trans "Unregister" %}</a>
+        <a class="nav-link bg-danger text-white ml-sm-3" href="{% url 'trainings-unregister-participant' training.id %}">{% trans "Unregister" %}</a>
     {% elif training.can_register %}
-        <a class="nav-link bg-success text-white ml-sm-3" href="{% url 'trainings-register' training.id %}">{% trans "Register" %}</a>
+        <a class="nav-link bg-success text-white ml-sm-3" href="{% url 'trainings-register-participant' training.id %}">{% trans "Register" %}</a>
     {% endif %}
 </nav>
 <div class="row my-2">
@@ -71,14 +76,30 @@
     {% endif %}
     <div class="col-sm-6 col-md my-1 order-3">
         <div class="card">
-        {% with training.registered_participants.all as participants %}
-            <div class="card-header d-flex justify-content-between">{% trans "Participants" %}<span class="badge {% if training.free_capacity > 4 %} badge-success {% elif training.free_capacity > 0%} badge-warning {% else %} badge-danger {% endif %} badge-pill align-self-center">{{participants|length}} / {{training.capacity}}</span></div>
+        {% with training.registered_participants.all as users %}
+            <div class="card-header d-flex justify-content-between">{% trans "Participants" %}<span class="badge {% if training.free_capacity > 4 %} badge-success {% elif training.free_capacity > 0%} badge-warning {% else %} badge-danger {% endif %} badge-pill align-self-center">{{users|length}} / {{training.capacity}}</span></div>
             <div class="card-body">
                 <ul class="list-group list-group-flush">
-                    {% for participant in participants %}
-                        <li class="list-group-item">{{participant.get_public_name}}{% if participant in training.participants.all %}<span class="oi oi-check text-success ml-2" title="{% trans 'participated' %}" aria-hidden="true"></span>{% endif %}</li>
+                    {% for loop_user in users %}
+                        <li class="list-group-item">{{loop_user.get_public_name}}{% if loop_user in training.participants.all %}<span class="oi oi-check text-success ml-2" title="{% trans 'participated' %}" aria-hidden="true"></span>{% endif %}</li>
                     {% empty %}
                         <li class="list-group-item">{% trans "No registrations yet" %}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endwith %}
+        </div>
+    </div>
+    <div class="col-sm-6 col-md my-1 order-4">
+        <div class="card">
+        {% with training.visitors.all as users %}
+            <div class="card-header d-flex justify-content-between">{% trans "Visitors" %}</div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    {% for loop_user in users %}
+                        <li class="list-group-item">{{loop_user.get_public_name}}</li>
+                    {% empty %}
+                        <li class="list-group-item">{% trans "No registered visitors yet" %}</li>
                     {% endfor %}
                 </ul>
             </div>

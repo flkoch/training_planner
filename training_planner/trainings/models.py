@@ -107,7 +107,7 @@ class Training(models.Model):
     duration        int             duration in minutes
     location        Location        location of training
     main_instructor User            main instructor for training
-    instructor      Users           further instructors
+    instructors     Users           further instructors
     coordinator     User            coordinator for training
     target_group    target_groups   target groups for training
     capacity        int             capacity of training
@@ -131,7 +131,7 @@ class Training(models.Model):
     main_instructor = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT,
         related_name='instructor', verbose_name=_('Main Instructor'))
-    instructor = models.ManyToManyField(
+    instructors = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name='assistant',
         default=None, blank=True, verbose_name=_('Instructor'))
     coordinator = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -150,6 +150,10 @@ class Training(models.Model):
     participants = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name='trainings', blank=True,
         default=None, verbose_name=_('Participants'))
+    visitors = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name='visited_trainings', blank=True,
+        default=None, verbose_name=_('Visitors')
+    )
     deleted = models.BooleanField(verbose_name=_('Deleted'), default=False)
     archived = models.BooleanField(verbose_name=_('Archived'), default=False)
     registration_open = models.DateTimeField(
@@ -293,8 +297,9 @@ class Training(models.Model):
 
     def can_register(self, user=None):
         """
-        Returns True if the user can currently register or if a user can
-        currently register if no user id is supplied, false otherwise.
+        Returns True if the user can currently register as participant or if
+        a user can currently register if no user id is supplied, false
+        otherwise.
         A user can register if the training is neither archived nor deleted,
         the registration period is open and the user is neither instructor nor
         the main instructor for that training.
@@ -311,27 +316,63 @@ class Training(models.Model):
 
     def can_unregister(self, user):
         """
-        Returns True if the user can currently unregister, false otherwise.
+        Returns True if the user can currently unregister as participant,
+        false otherwise.
         A user can unregister if the user currently is registered and the
         registration period is open.
         """
         if self.deleted or self.archived:
             return False
-        return self.registration_open <= timezone.now() \
-            <= self.registration_close and self.is_registered(user)
+        return self.during_registration and self.is_registered(user)
+
+    def can_register_visitor(self, user=None):
+        """
+        Returns True if the user can currently register as visitor or if
+        a user can currently register if no user id is supplied, false
+        otherwise.
+        A user can register if the training is neither archived nor deleted,
+        the registration period is open and the user is neither instructor nor
+        the main instructor for that training.
+        """
+        if self.deleted or self.archived:
+            return False
+        if isinstance(user, get_user_model()):
+            if self.is_instructor(user) or \
+                    self.is_registered(user):
+                return False
+        return self.during_registration
+
+    def can_unregister_visitor(self, user):
+        """
+        Returns True if the user can currently unregister as visitor,
+        false otherwise.
+        A user can unregister if the user currently is registered and the
+        registration period is open.
+        """
+        if self.deleted or self.archived:
+            return False
+        return self.during_registration and self.is_visitor(user)
 
     def is_registered(self, user):
         """
-        returns True if the user is currently registered, false otherwise
+        returns True if the user is currently registered as participant,
+        false otherwise
         """
         return user in self.registered_participants.all()
+
+    def is_visitor(self, user):
+        """
+        returns True if the user is currently registered as visitor,
+        false otherwise
+        """
+        return user in self.visitors.all()
 
     def is_instructor(self, user):
         """
         returns True if the user is either main instructor or instructor,
         false otherwise
         """
-        return user == self.main_instructor or user in self.instructor.all()
+        return user == self.main_instructor or user in self.instructors.all()
 
     def can_edit(self, user):
         """
@@ -346,28 +387,58 @@ class Training(models.Model):
             return False
         return self.is_instructor(user)
 
-    def register(self, user):
+    def register_participant(self, user):
         """
-        Register the user for the training session and return a boolean
-        indicating whether the registration was successful. Note that the
-        registration is also successfull, if the user is already registered.
-        However, the user will only be listed once as registered user.
+        Register the user for the training session as participant and return
+        a boolean indicating whether the registration was successful. Note
+        that the registration is also successfull, if the user is already
+        registered. However, the user will only be listed once as registered
+        participant.
         """
         if self.can_register(user):
+            if self.is_visitor(user):
+                self.visitors.remove(user)
             self.registered_participants.add(user)
             return True
         else:
             return False
 
-    def unregister(self, user):
+    def unregister_participant(self, user):
         """
-        Remove the user from the registered users for the training session.
-        Return a bolean indicating whether the sign off was successful, as for
-        example the registration period could be over or the user was not
-        registered in the first place.
+        Remove the user from the registered participants for the training
+        session. Return a bolean indicating whether the sign off was
+        successful, as for example the registration period could be over or
+        the user was not registered as participant in the first place.
         """
         if self.can_unregister(user):
             self.registered_participants.remove(user)
+            return True
+        else:
+            return False
+
+    def register_visitor(self, user):
+        """
+        Register the user for the training session as visitor and return
+        a boolean indicating whether the registration was successful. Note
+        that the registration is also successfull, if the user is already
+        registered as visitor. However, the user will only be listed once as
+        visitor.
+        """
+        if self.can_register_visitor(user):
+            self.visitors.add(user)
+            return True
+        else:
+            return False
+
+    def unregister_visitor(self, user):
+        """
+        Remove the user from the visitors for the training  session. Return a
+        bolean indicating whether the sign off was successful, as for example
+        the registration period could be over or the user was not registered
+        as visitor in the first place.
+        """
+        if self.can_unregister_visitor(user):
+            self.visitors.remove(user)
             return True
         else:
             return False
@@ -402,7 +473,7 @@ class Training(models.Model):
         start_day=14,
         start_hour=0,
         end_day=0,
-        end_hour=5,
+        end_hour=-2,
     ):
         """
         Set self.registration_open to self.start - start_days - start_hours and

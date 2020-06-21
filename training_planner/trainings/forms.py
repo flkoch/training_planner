@@ -58,7 +58,7 @@ class AddTrainingForm(forms.ModelForm):
     main_instructor = forms.ModelChoiceField(
         queryset=get_user_model().objects.filter(groups__name='Trainer'),
         empty_label=_('Choose main instructor'), label=_('Main instructor'))
-    instructor = forms.ModelMultipleChoiceField(
+    instructors = forms.ModelMultipleChoiceField(
         queryset=get_user_model().objects.filter(groups__name='Trainer'),
         required=False, label=_('Instructor'))
     start = forms.DateTimeField(
@@ -92,7 +92,7 @@ class AddTrainingForm(forms.ModelForm):
         super(forms.ModelForm, self).__init__(*args, **kwargs)
         self.fields['main_instructor'].queryset = \
             members.trainer().order_by('first_name', 'last_name')
-        self.fields['instructor'].queryset = \
+        self.fields['instructors'].queryset = \
             members.trainer().order_by('first_name', 'last_name')
         self.fields['location'].queryset = \
             Location.objects.all().order_by('name')
@@ -102,7 +102,7 @@ class AddTrainingForm(forms.ModelForm):
         self.helper.form_method = 'post'
         self.helper.action = ''
         self.helper.html5_required = True
-        for field in ['description', 'location', 'instructor']:
+        for field in ['description', 'location', 'instructors']:
             self.fields[field].required = False
         self.helper.layout = cfl.Layout(
             'title',
@@ -131,7 +131,7 @@ class AddTrainingForm(forms.ModelForm):
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
                 ),
                 cfl.Field(
-                    'instructor',
+                    'instructors',
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
                     help_text=_(
                         'Please hold down <Ctrl> to change the selection.'),
@@ -171,7 +171,7 @@ class TrainingForm(forms.ModelForm):
     main_instructor = forms.ModelChoiceField(
         queryset=get_user_model().objects.filter(groups__name='Trainer'),
         empty_label=_('Choose main instructor'), label=_('Main instructor'))
-    instructor = forms.ModelMultipleChoiceField(
+    instructors = forms.ModelMultipleChoiceField(
         queryset=get_user_model().objects.filter(groups__name='Trainer'),
         required=False, label=_('Instructor'))
     start = forms.DateTimeField(
@@ -207,10 +207,12 @@ class TrainingForm(forms.ModelForm):
         super(forms.ModelForm, self).__init__(*args, **kwargs)
         self.fields['main_instructor'].queryset = \
             members.trainer().order_by('first_name', 'last_name')
-        self.fields['instructor'].queryset = \
+        self.fields['instructors'].queryset = \
             members.trainer().order_by('first_name', 'last_name')
         self.fields['registered_participants'].queryset = \
             members.participant().order_by('first_name', 'last_name')
+        self.fields['visitors'].queryset = \
+            members.all().order_by('first_name', 'last_name')
         self.fields['coordinator'].queryset = \
             members.participant().order_by('first_name', 'last_name')
         self.fields['location'].queryset = \
@@ -221,8 +223,8 @@ class TrainingForm(forms.ModelForm):
         self.helper.form_method = 'post'
         self.helper.action = ''
         self.helper.html5_required = True
-        for field in ['description', 'location', 'instructor', 'coordinator',
-                      'registered_participants', ]:
+        for field in ['description', 'location', 'instructors', 'coordinator',
+                      'registered_participants', 'visitors', ]:
             self.fields[field].required = False
         self.helper.layout = cfl.Layout(
             'title',
@@ -255,7 +257,7 @@ class TrainingForm(forms.ModelForm):
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
                 ),
                 cfl.Field(
-                    'instructor',
+                    'instructors',
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
                     help_text=_(
                         'Please hold down <Ctrl> to change the selection.'
@@ -279,6 +281,13 @@ class TrainingForm(forms.ModelForm):
             cfl.Row(
                 cfl.Field(
                     'registered_participants',
+                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                    help_text=_(
+                        'Please hold down <Ctrl> to change the selection.'
+                    ),
+                ),
+                cfl.Field(
+                    'visitors',
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
                     help_text=_(
                         'Please hold down <Ctrl> to change the selection.'
@@ -370,12 +379,14 @@ class AdminTrainingForm(forms.ModelForm):
         super(forms.ModelForm, self).__init__(*args, **kwargs)
         self.fields['main_instructor'].queryset = \
             members.trainer().order_by('first_name', 'last_name')
-        self.fields['instructor'].queryset = \
+        self.fields['instructors'].queryset = \
             members.trainer().order_by('first_name', 'last_name')
         self.fields['registered_participants'].queryset = \
             members.participant().order_by('first_name', 'last_name')
         self.fields['participants'].queryset = \
             members.participant().order_by('first_name', 'last_name')
+        self.fields['visitors'].queryset = \
+            members.all().order_by('first_name', 'last_name')
         self.fields['coordinator'].queryset = \
             members.participant().order_by('first_name', 'last_name')
         self.fields['location'].queryset = \
@@ -386,9 +397,9 @@ class AdminTrainingForm(forms.ModelForm):
         self.helper.form_method = 'post'
         self.helper.action = ''
         self.helper.html5_required = True
-        for field in ['description', 'location', 'instructor', 'coordinator',
+        for field in ['description', 'location', 'instructors', 'coordinator',
                       'registered_participants', 'participants', 'archived',
-                      'deleted']:
+                      'deleted', 'visitors', ]:
             self.fields[field].required = False
         self.helper.layout = cfl.Layout(
             'title',
@@ -421,7 +432,7 @@ class AdminTrainingForm(forms.ModelForm):
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
                 ),
                 cfl.Field(
-                    'instructor',
+                    'instructors',
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
                     help_text=_(
                         'Please hold down <Ctrl> to change the selection.'
@@ -452,6 +463,13 @@ class AdminTrainingForm(forms.ModelForm):
                 ),
                 cfl.Field(
                     'participants',
+                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                    help_text=_(
+                        'Please hold down <Ctrl> to change the selection.'
+                    ),
+                ),
+                cfl.Field(
+                    'visitors',
                     wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
                     help_text=_(
                         'Please hold down <Ctrl> to change the selection.'
@@ -529,7 +547,7 @@ class TrainingSeriesForm(forms.ModelForm):
         self.helper.form_method = 'post'
         self.helper.action = ''
         self.helper.html5_required = True
-        for field in ['description', 'location', 'instructor', 'coordinator',
+        for field in ['description', 'location', 'instructors', 'coordinator',
                       'registered_participants', 'participants']:
             self.fields[field].required = False
         self.helper.layout = cfl.Layout(

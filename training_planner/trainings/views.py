@@ -90,7 +90,13 @@ def overview(request):
     trainings = myFilter.qs
     for training in trainings:
         training.can_edit = training.can_edit(request.user)
+        training.can_register = training.can_register(request.user)
+        training.can_register_visitor = training.can_register_visitor(
+            request.user
+        )
         training.is_registered = training.is_registered(request.user)
+        training.is_visitor = training.is_visitor(request.user)
+        training.passed = training.start < timezone.now()
     context = {'trainings': trainings, 'myFilter': myFilter}
     return render(request, 'trainings/overview.html', context)
 
@@ -105,6 +111,12 @@ def all(request):
     trainings = myFilter.qs
     for training in trainings:
         training.can_edit = training.can_edit(user)
+        training.can_register = training.can_register(request.user)
+        training.can_register_visitor = training.can_register_visitor(
+            request.user
+        )
+        training.is_registered = training.is_registered(request.user)
+        training.is_visitor = training.is_visitor(request.user)
         training.passed = training.start < timezone.now()
     context = {'trainings': trainings, 'myFilter': myFilter}
     return render(request, 'trainings/overview.html', context)
@@ -115,7 +127,13 @@ def details(request, id):
     training = get_object_or_404(Training, id=id)
     training.can_edit = training.can_edit(request.user)
     training.can_register = training.can_register(request.user)
+    training.can_register_visitor = training.can_register_visitor(
+        request.user
+    )
     training.can_unregister = training.can_unregister(request.user)
+    training.can_unregister_visitor = training.can_unregister_visitor(
+        request.user
+    )
     if training.deleted:
         messages.error(
             request,
@@ -162,24 +180,56 @@ def details(request, id):
 
 
 @auth_decorators.login_required
-def register(request, id):
+def register_participant(request, id):
     training = get_object_or_404(Training, id=id)
-    if training.register(request.user):
+    if training.register_participant(request.user):
         messages.success(
-            request, _('You were successfully registered.'))
+            request, _('You were successfully registered.')
+        )
     else:
         messages.info(request, _('Registration failed.'))
     return redirect('trainings-details', id)
 
 
 @auth_decorators.login_required
-def unregister(request, id):
+def unregister_participant(request, id):
     training = get_object_or_404(Training, id=id)
-    if training.unregister(request.user):
+    if training.unregister_participant(request.user):
         messages.success(
             request,
             format_lazy(
                 _('You have been successfully signed off for {training!s}.'),
+                training=training,
+            )
+        )
+    else:
+        messages.info(request, _('Sign-off failed.'))
+    return redirect('trainings-overview')
+
+
+@auth_decorators.login_required
+def register_visitor(request, id):
+    training = get_object_or_404(Training, id=id)
+    if training.register_visitor(request.user):
+        messages.success(
+            request, _('You were successfully registered as visitor.')
+        )
+    else:
+        messages.info(request, _('Registration failed.'))
+    return redirect('trainings-details', id)
+
+
+@auth_decorators.login_required
+def unregister_visitor(request, id):
+    training = get_object_or_404(Training, id=id)
+    if training.unregister_visitor(request.user):
+        messages.success(
+            request,
+            format_lazy(
+                _(
+                    'You have been successfully signed off as visitor for'
+                    '{training!s}.'
+                ),
                 training=training,
             )
         )
