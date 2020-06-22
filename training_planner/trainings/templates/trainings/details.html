@@ -8,9 +8,9 @@
 <p>{{training.location.with_address}}</p>
 <nav class="nav justify-content-end flex-column flex-sm-row my-2">
     <a class="nav-link bg-light text-dark" href="javascript:history.back()">{% trans "Back" %}</a>
-    {% if training.can_unregistor_visitor %}
-        <a class="nav-line bg-danger text-white ml-sm-3" href="{% url 'trainings-unregister-visitor' training.id %}">{% trans "Cancel Visit" %}</a>
-    {% elif training.can_unregister_visitor %}
+    {% if training.can_unregister_visitor %}
+        <a class="nav-link bg-danger text-white ml-sm-3" href="{% url 'trainings-unregister-visitor' training.id %}">{% trans "Cancel Visit" %}</a>
+    {% elif training.can_register_visitor %}
         <a class="nav-link bg-info text-white ml-sm-3" href="{% url 'trainings-register-visitor' training.id %}">{% trans "Visit" %}</a>
     {% endif %}
     {% if training.can_unregister %}
