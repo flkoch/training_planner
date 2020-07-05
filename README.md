@@ -2,7 +2,7 @@
 Django app to track training registration and participation
 
 ## Current status
-This project was developped for my local judo club in order to track registration and participation in times of COVID-19. In order to keep the requirements on the hardware as low as possible, all the configuration is done in source. The text currently displayed is in German and adheres to our requirements. You should update it accordingly before deploying.
+This project was developped for my local judo club in order to track registration and participation in times of COVID-19. In order to keep the requirements on the hardware as low as possible, all the configuration is done in source. The text is currently displayed in German and adheres to our requirements. All text fields are translatable and even the whole application can be served in multiple languages, though the user entered data cannot be translated. For customising the text you can directly edit the translation files or create translations for additional languages and set them as default in the `settings.py` file. For details see the django documentation for internationalisation.
 
 ## Requirements
 The requirements are kept upto-date in the `requirements.txt` file. It is tested to run on Ubuntu-2004 but should work on any unix operating system with python3.
