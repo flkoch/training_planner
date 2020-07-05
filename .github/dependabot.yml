@@ -10,15 +10,15 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-- package-ecosystem: "pip"
+  - package-ecosystem: "pip"
     # Files stored in repository root
     directory: "/"
     schedule:
       interval: "weekly"
-     allow:
-        - dependency-name: "django*"
-          dependency-type: "direct"
-        - dependency-name: "flake8"
-          dependency-type: "production"
-        - dependency-name: "autopep8"
-          dependency-type: "production"
+    allow:
+      - dependency-name: "django*"
+        dependency-type: "direct"
+      - dependency-name: "flake8"
+        dependency-type: "production"
+      - dependency-name: "autopep8"
+        dependency-type: "production"
