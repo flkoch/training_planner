@@ -307,7 +307,7 @@ def create(request):
     else:
         form = AddTrainingForm(initial={
             'main_instructor': request.user,
-            'capacity': 20,
+            'capacity': 38,
             'duration': 75,
         })
     context = {'form': form, 'title': _('New Training')}
@@ -350,7 +350,7 @@ def make_series(request, id):
     if request.method == 'POST':
         training = get_object_or_404(Training, id=id)
         training.coordinator = None
-        instructors = [e.id for e in training.instructor.all()]
+        instructors = [e.id for e in training.instructors.all()]
         target_groups = [e.id for e in training.target_group.all()]
         dates = request.POST['dates'].split(',')
         for date in dates:
@@ -366,7 +366,7 @@ def make_series(request, id):
             training.archived = False
             training.set_registration_times()
             training.save()
-            training.instructor.add(*instructors)
+            training.instructors.add(*instructors)
             training.target_group.add(*target_groups)
         messages.success(
             request,
