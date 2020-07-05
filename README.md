@@ -46,4 +46,6 @@ These groups are assuemd to exist and will partially be applied automatically. T
 # Contribution
 As currently many clubs might have similar difficulties of finding an easy tool for registration and participation tracking for their training sessions, I decided to make this tool available for everyone. I know that there is probably dozens of ways to improve the tool and am steadily working on improving existing funtionality and adding new function. If you notice any bugs or want to add any new features, make it easier for others to adopt, feel free to create an issue or a pull request.
 
+When setting up your own VPS to host this application or other projects, you can give a try to [Vultr](https://www.vultr.com/?ref=8530062). I have been using them myself and have been satisfied with their services. By creating an account with the provided link you get free credit to try out and if you stay I will also get some credit.
+
 If you want to support the project in any other way, feel free to contact me directly.
