@@ -1,3 +1,4 @@
+![Django CI](https://github.com/flkoch/training_planner/workflows/Django%20CI/badge.svg)
 # Training Planner
 Django app to track training registration and participation
 
