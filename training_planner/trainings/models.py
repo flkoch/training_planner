@@ -160,6 +160,18 @@ class Training(models.Model):
         verbose_name=_('Registration opening'), default=timezone.now)
     registration_close = models.DateTimeField(
         verbose_name=_('Registration closing'))
+    enable_registration = models.BooleanField(
+        verbose_name=_('Allow registration'),
+        default=True
+    )
+    enable_visitors = models.BooleanField(
+        verbose_name=_('Allow visitors'),
+        default=True
+    )
+    enable_coordinator = models.BooleanField(
+        verbose_name=_('Use coordinator'),
+        default=True
+    )
 
     class Meta:
         verbose_name = _('Training')
@@ -304,6 +316,8 @@ class Training(models.Model):
         the registration period is open and the user is neither instructor nor
         the main instructor for that training.
         """
+        if not self.enable_registration:
+            return False
         if self.deleted or self.archived:
             return False
         if isinstance(user, get_user_model()):
@@ -321,6 +335,8 @@ class Training(models.Model):
         A user can unregister if the user currently is registered and the
         registration period is open.
         """
+        if not self.enable_registration:
+            return False
         if self.deleted or self.archived:
             return False
         return self.during_registration and self.is_registered(user)
@@ -334,6 +350,8 @@ class Training(models.Model):
         the registration period is open and the user is neither instructor nor
         the main instructor for that training.
         """
+        if not self.enable_visitors:
+            return False
         if self.deleted or self.archived:
             return False
         if isinstance(user, get_user_model()):
@@ -349,6 +367,8 @@ class Training(models.Model):
         A user can unregister if the user currently is registered and the
         registration period is open.
         """
+        if not self.enable_visitors:
+            return False
         if self.deleted or self.archived:
             return False
         return self.during_registration and self.is_visitor(user)
@@ -450,6 +470,8 @@ class Training(models.Model):
         The main instructor may not be coordinator (return value 2). If the
         user is successfully registered as coordinator the return value is 3.
         """
+        if not self.enable_coordinator:
+            return 3
         if self.coordinator is not None:
             return 1
         elif user == self.main_instructor:

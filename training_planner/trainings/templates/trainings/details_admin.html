@@ -71,7 +71,9 @@
                             <br>
                         {% endif %}
                     {% endwith %}
-                    {% trans "Coordinator" %}: {% if training.coordinator %}{{training.coordinator}}{% if training.can_edit %}<a href="{% url 'trainings-unregister-coordinator' training.id %}" class="text-danger mx-1"><span class="oi oi-circle-x"></span></a>{% endif %}{% if training.coordinator == user %}<br><small class="text-muted">{% trans 'You will get further information just before the training. If you cannot make it, please contact the respective trainer.' %}</small>{% endif %}{% else %}<a href="{% url 'trainings-register-coordinator' training.id %}" class="btn btn-sm btn-secondary">{% trans "Register" %}</a>{% endif %}<br>
+                    {% if training.enable_coordinator %}
+                        {% trans "Coordinator" %}: {% if training.coordinator %}{{training.coordinator}}{% if training.can_edit %}<a href="{% url 'trainings-unregister-coordinator' training.id %}" class="text-danger mx-1"><span class="oi oi-circle-x"></span></a>{% endif %}{% if training.coordinator == user %}<br><small class="text-muted">{% trans 'You will get further information just before the training. If you cannot make it, please contact the respective trainer.' %}</small>{% endif %}{% else %}<a href="{% url 'trainings-register-coordinator' training.id %}" class="btn btn-sm btn-secondary">{% trans "Register" %}</a>{% endif %}<br>
+                    {% endif %}
                 </p>
             </div>
         </div>
@@ -88,38 +90,42 @@
         </div>
     </div>
     {% endif %}
-    <div class="col-sm-6 col-md my-1 order-3">
-        <div class="card">
-        {% with training.registered_participants.all as users %}
-            <div class="card-header d-flex justify-content-between">{% trans "Participants" %}<span class="badge {% if training.free_capacity > 4 %} badge-success {% elif training.free_capacity > 0%} badge-warning {% else %} badge-danger {% endif %} badge-pill align-self-center">{{users|length}} / {{training.capacity}}</span></div>
-            <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    {% for loop_user in users %}
-                        <li class="list-group-item"><a href="{% url 'member-details' loop_user.id %}">{{loop_user.name_or_username}}{% if loop_user in training.participants.all %}<span class="oi oi-check text-success ml-2" title="{% trans 'participated' %}" aria-hidden="true"></span>{% endif %}</a></li>
-                    {% empty %}
-                        <li class="list-group-item">{% trans "No registrations yet" %}</li>
-                    {% endfor %}
-                </ul>
+    {% if training.enable_registration %}
+        <div class="col-sm-6 col-md my-1 order-3">
+            <div class="card">
+            {% with training.registered_participants.all as users %}
+                <div class="card-header d-flex justify-content-between">{% trans "Participants" %}<span class="badge {% if training.free_capacity > 4 %} badge-success {% elif training.free_capacity > 0%} badge-warning {% else %} badge-danger {% endif %} badge-pill align-self-center">{{users|length}} / {{training.capacity}}</span></div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        {% for loop_user in users %}
+                            <li class="list-group-item"><a href="{% url 'member-details' loop_user.id %}">{{loop_user.name_or_username}}{% if loop_user in training.participants.all %}<span class="oi oi-check text-success ml-2" title="{% trans 'participated' %}" aria-hidden="true"></span>{% endif %}</a></li>
+                        {% empty %}
+                            <li class="list-group-item">{% trans "No registrations yet" %}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endwith %}
             </div>
-        {% endwith %}
         </div>
-    </div>
-    <div class="col-sm-6 col-md my-1 order-4">
-        <div class="card">
-        {% with training.visitors.all as users %}
-            <div class="card-header d-flex justify-content-between">{% trans "Visitors" %}</div>
-            <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    {% for loop_user in users %}
-                        <li class="list-group-item"><a href="{% url 'member-details' loop_user.id %}">{{loop_user.name_or_username}}</a></li>
-                    {% empty %}
-                        <li class="list-group-item">{% trans "No registered visitors yet" %}</li>
-                    {% endfor %}
-                </ul>
+    {% endif %}
+    {% if training.enable_visitors %}
+        <div class="col-sm-6 col-md my-1 order-4">
+            <div class="card">
+            {% with training.visitors.all as users %}
+                <div class="card-header d-flex justify-content-between">{% trans "Visitors" %}</div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        {% for loop_user in users %}
+                            <li class="list-group-item"><a href="{% url 'member-details' loop_user.id %}">{{loop_user.name_or_username}}</a></li>
+                        {% empty %}
+                            <li class="list-group-item">{% trans "No registered visitors yet" %}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endwith %}
             </div>
-        {% endwith %}
         </div>
-    </div>
+    {% endif %}
 </div>
 <script>
 $(function () {

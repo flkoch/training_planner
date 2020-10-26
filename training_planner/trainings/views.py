@@ -13,6 +13,7 @@ from django.utils import timezone
 from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
 
+from members import models as mmlds
 from members.filter import UserStatisticsFilter
 
 from .decorators import (admin_only, protect_training, trainer_only,
@@ -251,7 +252,8 @@ def register_coordinator(request, id):
             )
         ),
         1: ('info', _('There is already another coordinator registered.')),
-        2: ('warning', _('The coordinator cannot be the main instructor.'))
+        2: ('warning', _('The coordinator cannot be the main instructor.')),
+        3: ('info', _('There is no coordinator required for this training.'))
     }
     if not index:
         subject = format_lazy(
@@ -307,8 +309,11 @@ def create(request):
     else:
         form = AddTrainingForm(initial={
             'main_instructor': request.user,
-            'capacity': 38,
+            'capacity': 14,
             'duration': 75,
+            'enable_registration': True,
+            'enable_visitors': False,
+            'enable_coordinator': False
         })
     context = {'form': form, 'title': _('New Training')}
     return render(request, 'trainings/training_form.html', context)
@@ -482,7 +487,11 @@ def controlling(request, id):
         )
         group.user_set.add(*participants)
         messages.success(request, _('Changes saved successfully.'))
-    context = {'training': training}
+    participant = mmlds.participant().exclude(
+        instructor__id=id,
+        assistant__id=id
+    )
+    context = {'training': training, 'participant': participant}
     return render(request, 'trainings/details_controlling.html', context)
 
 

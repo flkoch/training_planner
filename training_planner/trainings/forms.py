@@ -151,6 +151,20 @@ class AddTrainingForm(forms.ModelForm):
                 ),
             ),
             cfl.Row(
+                cfl.Field(
+                    'enable_registration',
+                    wrapper_class='col-12 col-sm-4',
+                ),
+                cfl.Field(
+                    'enable_coordinator',
+                    wrapper_class='col-12 col-sm-4',
+                ),
+                cfl.Field(
+                    'enable_visitors',
+                    wrapper_class='col-12 col-sm-4',
+                ),
+            ),
+            cfl.Row(
                 cfl.HTML(
                     format_lazy(
                         '<a href="javascript:history.back()" '
@@ -299,6 +313,20 @@ class TrainingForm(forms.ModelForm):
                         'Please hold down &langle;<strong>Ctrl</strong>'
                         '&rangle; to change the selection.</p>'
                     )
+                ),
+            ),
+            cfl.Row(
+                cfl.Field(
+                    'enable_registration',
+                    wrapper_class='col-12 col-sm-4',
+                ),
+                cfl.Field(
+                    'enable_coordinator',
+                    wrapper_class='col-12 col-sm-4',
+                ),
+                cfl.Field(
+                    'enable_visitors',
+                    wrapper_class='col-12 col-sm-4',
                 ),
             ),
             cfl.Row(
@@ -501,6 +529,20 @@ class AdminTrainingForm(forms.ModelForm):
                 cfl.Field(
                     'deleted',
                     wrapper_class='col-auto',
+                ),
+            ),
+            cfl.Row(
+                cfl.Field(
+                    'enable_registration',
+                    wrapper_class='col-12 col-sm-4',
+                ),
+                cfl.Field(
+                    'enable_coordinator',
+                    wrapper_class='col-12 col-sm-4',
+                ),
+                cfl.Field(
+                    'enable_visitors',
+                    wrapper_class='col-12 col-sm-4',
                 ),
             ),
             cfl.Row(

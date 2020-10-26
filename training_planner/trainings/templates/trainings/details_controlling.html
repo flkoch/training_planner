@@ -14,19 +14,35 @@
 <div class="row my-2">
     <div class="col-sm-6 my-1 order-1">
         <div class="card">
-            <div class="card-header">{% trans "Registered" %}</div>
+            <div class="card-header">
+                {% if training.enable_registration %}
+                    {% trans "Registered" %}
+                {% else %}
+                    {% trans "Members" %}
+                {% endif %}
+            </div>
             <div class="card-body">
                 <form method="POST" action="">
                     {% csrf_token %}
-                    {% for participant in training.registered_participants.all %}
-                        <div class="form-check row my-0 p-2 {% cycle '' 'bg-secondary text-white' %}">
-                            <label class="form-check-label" for="cb-{{ participant.id }}">{{ participant.name_or_username }}</label>
-                            <input id="cb-{{ participant.id }}" type="checkbox" name="{{participant.id}}" value="participated" class="mt-1 float-right" aria-label="{{participant.name_or_username}}" {% if participant in training.participants.all %}checked{% endif %}/>
-                        </div>
-                    {% empty %}
-                        <div class="list-group-item border-0">{% trans "No registrations yet" %}</div>
-                    {% endfor %}
-                    {% if training.registered_participants.all.count > 0 %}
+                    {% if training.enable_registration %}
+                        {% for participant in training.registered_participants.all %}
+                            <div class="form-check row my-0 p-2 {% cycle '' 'bg-secondary text-white' %}">
+                                <label class="form-check-label" for="cb-{{ participant.id }}">{{ participant.name_or_username }}</label>
+                                <input id="cb-{{ participant.id }}" type="checkbox" name="{{participant.id}}" value="participated" class="mt-1 float-right" aria-label="{{participant.name_or_username}}" {% if participant in training.participants.all %}checked{% endif %}/>
+                            </div>
+                        {% empty %}
+                            <div class="list-group-item border-0">{% trans "No registrations yet" %}</div>
+                        {% endfor %}
+                        {% if training.registered_participants.all.count > 0 %}
+                            <input type="submit" class="btn btn-primary my-3" value="{% trans 'Save' %}"/>
+                        {% endif %}
+                    {% else %}
+                        {% for participant in participant.all %}
+                            <div class="form-check row my-0 p-2 {% cycle '' 'bg-secondary text-white' %}">
+                                <label class="form-check-label" for="cb-{{ participant.id }}">{{ participant.name_or_username }}</label>
+                                <input id="cb-{{ participant.id }}" type="checkbox" name="{{participant.id}}" value="participated" class="mt-1 float-right" aria-label="{{participant.name_or_username}}" {% if participant in training.participants.all %}checked{% endif %}/>
+                            </div>
+                        {% endfor %}
                         <input type="submit" class="btn btn-primary my-3" value="{% trans 'Save' %}"/>
                     {% endif %}
                 </form>
