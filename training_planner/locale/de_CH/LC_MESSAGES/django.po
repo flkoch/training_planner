@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: TrainingPlanner\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-26 19:34+0100\n"
-"PO-Revision-Date: 2020-10-26 19:40+0100\n"
+"PO-Revision-Date: 2020-10-26 19:47+0100\n"
 "Last-Translator: Florian Koch <flkoch@dev.fkoch.ch>\n"
 "Language-Team: \n"
 "Language: de-CH\n"
@@ -1114,7 +1114,7 @@ msgstr "Der Koordinator kann nicht der Haupttrainer sein."
 
 #: training_planner/trainings/views.py:256
 msgid "There is no coordinator required for this training."
-msgstr "Es kein Koordinator gebraucht für dieses Training."
+msgstr "Es wird kein Koordinator für dieses Training gebraucht."
 
 #: training_planner/trainings/views.py:260
 #, python-brace-format
