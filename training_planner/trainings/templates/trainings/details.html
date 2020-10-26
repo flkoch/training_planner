@@ -29,7 +29,7 @@
                     {% trans "Time" %}: {{training.starttime_as_text}}<br>
                     {% trans "Duration" %}: {{training.duration}} {% trans "minutes" %}<br>
                     {% trans "Main Instructor" %}: {{training.main_instructor}}<br>
-                    {% with instructors=training.instructor.all %}
+                    {% with instructors=training.instructors.all %}
                         {% if instructors|length > 0 %}
                             {% trans "Further Instructors" %}:
                             {% for instructor in instructors %}
