@@ -152,7 +152,8 @@ def details(request, id):
             ),
         )
 
-    elif training.before_registration and training.enable_registration:
+    elif training.before_registration and (training.enable_registration or
+                                           training.enable_visitors):
         messages.info(
             request,
             format_lazy(
@@ -161,7 +162,8 @@ def details(request, id):
                 time=training.opentime_as_text
             )
         )
-    elif training.after_registration and training.enable_registration:
+    elif training.after_registration and (training.enable_registration or
+                                          training.enable_visitors):
         messages.info(
             request,
             format_lazy(
