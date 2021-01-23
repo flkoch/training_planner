@@ -101,22 +101,28 @@ class TargetGroup(models.Model):
 class Training(models.Model):
     """
     Class for storing trainings. The following fields exist:
-    title           str             title of training
-    description     str             description of training (content)
-    start           datetime        start of training
-    duration        int             duration in minutes
-    location        Location        location of training
-    main_instructor User            main instructor for training
-    instructors     Users           further instructors
-    coordinator     User            coordinator for training
-    target_group    target_groups   target groups for training
-    capacity        int             capacity of training
+    title                   str             title of training
+    description             str             description of training (content)
+    start                   datetime        start of training
+    duration                int             duration in minutes
+    location                Location        location of training
+    main_instructor         User            main instructor for training
+    instructors             Users           further instructors
+    coordinator             User            coordinator for training
+    target_group            target_groups   target groups for training
+    capacity                int             capacity of training
     registered_participants Users   people registered to take part
-    participants    Users           people actually taking part
-    deleted         bool            flag to mark as deleted
-    archived        bool            flag to mark as archived
-    registration_open   datetime    earliest possible registration time
-    registration_close  datetime    latest possible registration time
+    participants            Users           people actually taking part
+    deleted                 bool            flag to mark as deleted
+    archived                bool            flag to mark as archived
+    registration_open       datetime        earliest possible registration time
+    registration_close      datetime        latest possible registration time
+    enable_registration     boolean         flag to enable registration for
+                                            participants
+    enable_visitors         boolean         flag to enable registration for
+                                            visitors
+    enable_coordinator      boolean         flag to enable registration for
+                                            coordinator
     """
     title = models.CharField(max_length=100, verbose_name=_('Title'))
     description = models.TextField(verbose_name=_('Description'), blank=True)
