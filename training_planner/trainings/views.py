@@ -5,6 +5,7 @@ import dateparser
 from django.conf import settings
 from django.contrib import auth, messages
 from django.contrib.auth import decorators as auth_decorators
+from django.core import paginator
 from django.core.mail import send_mail, send_mass_mail
 from django.db.models import Count
 from django.db.models.functions import ExtractWeek
@@ -76,7 +77,7 @@ def _full_message(salutation, message, user, training):
     )
 
 
-def overview(request):
+def overview(request, max_length=2500):
     if request.user.is_authenticated and request.user.is_trainer:
         trainings = Training.objects.filter(start__gte=timezone.now() -
                                             datetime.timedelta(hours=2))
@@ -89,6 +90,15 @@ def overview(request):
         .order_by('start', 'title')
     myFilter = TrainingFilter(request.GET, queryset=trainings)
     trainings = myFilter.qs
+    if len(trainings) > max_length:
+        trainings = trainings[len(trainings) - max_length:]
+        messages.info(
+            request,
+            _(f'There were more than {max_length} trainings that matched the '
+              'requested criteria. You only see the most recent entries in '
+              'this list. Please use the filter to narrow down the trainings '
+              'you are looking for.')
+        )
     for training in trainings:
         training.can_edit = training.can_edit(request.user)
         training.can_register = training.can_register(request.user)
@@ -98,18 +108,31 @@ def overview(request):
         training.is_registered = training.is_registered(request.user)
         training.is_visitor = training.is_visitor(request.user)
         training.passed = training.start < timezone.now()
-    context = {'trainings': trainings, 'myFilter': myFilter}
+    trainings_paginator = paginator.Paginator(
+        trainings, max(25, max_length // 100))
+    trainings_page = trainings_paginator.get_page(request.GET.get('page'))
+    trainings_page.page_range = trainings_paginator.page_range
+    context = {'trainings': trainings_page, 'myFilter': myFilter}
     return render(request, 'trainings/overview.html', context)
 
 
 @auth_decorators.login_required
 @trainer_or_admin_only
-def all(request):
+def all(request, max_length=2500):
     trainings = Training.objects.all().order_by(
         'start', 'title')
     user = request.user
     myFilter = TrainingAdminFilter(request.GET, queryset=trainings)
     trainings = myFilter.qs
+    if len(trainings) > max_length:
+        trainings = trainings[len(trainings) - max_length:]
+        messages.info(
+            request,
+            _(f'There were more than {max_length} trainings that matched the '
+              'requested criteria. You only see the most recent entries in '
+              'this list. Please use the filter to narrow down the trainings '
+              'you are looking for.')
+        )
     for training in trainings:
         training.can_edit = training.can_edit(user)
         training.can_register = training.can_register(request.user)
@@ -119,7 +142,11 @@ def all(request):
         training.is_registered = training.is_registered(request.user)
         training.is_visitor = training.is_visitor(request.user)
         training.passed = training.start < timezone.now()
-    context = {'trainings': trainings, 'myFilter': myFilter}
+    trainings_paginator = paginator.Paginator(
+        trainings, max(25, max_length // 100))
+    trainings_page = trainings_paginator.get_page(request.GET.get('page'))
+    trainings_page.page_range = trainings_paginator.page_range
+    context = {'trainings': trainings_page, 'myFilter': myFilter}
     return render(request, 'trainings/overview.html', context)
 
 

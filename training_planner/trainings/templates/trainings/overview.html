@@ -19,6 +19,9 @@
                 <button class="btn btn-primary m-2" type="submit">
                 {% trans "Filter" %}
                 </button>
+                <a class="btn btn-secondary m-2" href="{{ request.path }}">
+                {% trans "Reset" %}
+                </a>
             </form>
         </div>
     </div>
@@ -93,6 +96,83 @@
     </tbody>
 </table>
 </div>
+{% if trainings.paginator.num_pages > 10 %}
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        {% if '?title' in request.get_full_path %}
+        {% with request.get_full_path|cut:"&page=100"|cut:"&page=99"|cut:"&page=98"|cut:"&page=97"|cut:"&page=96"|cut:"&page=95"|cut:"&page=94"|cut:"&page=93"|cut:"&page=92"|cut:"&page=91"|cut:"&page=90"|cut:"&page=89"|cut:"&page=88"|cut:"&page=87"|cut:"&page=86"|cut:"&page=85"|cut:"&page=84"|cut:"&page=83"|cut:"&page=82"|cut:"&page=81"|cut:"&page=80"|cut:"&page=79"|cut:"&page=78"|cut:"&page=77"|cut:"&page=76"|cut:"&page=75"|cut:"&page=74"|cut:"&page=73"|cut:"&page=72"|cut:"&page=71"|cut:"&page=70"|cut:"&page=69"|cut:"&page=68"|cut:"&page=67"|cut:"&page=66"|cut:"&page=65"|cut:"&page=64"|cut:"&page=63"|cut:"&page=62"|cut:"&page=61"|cut:"&page=10"|cut:"&page=59"|cut:"&page=58"|cut:"&page=57"|cut:"&page=56"|cut:"&page=55"|cut:"&page=54"|cut:"&page=53"|cut:"&page=52"|cut:"&page=51"|cut:"&page=50"|cut:"&page=49"|cut:"&page=48"|cut:"&page=47"|cut:"&page=46"|cut:"&page=45"|cut:"&page=44"|cut:"&page=43"|cut:"&page=42"|cut:"&page=41"|cut:"&page=40"|cut:"&page=39"|cut:"&page=38"|cut:"&page=37"|cut:"&page=36"|cut:"&page=35"|cut:"&page=34"|cut:"&page=33"|cut:"&page=32"|cut:"&page=31"|cut:"&page=30"|cut:"&page=29"|cut:"&page=28"|cut:"&page=27"|cut:"&page=26"|cut:"&page=25"|cut:"&page=24"|cut:"&page=23"|cut:"&page=22"|cut:"&page=21"|cut:"&page=20"|cut:"&page=19"|cut:"&page=18"|cut:"&page=17"|cut:"&page=16"|cut:"&page=15"|cut:"&page=14"|cut:"&page=13"|cut:"&page=12"|cut:"&page=11"|cut:"&page=10"|cut:"&page=9"|cut:"&page=8"|cut:"&page=7"|cut:"&page=6"|cut:"&page=5"|cut:"&page=4"|cut:"&page=3"|cut:"&page=2"|cut:"&page=1" as path_filter %}
+            {% if trainings.number > 3 %}
+                <li class="page-item"><a href="{{ path_filter }}&page=1" class="page-link">1</a></li>
+                <li class="page-item disabled" aria-hidden="true"><span class="page-link">...</span></li>
+                <li class="page-item"><a href="{{ path_filter }}&page={{ trainings.previous_page_number }}" class="page-link">{{ trainings.previous_page_number }}</a></li>
+            {% elif trainings.number == 3 %}
+                <li class="page-item"><a href="{{ path_filter }}&page=1" class="page-link">1</a></li>
+                <li class="page-item"><a href="{{ path_filter }}&page=2" class="page-link">2</a></li>
+            {% elif trainings.number == 2 %}
+                <li class="page-item"><a href="{{ path_filter }}&page=1" class="page-link">1</a></li>
+            {% endif %}
+            <li class="page-item active" aria-current="page"><span class="page-link">{{ trainings.number }}<span class="sr-only">{% trans "current" %}</span></span></li>
+            {% if trainings.paginator.num_pages > trainings.number|add:2 %}
+                <li class="page-item"><a href="{{ path_filter }}&page={{ trainings.next_page_number }}" class="page-link">{{ trainings.next_page_number }}</a></li>
+                <li class="page-item disabled" aria-hidden="true"><span class="page-link">...</span></li>
+                <li class="page-item"><a href="{{ path_filter }}&page={{ trainings.paginator.num_pages }}" class="page-link">{{ trainings.paginator.num_pages }}</a></li>
+            {% elif trainings.paginator.num_pages == trainings.number|add:2 %}
+                <li class="page-item"><a href="{{ path_filter }}&page={{ trainings.next_page_number }}" class="page-link">{{ trainings.next_page_number }}</a></li>
+                <li class="page-item"><a href="{{ path_filter }}&page={{ trainings.paginator.num_pages }}" class="page-link">{{ trainings.paginator.num_pages }}</a></li>
+            {% elif trainings.paginator.num_pages == trainings.number|add:1 %}
+                <li class="page-item"><a href="{{ path_filter }}&page={{ trainings.paginator.num_pages }}" class="page-link">{{ trainings.paginator.num_pages }}</a></li>
+            {% endif %}
+        {% endwith %}
+        {% else %}
+            {% if trainings.number > 3 %}
+                <li class="page-item"><a href="?page=1" class="page-link">1</a></li>
+                <li class="page-item disabled" aria-hidden="true"><span class="page-link">...</span></li>
+                <li class="page-item"><a href="?page={{ trainings.previous_page_number }}" class="page-link">{{ trainings.previous_page_number }}</a></li>
+            {% elif trainings.number == 3 %}
+                <li class="page-item"><a href="?page=1" class="page-link">1</a></li>
+                <li class="page-item"><a href="?page=2" class="page-link">2</a></li>
+            {% elif trainings.number == 2 %}
+                <li class="page-item"><a href="?page=1" class="page-link">1</a></li>
+            {% endif %}
+            <li class="page-item active" aria-current="page"><span class="page-link">{{ trainings.number }}<span class="sr-only">{% trans "current" %}</span></span></li>
+            {% if trainings.paginator.num_pages > trainings.number|add:2 %}
+                <li class="page-item"><a href="?page={{ trainings.next_page_number }}" class="page-link">{{ trainings.next_page_number }}</a></li>
+                <li class="page-item disabled" aria-hidden="true"><span class="page-link">...</span></li>
+                <li class="page-item"><a href="?page={{ trainings.paginator.num_pages }}" class="page-link">{{ trainings.paginator.num_pages }}</a></li>
+            {% elif trainings.paginator.num_pages == trainings.number|add:2 %}
+                <li class="page-item"><a href="?page={{ trainings.next_page_number }}" class="page-link">{{ trainings.next_page_number }}</a></li>
+                <li class="page-item"><a href="?page={{ trainings.paginator.num_pages }}" class="page-link">{{ trainings.paginator.num_pages }}</a></li>
+            {% elif trainings.paginator.num_pages == trainings.number|add:1 %}
+                <li class="page-item"><a href="?page={{ trainings.paginator.num_pages }}" class="page-link">{{ trainings.paginator.num_pages }}</a></li>
+            {% endif %}
+        {% endif %}
+    </ul>
+</nav>
+{% elif trainings.paginator.num_pages > 1 %}
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        {% if '?title' in request.get_full_path %}
+        {% with request.get_full_path|cut:"&page=10"|cut:"&page=9"|cut:"&page=8"|cut:"&page=7"|cut:"&page=6"|cut:"&page=5"|cut:"&page=4"|cut:"&page=3"|cut:"&page=2"|cut:"&page=1" as path_filter %}
+            {% for num in trainings.page_range %}
+                {% if num == trainings.number %}
+                    <li class="page-item active" aria-current="page"><span class="page-link">{{ num }}<span class="sr-only">{% trans "current" %}</span></span></li>
+                {% else %}
+                    <li class="page-item"><a href="{{ path_filter }}&page={{ num }}" class="page-link">{{ num }}</a></li>
+                {% endif %}
+            {% endfor %}
+        {% endwith %}
+        {% else %}
+            {% for num in trainings.page_range %}
+                {% if num == trainings.number %}
+                    <li class="page-item active" aria-current="page"><span class="page-link">{{ num }}<span class="sr-only">{% trans "current" %}</span></span></li>
+                {% else %}
+                    <li class="page-item"><a href="?page={{ num }}" class="page-link">{{ num }}</a></li>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
 {% endblock content %}
 {% block afterScripts %}
 <script>
