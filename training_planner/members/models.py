@@ -87,7 +87,7 @@ class User(AbstractUser):
     @property
     def name_or_username(self):
         if self.first_name:
-            return ' '.join([self.first_name, self.last_name])
+            return self.name
         return self.username
 
     @property
@@ -139,7 +139,7 @@ def trainer():
 
 def administrator():
     return User.objects.filter(groups__name='Administrator') \
-        .exlcude(groups__name='System')
+        .exclude(groups__name='System')
 
 
 def check_active_participants(**kwargs):
