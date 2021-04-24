@@ -103,7 +103,7 @@ class TestViewsAnonymous(TestCase):
 class TestViewsParticipant(TestCase):
     def setUp(self):
         self.client = Client()
-        self.participant_group = Group.objects.create(name='Participant')
+        self.participant_group = Group.objects.get(name='Participant')
         self.participant = User.objects.create_user(
             username='test_participant',
             password='test_password',
@@ -155,7 +155,7 @@ class TestViewsParticipant(TestCase):
 class TestViewsTrainer(TestCase):
     def setUp(self):
         self.client = Client()
-        self.trainer_group = Group.objects.create(name='Trainer')
+        self.trainer_group = Group.objects.get(name='Trainer')
         self.trainer1 = User.objects.create_user(
             username='test_trainer1',
             password='test_password',
@@ -210,8 +210,8 @@ class TestViewsTrainer(TestCase):
 class TestViewsAdministrator(TestCase):
     def setUp(self):
         self.client = Client()
-        self.trainer_group = Group.objects.create(name='Trainer')
-        self.admin_group = Group.objects.create(name='Administrator')
+        self.trainer_group = Group.objects.get(name='Trainer')
+        self.admin_group = Group.objects.get(name='Administrator')
         self.trainer = User.objects.create_user(
             username='test_trainer',
             password='test_password',

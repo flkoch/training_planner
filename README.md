@@ -33,7 +33,7 @@ Once you have made the necessary adoptions, you are ready for deployment. You ca
 Once everything is working, you should finalise the deployment by switching the debug flag in `setting.py` to false and entering the allowed hostname in the same field. Make sure everything turns up when restarting the machine. As a last word of caution keep in mind that this is potentially a public-facing server which should be secured accordingly, including regular security upgrades, limiting ssh-access, proper firewall configuration and SSL-certificates for transmitting passwords upon registration.
 
 ## First Use
-After setting up a new instance of this service you should log in with the superuser created from the commandline and supply as much additional information as you like. Then head to the groups section in the admin panel and create the following groups.
+After setting up a new instance of this service you should log in with the superuser created from the commandline and supply as much additional information as you like. The following groups are created automatically.
 ```
 Participant
 Active Participant
@@ -42,8 +42,9 @@ Active Trainer
 Administrator
 System
 ```
-These groups are assuemd to exist and will partially be applied automatically. Trainer, Administrator and System groups have to be assigned manually through the admin interface. Only members of the Trainer group can create trainings, edit their own trainings, view member details and track participation. Members of the group Administrator can edit any training. The group System is applied to users which are non-regular users and should not be displayed on selection forms in the front-end.
+These groups  will partially be applied automatically. Trainer, Administrator and System groups have to be assigned manually through the admin interface. Only members of the Trainer group can create trainings, edit their own trainings, view member details and track participation. Members of the group Administrator can edit any training. The group System is applied to users which are non-regular users and should not be displayed on selection forms in the front-end.
 
+You can also go about and add additional permissions to these groups to your liking. These permissions are only checked at the admin interface level. In order for the user to be able to reach this interface, they have to be marked as staff.
 # Contribution
 As currently many clubs might have similar difficulties of finding an easy tool for registration and participation tracking for their training sessions, I decided to make this tool available for everyone. I know that there is probably dozens of ways to improve the tool and am steadily working on improving existing funtionality and adding new function. If you notice any bugs or want to add any new features, make it easier for others to adopt, feel free to create an issue or a pull request.
 
