@@ -35,6 +35,7 @@ class Address(models.Model):
     class Meta:
         verbose_name = _('Address')
         verbose_name_plural = _('Addresses')
+        ordering = ['country', 'city', 'street', 'house_number']
 
     def __str__(self):
         """
@@ -64,6 +65,7 @@ class Location(models.Model):
     class Meta:
         verbose_name = _('Location')
         verbose_name_plural = _('Locations')
+        ordering = ['name', '-capacity']
 
     def __str__(self):
         """
@@ -90,6 +92,7 @@ class TargetGroup(models.Model):
     class Meta:
         verbose_name = _('Target Group')
         verbose_name_plural = _('Target Groups')
+        ordering = ['name']
 
     def __str__(self):
         """
@@ -182,6 +185,7 @@ class Training(models.Model):
     class Meta:
         verbose_name = _('Training')
         verbose_name_plural = _('Trainings')
+        ordering = ['-start', 'duration', 'title']
 
     def __str__(self):
         """
