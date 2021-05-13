@@ -77,10 +77,10 @@ def register(request):
                 name=user.first_name
             )
             email = EmailMessage(
-                subject,
-                message,
-                settings.DEFAULT_FROM_EMAIL,
-                [user.email],
+                subject=subject,
+                body=message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                to=[user.email],
             )
             email.send()
             messages.success(
