@@ -2,6 +2,7 @@ import datetime
 
 from django.contrib.auth.models import AbstractUser, Group
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
@@ -79,6 +80,9 @@ class User(AbstractUser):
                                              for group in self.groups.all()]
                          if func is not None]
         return groups_locale
+
+    def get_absolute_url(self):
+        return reverse('member-details', kwargs={'id': self.pk})
 
     @property
     def name(self):
