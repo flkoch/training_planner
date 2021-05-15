@@ -11,8 +11,12 @@ class TestMembersURLs(SimpleTestCase):
         self.assertEqual(resolve(url).func, views.all)
 
     def test_members_management(self) -> None:
-        url = reverse('user-management')
-        self.assertEqual(resolve(url).func, views.user_management)
+        url = reverse('members-management')
+        self.assertEqual(resolve(url).func, views.management)
+
+    def test_members_merge(self) -> None:
+        url = reverse('members-merge')
+        self.assertEqual(resolve(url).func, views.merge)
 
 
 class TestMemberURLs(TestCase):

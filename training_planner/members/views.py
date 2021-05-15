@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
+from django.views.decorators.csrf import csrf_protect
 
 from trainings import decorators
 
@@ -182,7 +183,7 @@ def edit(request, id=None):
 
 @auth_decorators.login_required
 @decorators.admin_only
-def user_management(request):
+def management(request):
     if request.method == 'POST':
         print(request.POST)
         if 'check_active_participants' in request.POST:
@@ -195,3 +196,75 @@ def user_management(request):
             check_trainers(weeks=15)
             messages.success(request, _('Update Trainer'))
     return render(request, 'members/user_management.html')
+
+
+@auth_decorators.login_required
+@decorators.admin_only
+@csrf_protect
+def merge(request):
+    if request.method != 'POST':
+        users = User.objects.all().exclude(groups__name='System') \
+            .order_by('last_name', 'first_name')
+        myFilter = UserFilter(request.GET, queryset=users)
+        users = myFilter.qs
+        context = {'users': users, 'myFilter': myFilter}
+        return render(request, 'members/merge_search.html', context)
+    user_ids = request.POST.getlist('users')
+    users = User.objects.filter(id__in=user_ids).order_by(
+        '-id').order_by('-last_login')
+    if request.POST.get('action') == 'detail':
+        if len(users) < 2:
+            messages.error(
+                request,
+                _('For merging you need to select at least two users.')
+            )
+            return redirect('members-merge')
+        context = {'users': users}
+        return render(request, 'members/merge_users.html', context)
+    if request.POST.get('action') == 'merge':
+        username_id = request.POST.get('username')
+        first_name_id = request.POST.get('first_name')
+        last_name_id = request.POST.get('last_name')
+        birth_date_id = request.POST.get('birth_date')
+        email_id = request.POST.get('email')
+        initials_id = request.POST.get('initials')
+        main_user = users.get(id=username_id)
+        if first_name_id is not None and first_name_id != username_id:
+            main_user.first_name = users.get(id=first_name_id).first_name
+        if last_name_id is not None and last_name_id != username_id:
+            main_user.last_name = users.get(id=last_name_id).last_name
+        if birth_date_id is not None and birth_date_id != username_id:
+            main_user.birth_date = users.get(id=birth_date_id).birth_date
+        if email_id is not None and email_id != username_id:
+            main_user.email = users.get(id=email_id).email
+        if initials_id is not None and initials_id != username_id:
+            main_user.initials = users.get(id=initials_id).initials
+        main_user.save()
+        other_users = users.exclude(id=username_id)
+        for user in other_users:
+            for training in user.instructor.all():
+                training.main_instructor = main_user
+                training.save()
+            for training in user.assistant.all():
+                training.instructors.add(main_user.id)
+                training.instructors.remove(user.id)
+            for training in user.coordinated_trainings.all():
+                training.coordinator = main_user
+                training.save()
+            for training in user.trainings_registered.all():
+                training.registered_participants.add(main_user.id)
+                training.registered_participants.remove(user.id)
+            for training in user.trainings.all():
+                training.participants.add(main_user.id)
+                training.participants.remove(user.id)
+            for training in user.visited_trainings.all():
+                training.visitors.add(main_user.id)
+                training.visitors.remove(user.id)
+            for group in user.groups.all():
+                main_user.groups.add(group)
+        messages.success(
+            request,
+            _('The users were merged and additional accounts were deleted.')
+        )
+        other_users.delete()
+    return redirect('members-merge')

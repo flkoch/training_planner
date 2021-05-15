@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}
+{% trans "Merge users" %}
+{% endblock title %}
+{% block content %}
+<form action="{% url 'members-merge' %}" method="post">
+{% csrf_token %}
+<div class="table-responsive-lg">
+    <table class="table">
+    <thead>
+    <tr>
+        <td>{% trans "Username" %}</td>
+        <td>{% trans "First name" %}</td>
+        <td>{% trans "Last name" %}</td>
+        <td>{% trans "Date of Birth" %}</td>
+        <td>{% trans "E-mail" %}</td>
+        <td>{% trans "Initials" %}</td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+        <input type="checkbox" name="users" id="user" checked hidden value="{{user.id}}">
+        <tr>
+            <td><input type="radio" name="username" id="rd-username-{{user.id}}" value="{{user.id}}" aria-label="{{user.username}}" {% if user.username is None %} disabled {% elif forloop.first %}checked{% endif %}> {{user.username}}</td>
+            <td><input type="radio" name="first_name" id="rd-first-name-{{user.id}}" value="{{user.id}}" aria-label="{{user.first_name}}" {% if user.first_name is None %} disabled {% elif forloop.first %}checked{% endif %}> {{user.first_name}}</td>
+            <td><input type="radio" name="last_name" id="rd-last-name-{{user.id}}" value="{{user.id}}" aria-label="{{user.last_name}}" {% if user.last_name is None %} disabled {% elif forloop.first %}checked{% endif %}> {{user.last_name}}</td>
+            <td><input type="radio" name="birth_date" id="rd-birth_date-{{user.id}}" value="{{user.id}}" aria-label="{{user.birth_date}}" {% if user.birth_date is None %} disabled {% elif forloop.first %}checked{% endif %}> {{user.birth_date}}</td>
+            <td><input type="radio" name="email" id="rd-email-{{user.id}}" value="{{user.id}}" aria-label="{{user.email}}" {% if user.email is None %} disabled {% elif forloop.first %}checked{% endif %}> {{user.email}}</td>
+            <td><input type="radio" name="initials" id="rd-initials-{{user.id}}" value="{{user.id}}" aria-label="{{user.initials}}" {% if user.initials is None %} disabled {% elif forloop.first %}checked{% endif %}> {{user.initials}}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+</div>
+<input type="hidden" name="action" value="merge">
+<input type="submit" value="{% trans "Merge" %}" class="btn btn-primary">
+</form>
+{% endblock content %}

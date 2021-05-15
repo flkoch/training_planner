@@ -23,7 +23,8 @@
         <a href="{% url 'members-all' %}" class="dropdown-item {% active_link 'members-all' strict=True %}">{% trans "All" %}</a>
         <a href="{% url 'trainings-participation' %}" class="dropdown-item {% active_link 'trainings-participation' %}">{% trans "Statistics" %}</a>
         <div class="dropdown-divider"></div>
-        <a href="{% url 'user-management' %}" class="dropdown-item {% active_link 'user-management' %}">{% trans "Management" %}</a>
+        <a href="{% url 'members-management' %}" class="dropdown-item {% active_link 'user-management' %}">{% trans "Management" %}</a>
+        <a href="{% url 'members-merge' %}" class="dropdown-item {% active_link 'members-merge' %}">{% trans "User Merge" %}</a>
     </div>
 {% else %}
 <li class="nav-item"><a href="{% url 'members-all' %}" class="nav-link {% active_link 'members-all' %}">{% trans "Members" %}</a></li>
