@@ -301,7 +301,7 @@ msgstr "Filtern"
 
 #: members/templates/members/merge_search.html:34
 msgid "Member since"
-msgstr "Mitglieder seit"
+msgstr "Mitglied seit"
 
 #: members/templates/members/merge_search.html:35
 msgid "Last login"
@@ -419,7 +419,8 @@ msgstr "Zum Zusammenfügen müssen mindestens zwei Benutzer ausgewählt werden."
 
 #: members/views.py:267
 msgid "The users were merged and additional accounts were deleted."
-msgstr "Die Benutzer wurden zusammengefügt und zusätzliche Konten wurden gelöscht."
+msgstr ""
+"Die Benutzer wurden zusammengefügt und zusätzliche Konten wurden gelöscht."
 
 #: training_planner/settings.py:126
 msgid "German (Swiss)"
@@ -461,7 +462,7 @@ msgstr "Nur Administratoren dürfen auf diesen Bereich zugreifen."
 msgid "Only administrators and the respective trainers may access this area."
 msgstr ""
 "Nur Administratoren und der entsprechende Trainer dürfen auf diesen Bereich "
-"zugreifen"
+"zugreifen."
 
 #: trainings/filter.py:12 trainings/filter.py:29 trainings/models.py:131
 msgid "Title"
@@ -1364,7 +1365,7 @@ msgstr ""
 "angezeigt wird. Im Falle, dass mehrere Konten mit der selben E-Mail Adresse "
 "erstellt wurden, zum Beispiel wenn ein Vater Konten für seine Kinder "
 "erstellt, kann das automatische Zurücksetzen des Passworts scheitern. In "
-"solchen Fällen kontaktiert uns unter < href='mailto:info@jcu.ch'>info@jcu."
+"solchen Fällen kontaktiert uns unter <a href='mailto:info@jcu.ch'>info@jcu."
 "ch</a>."
 
 #: website/templates/website/about.html:15
