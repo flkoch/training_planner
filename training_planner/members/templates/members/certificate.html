@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}
+{% trans "Certificate" %} - {% trans "Details" %}
+{% endblock title %}
+{% block content %}
+<h1>{% trans "Certificate" %} - {{certificate.user}}</h1>
+<nav class="nav justify-content-end flex-column flex-sm-row my-2">
+    <a class="nav-link bg-light text-dark" href="{% url 'member-details' certificate.user.id %}">{% trans "Back" %}</a>
+    {% if can_edit %}
+        <a class="nav-link bg-warning text-dark ml-sm-3" href="{% url 'certificate-edit' certificate.id %}">{% trans "Edit" %}</a>
+    {% endif %}
+    {% if can_delete %}
+        <a class="nav-link bg-danger text-white ml-sm-3" href="{% url 'certificate-delete' certificate.id %}">{% trans "Delete" %}</a>
+    {% endif %}
+</nav>
+<div class="row my-2">
+    <div class="col-sm-6 col-md my-1 order-1">
+        <div class="card">
+            <div class="card-header {% if valid %}bg-success{% else %}bg-danger text-white{% endif %}">{% trans "Information" %}</div>
+            <div class="card-body">
+                <p class="card-text">
+                    {% trans "Valid from" %} {{certificate.date_start}} {% trans "to" %} {{certificate.date_end}}<br>
+                    {% with res=res_full %}
+                        {% if res|length > 0 %}
+                            {% trans "Restrictions fulfilled" %}:
+                            {% for r in res %}
+                                {{r}}{% if forloop.revcounter > 2 %}, {% elif forloop.revcounter == 2%} {% trans "and" %} {% endif %}
+                            {% endfor %}
+                            <br>
+                        {% endif %}
+                    {% endwith %}
+                    {% with res=res_part %}
+                        {% if res|length > 0 %}
+                            {% trans "Restrictions partially fulfilled" %}:
+                            {% for r in res %}
+                                {{r}}{% if forloop.revcounter > 2 %}, {% elif forloop.revcounter == 2%} {% trans "and" %} {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
