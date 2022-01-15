@@ -105,40 +105,51 @@ class AddTrainingForm(forms.ModelForm):
         for field in ['description', 'location', 'instructors']:
             self.fields[field].required = False
         self.helper.layout = cfl.Layout(
-            'title',
+            cfl.Row(
+                cfl.Field(
+                    'title',
+                    wrapper_class='col-12 col-sm-6 col-md-8 col-lg-9'
+                ),
+                cfl.Field(
+                    'main_instructor',
+                    wrapper_class='col-12 col-sm-6 col-md-4 col-lg-3',
+                ),
+            ),
             'description',
             cfl.Row(
                 cfl.Field(
                     'start',
-                    wrapper_class='col-auto',
+                    wrapper_class='col-12 col-sm-6 col-md-3',
                 ),
                 cfl.Field(
                     'duration',
-                    wrapper_class='col-auto',
+                    wrapper_class='col-12 col-sm-6 col-md-3',
                 ),
                 cfl.Field(
                     'location',
-                    wrapper_class='col-auto',
+                    wrapper_class='col-12 col-sm-6 col-md-3',
                 ),
                 cfl.Field(
                     'capacity',
-                    wrapper_class='col-auto',
+                    wrapper_class='col-12 col-sm-6 col-md-3',
                 ),
             ),
             cfl.Row(
                 cfl.Field(
-                    'main_instructor',
-                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
-                ),
-                cfl.Field(
                     'instructors',
-                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                    wrapper_class='col-12 col-sm-6 col-md-4',
                     help_text=_(
                         'Please hold down <Ctrl> to change the selection.'),
                 ),
                 cfl.Field(
                     'target_group',
-                    wrapper_class='col-auto',
+                    wrapper_class='col-12 col-sm-6 col-md-4',
+                    help_text=_(
+                        'Please hold down <Ctrl> to change the selection.'),
+                ),
+                cfl.Field(
+                    'restrictions',
+                    wrapper_class='col-12 col-sm-6 col-md-4',
                     help_text=_(
                         'Please hold down <Ctrl> to change the selection.'),
                 ),
@@ -241,48 +252,53 @@ class TrainingForm(forms.ModelForm):
                       'registered_participants', 'visitors', ]:
             self.fields[field].required = False
         self.helper.layout = cfl.Layout(
-            'title',
+            cfl.Row(
+                cfl.Field(
+                    'title',
+                    wrapper_class='col-12 col-sm-6 col-md-8 col-lg-9'
+                ),
+                cfl.Field(
+                    'main_instructor',
+                    wrapper_class='col-12 col-sm-6 col-md-4 col-lg-3',
+                ),
+            ),
             'description',
             cfl.Row(
                 cfl.Field(
                     'start',
-                    wrapper_class='col-auto',
+                    wrapper_class='col-12 col-sm-6 col-md-3',
                 ),
                 cfl.Field(
                     'duration',
-                    wrapper_class='col-auto',
+                    wrapper_class='col-12 col-sm-6 col-md-3',
                 ),
                 cfl.Field(
                     'location',
-                    wrapper_class='col-auto',
+                    wrapper_class='col-12 col-sm-6 col-md-3',
                 ),
                 cfl.Field(
                     'capacity',
-                    wrapper_class='col-auto',
-                ),
-                cfl.Field(
-                    'coordinator',
-                    wrapper_class='col-auto',
+                    wrapper_class='col-12 col-sm-6 col-md-3',
                 ),
             ),
             cfl.Row(
                 cfl.Field(
-                    'main_instructor',
-                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
-                ),
-                cfl.Field(
                     'instructors',
-                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                    wrapper_class='col-12 col-sm-6 col-md-4',
                     help_text=_(
-                        'Please hold down <Ctrl> to change the selection.'
-                    ),
+                        'Please hold down <Ctrl> to change the selection.'),
                 ),
                 cfl.Field(
                     'target_group',
-                    wrapper_class='col-auto',
+                    wrapper_class='col-12 col-sm-6 col-md-4',
                     help_text=_(
-                        'Please hold down <Ctrl> to change the selection.'
-                    ),
+                        'Please hold down <Ctrl> to change the selection.'),
+                ),
+                cfl.Field(
+                    'restrictions',
+                    wrapper_class='col-12 col-sm-6 col-md-4',
+                    help_text=_(
+                        'Please hold down <Ctrl> to change the selection.'),
                 ),
                 cfl.HTML(
                     _(
@@ -295,14 +311,14 @@ class TrainingForm(forms.ModelForm):
             cfl.Row(
                 cfl.Field(
                     'registered_participants',
-                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                    wrapper_class='col-12 col-md-6',
                     help_text=_(
                         'Please hold down <Ctrl> to change the selection.'
                     ),
                 ),
                 cfl.Field(
                     'visitors',
-                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                    wrapper_class='col-12  col-md-6',
                     help_text=_(
                         'Please hold down <Ctrl> to change the selection.'
                     ),
@@ -430,48 +446,57 @@ class AdminTrainingForm(forms.ModelForm):
                       'deleted', 'visitors', ]:
             self.fields[field].required = False
         self.helper.layout = cfl.Layout(
-            'title',
+            cfl.Row(
+                cfl.Field(
+                    'title',
+                    wrapper_class='col-12 col-sm-6 col-md-8 col-lg-9'
+                ),
+                cfl.Field(
+                    'main_instructor',
+                    wrapper_class='col-12 col-sm-6 col-md-4 col-lg-3',
+                ),
+            ),
             'description',
             cfl.Row(
                 cfl.Field(
                     'start',
-                    wrapper_class='col-auto',
+                    wrapper_class='col-12 col-sm-6 col-md-3',
                 ),
                 cfl.Field(
                     'duration',
-                    wrapper_class='col-auto',
+                    wrapper_class='col-12 col-sm-6 col-md-3',
                 ),
                 cfl.Field(
                     'location',
-                    wrapper_class='col-auto',
+                    wrapper_class='col-12 col-sm-6 col-md-3',
                 ),
                 cfl.Field(
                     'capacity',
-                    wrapper_class='col-auto',
-                ),
-                cfl.Field(
-                    'coordinator',
-                    wrapper_class='col-auto',
+                    wrapper_class='col-12 col-sm-6 col-md-3',
                 ),
             ),
             cfl.Row(
                 cfl.Field(
-                    'main_instructor',
-                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
-                ),
-                cfl.Field(
                     'instructors',
-                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                    wrapper_class='col-12 col-sm-6 col-md-4 col-lg-3',
                     help_text=_(
-                        'Please hold down <Ctrl> to change the selection.'
-                    ),
+                        'Please hold down <Ctrl> to change the selection.'),
                 ),
                 cfl.Field(
                     'target_group',
-                    wrapper_class='col-auto',
+                    wrapper_class='col-12 col-sm-6 col-md-4 col-lg-3',
                     help_text=_(
-                        'Please hold down <Ctrl> to change the selection.'
-                    ),
+                        'Please hold down <Ctrl> to change the selection.'),
+                ),
+                cfl.Field(
+                    'restrictions',
+                    wrapper_class='col-12 col-sm-6 col-md-4 col-lg-3',
+                    help_text=_(
+                        'Please hold down <Ctrl> to change the selection.'),
+                ),
+                cfl.Field(
+                    'coordinator',
+                    wrapper_class='col-12 col-sm-6 col-md-4 col-lg-3',
                 ),
                 cfl.HTML(
                     _(
@@ -484,21 +509,21 @@ class AdminTrainingForm(forms.ModelForm):
             cfl.Row(
                 cfl.Field(
                     'registered_participants',
-                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                    wrapper_class='col-12 col-sm-6 col-md-4',
                     help_text=_(
                         'Please hold down <Ctrl> to change the selection.'
                     ),
                 ),
                 cfl.Field(
                     'participants',
-                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                    wrapper_class='col-12 col-sm-6 col-md-4',
                     help_text=_(
                         'Please hold down <Ctrl> to change the selection.'
                     ),
                 ),
                 cfl.Field(
                     'visitors',
-                    wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3',
+                    wrapper_class='col-12 col-sm-6 col-md-4',
                     help_text=_(
                         'Please hold down <Ctrl> to change the selection.'
                     ),
@@ -514,21 +539,11 @@ class AdminTrainingForm(forms.ModelForm):
             cfl.Row(
                 cfl.Field(
                     'registration_open',
-                    wrapper_class='col-auto',
+                    wrapper_class='col-6',
                 ),
                 cfl.Field(
                     'registration_close',
-                    wrapper_class='col-auto',
-                ),
-            ),
-            cfl.Row(
-                cfl.Field(
-                    'archived',
-                    wrapper_class='col-auto',
-                ),
-                cfl.Field(
-                    'deleted',
-                    wrapper_class='col-auto',
+                    wrapper_class='col-6',
                 ),
             ),
             cfl.Row(
@@ -543,6 +558,14 @@ class AdminTrainingForm(forms.ModelForm):
                 cfl.Field(
                     'enable_visitors',
                     wrapper_class='col-12 col-sm-4',
+                ),
+                cfl.Field(
+                    'archived',
+                    wrapper_class='col-auto',
+                ),
+                cfl.Field(
+                    'deleted',
+                    wrapper_class='col-auto',
                 ),
             ),
             cfl.Row(
