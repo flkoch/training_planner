@@ -13,9 +13,10 @@ from django.views.decorators.csrf import csrf_protect
 from trainings import decorators
 
 from .filter import UserFilter
-from .forms import ChangeUserForm, CreateUserForm
-from .models import (User, check_active_participants, check_active_trainers,
-                     check_trainers)
+from .forms import (CertificateForm, ChangeUserForm, CreateCertificateForm,
+                    CreateUserForm)
+from .models import (Certificate, User, check_active_participants,
+                     check_active_trainers, check_trainers)
 
 # Create your views here.
 
@@ -31,7 +32,7 @@ def login(request):
             auth.login(request, user)
             if 'next' in request.GET:
                 return redirect(request.GET['next'])
-            return redirect('/trainings')
+            return redirect('trainings-overview')
         else:
             messages.info(
                 request,
@@ -43,7 +44,7 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect('/trainings')
+    return redirect('trainings-overview')
 
 
 @decorators.unauthorised_user
@@ -109,9 +110,12 @@ def all(request):
 
 @auth_decorators.login_required
 def details(request, id=None):
+    show_cert = request.user.has_perm('members.view_certificate')
+    certs = None
     if id is None:
         user = request.user
         edit_link = reverse('account-edit')
+        show_cert = True
     else:
         user = get_object_or_404(auth.get_user_model(), id=id)
         if user == request.user:
@@ -134,12 +138,17 @@ def details(request, id=None):
     paginator = Paginator(visited_trainings, 10)
     page_number = request.GET.get('page2')
     page_obj2 = paginator.get_page((page_number))
+    if show_cert:
+        certs = user.certificates.filter(
+            date_end__gte=timezone.now()).order_by('date_end')
     context = {
         'page_user': user,
         'edit_link': edit_link,
         'reg_trainings': reg_trainings,
         'part_trainings': page_obj1,
         'visited_trainings': page_obj2,
+        'show_certs': show_cert,
+        'certs': certs,
     }
     return render(request, 'members/details.html', context)
 
@@ -262,9 +271,102 @@ def merge(request):
                 training.visitors.remove(user.id)
             for group in user.groups.all():
                 main_user.groups.add(group)
+            for cert in user.certificates.all():
+                cert.user = main_user
+                cert.save()
         messages.success(
             request,
             _('The users were merged and additional accounts were deleted.')
         )
         other_users.delete()
     return redirect('members-merge')
+
+
+@auth_decorators.login_required
+def view_certificate(request, id=None):
+    if id is None:
+        return redirect('certificates-all')
+    certificate = get_object_or_404(Certificate, id=id)
+    valid = certificate.is_valid
+    can_edit = False
+    can_delete = False
+    if request.user.has_perm('members.edit_certificate'):
+        can_edit = True
+    if request.user.has_perm('members.delete_certificate'):
+        can_delete = True
+    res_full = certificate.restrictions_fulfilled.all()
+    res_part = certificate.restrictions_part_fulfilled.all()
+    context = {'certificate': certificate,
+               'res_full': res_full, 'res_part': res_part, 'valid': valid,
+               'can_edit': can_edit, 'can_delete': can_delete}
+    return render(request, 'members/certificate.html', context)
+
+
+@auth_decorators.login_required
+@auth_decorators.permission_required('members.create_certificate')
+def create_certificate(request, user_id=None):
+    if request.method == 'POST':
+        form = CreateCertificateForm(request.POST)
+        if form.is_valid():
+            cert = form.save(commit=True)
+            messages.success(request, _('Certificate added successfully.'))
+            return redirect('certificate-details', cert.id)
+        else:
+            messages.warning(
+                request,
+                _('Please take care of the highlighted errors.')
+            )
+    else:
+        if user_id is None:
+            user = None
+        else:
+            user = get_object_or_404(auth.get_user_model(), id=user_id)
+        form = CertificateForm(
+            initial={
+                'user': user,
+                'date_start': timezone.now().date()
+            }
+        )
+    context = {'form': form, 'title': _('New Certificate')}
+    return render(request, 'members/certificate_form.html', context)
+
+
+@auth_decorators.login_required
+@auth_decorators.permission_required('members.edit_certificate')
+def edit_certificate(request, id):
+    cert = get_object_or_404(Certificate, id=id)
+    if request.method == 'POST':
+        form = CertificateForm(request.POST)
+        if form.is_valid():
+            cert = form.save(commit=True)
+            messages.success(request, _('Certificate added successfully.'))
+            return redirect('certificate-details', cert.id)
+        else:
+            messages.warning(
+                request,
+                _('Please take care of the highlighted errors.')
+            )
+    else:
+        form = CertificateForm(instance=cert)
+    title = _('Certificate')
+    context = {'form': form, 'user': cert.user,
+               'title': title}
+    return render(request, 'members/certificate_form.html', context)
+
+
+@auth_decorators.login_required
+@auth_decorators.permission_required('members.delete_certificate')
+def delete_certificate(request, id):
+    cert = get_object_or_404(Certificate, id=id)
+    if request.method == 'POST' and \
+            request.POST['_method'] == 'delete' and \
+            request.POST['id'] == str(id):
+        user_id = cert.user.id
+        cert.delete()
+        messages.success(
+            request,
+            _('The certificate was successfully deleted.')
+        )
+        return redirect('member-details', user_id)
+    context = {'obj': cert, 'title': _('Certificate')}
+    return render(request, 'members/delete.html', context)

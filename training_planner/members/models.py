@@ -6,6 +6,8 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from trainings.models import Restriction
+
 
 def _participant():
     return _('Participant')
@@ -114,6 +116,37 @@ class User(AbstractUser):
     @property
     def is_administrator(self):
         return self.groups.filter(name='Administrator').exists()
+
+
+class Certificate(models.Model):
+    date_start = models.DateField(verbose_name=_('Start of validity'))
+    date_end = models.DateField(verbose_name=_('End of validity'))
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='certificates')
+    restrictions_fulfilled = models.ManyToManyField(
+        Restriction,
+        verbose_name=_('Restrictions fulfilled'),
+        related_name='valid_certs',
+        blank=True
+    )
+    restrictions_part_fulfilled = models.ManyToManyField(
+        Restriction,
+        verbose_name=_('Restrictions partially fulfilled'),
+        related_name='part_valid_certs',
+        blank=True
+    )
+
+    class Meta:
+        ordering = ['-date_end', 'date_start']
+        verbose_name = _('Certificate')
+        verbose_name_plural = _('Certificates')
+
+    def __str__(self):
+        return f'{self.restrictions_fulfilled.first()} ({self.date_end})'
+
+    @property
+    def is_valid(self, date=timezone.now().date()):
+        return self.date_start <= date and date <= self.date_end
 
 
 def all():

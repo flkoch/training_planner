@@ -102,6 +102,27 @@ class TargetGroup(models.Model):
         return self.name
 
 
+class Restriction(models.Model):
+    """
+    Class for supplying various restriction types.
+    """
+    name = models.CharField(max_length=10, verbose_name=_('Name'), unique=True)
+    description = models.TextField(
+        verbose_name=_('Description'), max_length=500
+    )
+
+    class Meta:
+        verbose_name = _('Restriction')
+        verbose_name_plural = _('Restrictions')
+        ordering = ['name']
+
+    def __str__(self):
+        """
+        return the name as string representation
+        """
+        return self.name
+
+
 class Training(models.Model):
     """
     Class for storing trainings. The following fields exist:
@@ -181,6 +202,9 @@ class Training(models.Model):
     enable_coordinator = models.BooleanField(
         verbose_name=_('Use coordinator'),
         default=True
+    )
+    restrictions = models.ManyToManyField(
+        Restriction, verbose_name=_('Restriction'), blank=True
     )
 
     class Meta:
@@ -334,13 +358,39 @@ class Training(models.Model):
             return False
         if self.deleted or self.archived:
             return False
-        if isinstance(user, get_user_model()):
-            if self.is_instructor(user) or \
-                not user.groups.filter(name='Participant') \
-                    .exists():
-                return False
-        return self.during_registration and \
-            self.registered_participants.all().count() < self.capacity
+        if not self.during_registration:
+            return False
+        if not self.registered_participants.all().count() < self.capacity:
+            return False
+        if not isinstance(user, get_user_model()):
+            return True
+        if self.is_instructor(user):
+            return False
+        if not user.groups.filter(name='Participant').exists():
+            return False
+        if self.restrictions.all().count() > 0:
+            for cert in user.certificates.iterator():
+                if cert.is_valid:
+                    cert_set = set(
+                        cert.restrictions_fulfilled.values_list(
+                            'id',
+                            flat=True
+                        )
+                    ).union(
+                        set(
+                            cert.restrictions_part_fulfilled.values_list(
+                                'id',
+                                flat=True
+                            )
+                        )
+                    )
+                    rest_set = set(
+                        self.restrictions.values_list('id', flat=True)
+                    )
+                    if rest_set.intersection(cert_set):
+                        return True
+            return False
+        return True
 
     def can_unregister(self, user):
         """

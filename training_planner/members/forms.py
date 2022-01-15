@@ -6,7 +6,7 @@ from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
 from tempus_dominus import widgets
 
-from .models import User
+from .models import Certificate, User
 
 
 class CreateUserForm(UserCreationForm):
@@ -165,6 +165,152 @@ class ChangeUserForm(forms.ModelForm):
                         'btn-secondary mr-3">{back}</a>',
                         back=_('Back'),
                     )
+                ),
+                cfl.Submit(
+                    'submit',
+                    _('Save'),
+                    css_class='btn btn-primary'
+                ),
+            ),
+        )
+
+
+class CreateCertificateForm(forms.ModelForm):
+    date_start = forms.DateField(widget=widgets.DatePicker(
+        attrs={
+            'append': 'fa fa-calendar',
+            'icon_toggle': True,
+        }
+    ))
+    date_end = forms.DateField(widget=widgets.DatePicker(
+        attrs={
+            'append': 'fa fa-calendar',
+            'icon_toggle': True,
+        }
+    ))
+
+    class Meta:
+        model = Certificate
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(forms.ModelForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.action = ''
+        self.helper.html5_required = True
+        self.helper.layout = cfl.Layout(
+            cfl.Row(
+                cfl.Field(
+                    'user', wrapper_class='col-12 col-sm-5 col-md-4 col-lg-3'
+                ),
+            ),
+            cfl.Row(
+                cfl.Field(
+                    'date_start',
+                    wrapper_class='col-12 col-sm-6 col-md-4 col-lg-3'
+                ),
+                cfl.Field(
+                    'date_end',
+                    wrapper_class='col-12 col-sm-6 col-md-4 col-lg-3'
+                ),
+            ),
+            cfl.Row(
+                cfl.Field(
+                    'restrictions_fulfilled',
+                    wrapper_class='col-12 col-md-6',
+                    help_text=_(
+                        'Please hold down <Ctrl> to change the selection.'
+                    ),
+                ),
+                cfl.Field(
+                    'restrictions_part_fulfilled',
+                    wrapper_class='col-12 col-md-6',
+                    help_text=_(
+                        'Please hold down <Ctrl> to change the selection.'
+                    ),
+                ),
+            ),
+            cfl.Row(
+                cfl.HTML(
+                    format_lazy(
+                        '<a href="javascript:history:back()" '
+                        'class="btn btn-secondary mr-3">{back}</a>',
+                        back=_('Back')
+                    ),
+                ),
+                cfl.Submit(
+                    'submit',
+                    _('Create'),
+                    css_class='btn btn-primary'
+                ),
+            ),
+        )
+
+
+class CertificateForm(forms.ModelForm):
+    date_start = forms.DateField(widget=widgets.DatePicker(
+        attrs={
+            'append': 'fa fa-calendar',
+            'icon_toggle': True,
+        }
+    ))
+    date_end = forms.DateField(widget=widgets.DatePicker(
+        attrs={
+            'append': 'fa fa-calendar',
+            'icon_toggle': True,
+        }
+    ))
+
+    class Meta:
+        model = Certificate
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(forms.ModelForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.action = ''
+        self.helper.html5_required = True
+        self.helper.layout = cfl.Layout(
+            cfl.Row(
+                cfl.Field(
+                    'user', wrapper_class='d-none'
+                ),
+            ),
+            cfl.Row(
+                cfl.Field(
+                    'date_start',
+                    wrapper_class='col-12 col-sm-6 col-md-4 col-lg-3'
+                ),
+                cfl.Field(
+                    'date_end',
+                    wrapper_class='col-12 col-sm-6 col-md-4 col-lg-3'
+                ),
+            ),
+            cfl.Row(
+                cfl.Field(
+                    'restrictions_fulfilled',
+                    wrapper_class='col-12 col-md-6',
+                    help_text=_(
+                        'Please hold down <Ctrl> to change the selection.'
+                    ),
+                ),
+                cfl.Field(
+                    'restrictions_part_fulfilled',
+                    wrapper_class='col-12 col-md-6',
+                    help_text=_(
+                        'Please hold down <Ctrl> to change the selection.'
+                    ),
+                ),
+            ),
+            cfl.Row(
+                cfl.HTML(
+                    format_lazy(
+                        '<a href="javascript:history:back()" '
+                        'class="btn btn-secondary mr-3">{back}</a>',
+                        back=_('Back')
+                    ),
                 ),
                 cfl.Submit(
                     'submit',

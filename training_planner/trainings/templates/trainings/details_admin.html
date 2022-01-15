@@ -71,6 +71,19 @@
                             <br>
                         {% endif %}
                     {% endwith %}
+                    {% with rest=training.restrictions.all %}
+                        {% if rest|length > 0 %}
+                            {% trans "Restrictions" %}:
+                            {% for r in rest %}
+                                {{r}}{% if r.description %}<span class="ml-1 badge badge-pill badge-primary" data-toggle="tooltip" data-placement="right" title="{{r.description}}"><span class="oi oi-info small"></span></span>{% endif %}
+                                {% if forloop.revcounter > 2 %}
+                                ,
+                                {% elif forloop.revcounter == 2 %}
+                                     {% trans "or" %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
                     {% if training.enable_coordinator %}
                         {% trans "Coordinator" %}: {% if training.coordinator %}{{training.coordinator}}{% if training.can_edit %}<a href="{% url 'trainings-unregister-coordinator' training.id %}" class="text-danger mx-1"><span class="oi oi-circle-x"></span></a>{% endif %}{% if training.coordinator == user %}<br><small class="text-muted">{% trans 'You will get further information just before the training. If you cannot make it, please contact the respective trainer.' %}</small>{% endif %}{% else %}<a href="{% url 'trainings-register-coordinator' training.id %}" class="btn btn-sm btn-secondary">{% trans "Register" %}</a>{% endif %}<br>
                     {% endif %}

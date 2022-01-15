@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}
+    {% trans "Confirm Delete" %} - {{ title }}
+{% endblock title %}
+{% block content %}
+    <h1>{% trans "Confirm" %}</h1>
+    <h2>{{ title }} - Deletion</h2>
+    <p>{% trans "Please confirm that you intend to delete the following object:" %}</p>
+    <p>{{obj}}</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="id" value={{obj.id}}>
+        <input type="hidden" name="_method" value="delete">
+        <a href="javascript:history.back()" class="btn btn-secondary">{% trans "Back" %}</a>
+        <input type="submit" class="btn btn-danger" value="{% trans "Delete" %}">
+    </form>
+{% endblock content %}
